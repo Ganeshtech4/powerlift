@@ -4,65 +4,10 @@ import { Link } from 'react-router-dom';
 const MenuItems = ({ parentMenu, secondParentMenu, activeMenu }) => {
   return (
     <ul className="main-menu__list">
-      <li className={parentMenu === 'Home' ? 'dropdown current-menu-item' : 'dropdown'}>
-        <Link to="#">Home</Link>
-        <ul className="sub-menu">
-          <li>
-            <Link to="/" className={activeMenu === '/' ? 'active-menu' : ''}>
-              Home One
-            </Link>
-          </li>
-          <li>
-            <Link to="/home-2" className={activeMenu === '/home-2' ? 'active-menu' : ''}>
-              Home Two
-            </Link>
-          </li>
-          <li>
-            <Link to="/home-3" className={activeMenu === '/home-3' ? 'active-menu' : ''}>
-              Home Three
-            </Link>
-          </li>
-          <li className={secondParentMenu === 'Header Styles' ? 'dropdown current-menu-item' : 'dropdown'}>
-            <Link to="#">Header Styles</Link>
-            <ul className="sub-menu">
-              <li>
-                <Link to="/" className={activeMenu === '/' ? 'active-menu' : ''}>
-                  Header One
-                </Link>
-              </li>
-              <li>
-                <Link to="/home-2" className={activeMenu === '/home-2' ? 'active-menu' : ''}>
-                  Header Two
-                </Link>
-              </li>
-              <li>
-                <Link to="/home-3" className={activeMenu === '/home-3' ? 'active-menu' : ''}>
-                  Header Three
-                </Link>
-              </li>
-            </ul>
-          </li>
-          <li className={secondParentMenu === 'One Page Styles' ? 'dropdown current-menu-item' : 'dropdown'}>
-            <Link to="#">One Page Styles</Link>
-            <ul className="sub-menu">
-              <li>
-                <Link to="/one-page-style-one" className={activeMenu === '/one-page-style-one' ? 'active-menu' : ''}>
-                  One Page Styles One
-                </Link>
-              </li>
-              <li>
-                <Link to="/one-page-style-two" className={activeMenu === '/one-page-style-two' ? 'active-menu' : ''}>
-                  One Page Styles Two
-                </Link>
-              </li>
-              <li>
-                <Link to="/one-page-style-three" className={activeMenu === '/one-page-style-three' ? 'active-menu' : ''}>
-                  One Page Styles Three
-                </Link>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <li className={parentMenu === 'Home' ? 'current-menu-item' : ''}>
+        <Link to="/" className={activeMenu === '/' ? 'active-menu' : ''}>
+          Home
+        </Link>
       </li>
       <li className={parentMenu === 'Pages' ? 'dropdown current-menu-item' : 'dropdown'}>
         <Link to="#">Pages</Link>
