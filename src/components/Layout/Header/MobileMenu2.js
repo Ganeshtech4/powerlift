@@ -12,11 +12,11 @@ const MobileMenu2 = ({
 }) => {
   const {
     item1 = "Home",
-    item2 = "Services",
-    item3 = "About",
-    item4 = "Team",
-    item5 = "Event",
-    item6 = "Blog",
+    item2 = "Championships",
+    item3 = "About WPC–Telangana",
+    item4 = "Committee Members",
+    item5 = "Membership",
+    item6 = "News & Updates",
   } = props;
 
   return (
@@ -43,11 +43,11 @@ const MobileMenu2 = ({
             <ul className="main-menu__list">
               <OnepageMenuItems
                   menuItem1={item1 ? item1 : 'Home'}
-                  menuItem3={item2 ? item2 : 'Services'}
-                  menuItem2={item3 ? item3 : 'About'}
-                  menuItem5={item4 ? item4 : 'Team'}
-                  menuItem6={item5 ? item5 : 'Event'}
-                  menuItem7={item6 ? item6 : 'Blog'}
+                  menuItem3={item2 ? item2 : 'Championships'}
+                  menuItem2={item3 ? item3 : 'About WPC–Telangana'}
+                  menuItem5={item4 ? item4 : 'Committee Members'}
+                  menuItem6={item5 ? item5 : 'Membership'}
+                  menuItem7={item6 ? item6 : 'News & Updates'}
               />
             </ul>
           </div>
