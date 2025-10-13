@@ -36,18 +36,18 @@ const Footer = () => {
                         <div className="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
                             <div className="footer-widget__column footer-widget__events">
                                 <div className="footer-widget__title-box">
-                                    <h3 className="footer-widget__title">Upcoming Events</h3>
+                                    <h3 className="footer-widget__title">Upcoming Championships</h3>
                                 </div>
                                 <ul className="footer-widget__events-list list-unstyled">
                                     <li>
-                                        <p>11 April 2024 At 10 Pm In Dhaka</p>
-                                        <h5>Ui/ux Designer Meetup</h5>
-                                        <Link to="/event-details">Get a Ticket <span className="icon-arrow-right"></span></Link>
+                                        <p>2025 District Championships</p>
+                                        <h5>WPC–Telangana District Meet</h5>
+                                        <Link to="/event-details">Register Now <span className="icon-arrow-right"></span></Link>
                                     </li>
                                     <li>
-                                        <p>11 April 2024 At 10 Pm In Dhaka</p>
-                                        <h5>Ui/ux Designer Meetup</h5>
-                                        <Link to="/event-details">Get a Ticket <span className="icon-arrow-right"></span></Link>
+                                        <p>2025 State Championships</p>
+                                        <h5>WPC–Telangana State Championships</h5>
+                                        <Link to="/event-details">Apply Here <span className="icon-arrow-right"></span></Link>
                                     </li>
                                 </ul>
                             </div>
@@ -58,10 +58,10 @@ const Footer = () => {
                                     <h3 className="footer-widget__title">Quick links</h3>
                                 </div>
                                 <ul className="footer-widget__link-list list-unstyled">
-                                    <li><Link to="/about">About Us</Link></li>
-                                    <li><Link to="/services">Service</Link></li>
-                                    <li><Link to="/contact">Online Ticket</Link></li>
-                                    <li><Link to="/blog">Blog Post</Link></li>
+                                    <li><Link to="/about">About WPC–Telangana</Link></li>
+                                    <li><Link to="/services">Championships</Link></li>
+                                    <li><Link to="/contact">Membership</Link></li>
+                                    <li><Link to="/blog">News & Updates</Link></li>
                                     <li><Link to="/contact">Contact Us</Link></li>
                                 </ul>
                             </div>
@@ -69,14 +69,14 @@ const Footer = () => {
                         <div className="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="300ms">
                             <div className="footer-widget__column footer-widget__our-company">
                                 <div className="footer-widget__title-box">
-                                    <h3 className="footer-widget__title">Our Company</h3>
+                                    <h3 className="footer-widget__title">Events & Programs</h3>
                                 </div>
                                 <ul className="footer-widget__link-list list-unstyled">
-                                    <li><Link to="/schedule-list-2">Jubilee Events</Link></li>
-                                    <li><Link to="/about">Gala Affairs</Link></li>
-                                    <li><Link to="/about">Inspire and Delight Events</Link></li>
-                                    <li><Link to="/about">Enchanted Gatherings</Link></li>
-                                    <li><Link to="/about">Eventful Ventures</Link></li>
+                                    <li><Link to="/schedule-list-2">District Championships</Link></li>
+                                    <li><Link to="/about">State Championships</Link></li>
+                                    <li><Link to="/about">Open Meets</Link></li>
+                                    <li><Link to="/about">Training Workshops</Link></li>
+                                    <li><Link to="/about">Referee Seminars</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -92,7 +92,7 @@ const Footer = () => {
                                                 <span className="icon-envelop"></span>
                                             </div>
                                             <div className="text">
-                                                <p><a href="mailto:nafiz125@gmail.com">nafiz125@gmail.com</a></p>
+                                                <p><a href="mailto:info@wpctelangana.in">info@wpctelangana.in</a></p>
                                             </div>
                                         </li>
                                         <li>
@@ -100,7 +100,7 @@ const Footer = () => {
                                                 <span className="icon-pin"></span>
                                             </div>
                                             <div className="text">
-                                                <p>3891 Ranchview Dr. Richardson</p>
+                                                <p>WPC–Telangana Headquarters, Hyderabad, Telangana, India</p>
                                             </div>
                                         </li>
                                         <li>
@@ -108,7 +108,7 @@ const Footer = () => {
                                                 <span className="icon-call"></span>
                                             </div>
                                             <div className="text">
-                                                <p><a href="tel:01245789321">01245789321, 012457895146</a></p>
+                                                <p><a href="tel:+91XXXXXXXXXXX">+91 XXXXX XXXXX</a></p>
                                             </div>
                                         </li>
                                     </ul>
@@ -122,7 +122,7 @@ const Footer = () => {
         <div className="site-footer__bottom">
             <div className="container">
                 <div className="site-footer__bottom-inner">
-                    <p className="site-footer__bottom-text">© EventFlow 2024 | All Rights Reserved</p>
+                    <p className="site-footer__bottom-text">© WPC–Telangana 2025 | Official State Body of WPC–India | All Rights Reserved</p>
                     <ul className="list-unstyled site-footer__bottom-menu">
                         <li><Link to="/about">Terms & Condition</Link></li>
                         <li><Link to="/about">Privacy Policy</Link></li>

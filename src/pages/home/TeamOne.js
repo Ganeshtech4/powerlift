@@ -9,34 +9,34 @@ import teamImg3 from '../../assets/images/team/team-1-3.jpg';
 export default function TeamOne() {
   // State for dynamic content
   const [teamContent] = useState({
-    tagline: "Our Team Member",
-    title: "Our Amazing & Learned Event Speakers",
+    tagline: "Committee Members",
+    title: "WPC–Telangana Leadership & Officials",
     members: [
       {
         id: 1,
-        name: "David Beckham",
-        role: "Speaker",
+        name: "[President Name]",
+        role: "President",
         image: teamImg1,
         hoverText:
-          "Events bring people together for shared experiences and celebrations. From weddings and birthdays to conferences and festivals, events create memories.",
+          "Leading WPC–Telangana with vision and dedication to promote powerlifting across all districts in Telangana state under WPC regulations.",
         link: "/team-details",
       },
       {
         id: 2,
-        name: "David Betman",
-        role: "Singer",
+        name: "[General Secretary Name]",
+        role: "General Secretary",
         image: teamImg2,
         hoverText:
-          "Events bring people together for shared experiences and celebrations. From weddings and birthdays to conferences and festivals, events create memories.",
+          "Managing day-to-day operations, organizing championships, and coordinating with WPC–India for state-level powerlifting activities.",
         link: "/team-details",
       },
       {
         id: 3,
-        name: "Jessica Brown",
-        role: "Content Creator",
+        name: "[Technical Head Name]",
+        role: "Technical Head",
         image: teamImg3,
         hoverText:
-          "Events bring people together for shared experiences and celebrations. From weddings and birthdays to conferences and festivals, events create memories.",
+          "Overseeing technical aspects of powerlifting events, referee training, and ensuring compliance with WPC international standards.",
         link: "/team-details",
       },
     ],

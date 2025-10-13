@@ -6,27 +6,27 @@ import { useState } from "react";
 export default function ServicesOne() {
   // State for dynamic data (e.g., dynamic images, text, links)
   const [servicesContent] = useState({
-    sectionTagline: "event benefits",
-    sectionTitle: "Why should you join our event",
+    sectionTagline: "WPC Benefits",
+    sectionTitle: "Why should you join WPC–Telangana",
     services: [
       {
         id: 1,
-        title: "Eventful Ventures",
-        description: "Events bring people together for a shared experience and from weddings.",
+        title: "Official Competition",
+        description: "Participate in district, state, and national level powerlifting championships under WPC regulations.",
         icon: "icon-camera",
         link: "/event-prodigy",
       },
       {
         id: 2,
-        title: "Stellar Events Co",
-        description: "Events bring people together for a shared experience and from weddings.",
+        title: "Structured Training",
+        description: "Access to certified coaches, workshops, seminars, and referee training programs.",
         icon: "icon-skewer",
         link: "/stellar-events-co",
       },
       {
         id: 3,
-        title: "Elite Event Management",
-        description: "Events bring people together for a shared experience and from weddings.",
+        title: "International Recognition",
+        description: "Official WPC–India ID card and pathway to compete in national and international competitions.",
         icon: "icon-dinner-table",
         link: "/elite-event-management",
       },

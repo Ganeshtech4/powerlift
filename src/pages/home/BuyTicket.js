@@ -7,13 +7,13 @@ import ticketImg from '../../assets/images/resources/buy-ticket-img.jpg';
 export default function BuyTicket() {
   // State for dynamic content
   const [ticketContent] = useState({
-    address: "Mirpur 01 Road N 12 Dhaka Bangladesh",
-    timing: "10 Am To 10 Pm 20 April 2024",
-    title: "Grab Your Seat Now Or You May Regret it Once",
+    address: "WPC–Telangana Headquarters, Hyderabad, Telangana, India",
+    timing: "Email: info@wpctelangana.in | Phone: +91 XXXXX XXXXX",
+    title: "Join WPC–Telangana Membership Today",
     description:
-      "Events bring people together for a shared experience celebration. From weddings and birthdays to conferences, events bring people together for a shared purpose.",
+      "Become part of the official state federation under WPC–India. Get your official ID card, access to certified coaches, and compete in district, state, and national championships.",
     buttons: [
-      { id: 1, text: "Buy Your Ticket", link: "/contact", class: "buy-ticket__btn-1" },
+      { id: 1, text: "Apply for Membership", link: "/contact", class: "buy-ticket__btn-1" },
       { id: 2, text: "Contact Us", link: "/contact", class: "buy-ticket__btn-2" },
     ],
   });

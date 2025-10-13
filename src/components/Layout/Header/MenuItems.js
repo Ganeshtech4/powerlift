@@ -74,12 +74,12 @@ const MenuItems = ({ parentMenu, secondParentMenu, activeMenu }) => {
           </li>
           <li>
             <Link to="/team" className={activeMenu === '/team' ? 'active-menu' : ''}>
-              Team
+              Committee Members
             </Link>
           </li>
           <li>
             <Link to="/team-details" className={activeMenu === '/team-details' ? 'active-menu' : ''}>
-              Team Details
+              Referees
             </Link>
           </li>
           <li>
@@ -89,7 +89,7 @@ const MenuItems = ({ parentMenu, secondParentMenu, activeMenu }) => {
           </li>
           <li>
             <Link to="/pricing" className={activeMenu === '/pricing' ? 'active-menu' : ''}>
-              Pricing
+              Results
             </Link>
           </li>
           <li>
@@ -114,52 +114,52 @@ const MenuItems = ({ parentMenu, secondParentMenu, activeMenu }) => {
           </li>
         </ul>
       </li>
-      <li className={parentMenu === 'Services' ? 'dropdown current-menu-item' : 'dropdown'}>
-        <Link to="#">Services</Link>
+      <li className={parentMenu === 'Championships' ? 'dropdown current-menu-item' : 'dropdown'}>
+        <Link to="#">Championships</Link>
         <ul className="sub-menu">
           <li>
             <Link to="/services" className={activeMenu === '/services' ? 'active-menu' : ''}>
-              Services
+              District Championships
             </Link>
           </li>
           <li>
             <Link to="/event-prodigy" className={activeMenu === '/event-prodigy' ? 'active-menu' : ''}>
-              Event Prodigy
+              State Championships
             </Link>
           </li>
           <li>
             <Link to="/stellar-events-co" className={activeMenu === '/stellar-events-co' ? 'active-menu' : ''}>
-              Stellar Events Co
+              Open Meets
             </Link>
           </li>
           <li>
             <Link to="/elite-event-management" className={activeMenu === '/elite-event-management' ? 'active-menu' : ''}>
-              Elite Event Management
+              Benchpress Events
             </Link>
           </li>
           <li>
             <Link to="/infinite-occasions" className={activeMenu === '/infinite-occasions' ? 'active-menu' : ''}>
-              Infinite Occasions
+              Deadlift Events
             </Link>
           </li>
           <li>
             <Link to="/dream-event-planners" className={activeMenu === '/dream-event-planners' ? 'active-menu' : ''}>
-              Dream Event Planners
+              Powerlifting Events
             </Link>
           </li>
         </ul>
       </li>
-      <li className={parentMenu === 'Event' ? 'dropdown current-menu-item' : 'dropdown'}>
-        <Link to="#">Event</Link>
+      <li className={parentMenu === 'Membership' ? 'dropdown current-menu-item' : 'dropdown'}>
+        <Link to="#">Membership</Link>
         <ul className="sub-menu">
           <li>
             <Link to="/event" className={activeMenu === '/event' ? 'active-menu' : ''}>
-              Event
+              How to Join
             </Link>
           </li>
           <li>
             <Link to="/event-details" className={activeMenu === '/event-details' ? 'active-menu' : ''}>
-              Event Details
+              Benefits & Rules
             </Link>
           </li>
         </ul>
