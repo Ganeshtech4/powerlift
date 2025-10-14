@@ -4,7 +4,7 @@ import MenuItems from './MenuItems';
 import MobileMenu from './MobileMenu';
 import SearchPopup from './SearchPopup';
 import Sidebar from './Sidebar';
-import navLogo from "../../../assets/images/resources/logo-1.png";
+import navLogo from "../../../assets/images/plat2.png";
 
 const HeaderStyleOne = (props) => {
     const { parentMenu, secondParentMenu, activeMenu } = props;
@@ -78,7 +78,7 @@ const HeaderStyleOne = (props) => {
                         </div>
                         <div className="main-menu__btn-box">
                             <Link to="/contact" className="main-menu__btn thm-btn">
-                                Buy Ticket <span className="icon-arrow-right"></span>
+                                Join WPC <span className="icon-arrow-right"></span>
                             </Link>
                         </div>
                         </div>
@@ -123,7 +123,7 @@ const HeaderStyleOne = (props) => {
                                 </div>
                                 <div className="main-menu__btn-box">
                                     <Link to="/contact" className="main-menu__btn thm-btn">
-                                        Buy Ticket <span className="icon-arrow-right"></span>
+                                        Join WPC <span className="icon-arrow-right"></span>
                                     </Link>
                                 </div>
                                 </div>

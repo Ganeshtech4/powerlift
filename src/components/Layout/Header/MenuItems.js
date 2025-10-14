@@ -4,65 +4,10 @@ import { Link } from 'react-router-dom';
 const MenuItems = ({ parentMenu, secondParentMenu, activeMenu }) => {
   return (
     <ul className="main-menu__list">
-      <li className={parentMenu === 'Home' ? 'dropdown current-menu-item' : 'dropdown'}>
-        <Link to="#">Home</Link>
-        <ul className="sub-menu">
-          <li>
-            <Link to="/" className={activeMenu === '/' ? 'active-menu' : ''}>
-              Home One
-            </Link>
-          </li>
-          <li>
-            <Link to="/home-2" className={activeMenu === '/home-2' ? 'active-menu' : ''}>
-              Home Two
-            </Link>
-          </li>
-          <li>
-            <Link to="/home-3" className={activeMenu === '/home-3' ? 'active-menu' : ''}>
-              Home Three
-            </Link>
-          </li>
-          <li className={secondParentMenu === 'Header Styles' ? 'dropdown current-menu-item' : 'dropdown'}>
-            <Link to="#">Header Styles</Link>
-            <ul className="sub-menu">
-              <li>
-                <Link to="/" className={activeMenu === '/' ? 'active-menu' : ''}>
-                  Header One
-                </Link>
-              </li>
-              <li>
-                <Link to="/home-2" className={activeMenu === '/home-2' ? 'active-menu' : ''}>
-                  Header Two
-                </Link>
-              </li>
-              <li>
-                <Link to="/home-3" className={activeMenu === '/home-3' ? 'active-menu' : ''}>
-                  Header Three
-                </Link>
-              </li>
-            </ul>
-          </li>
-          <li className={secondParentMenu === 'One Page Styles' ? 'dropdown current-menu-item' : 'dropdown'}>
-            <Link to="#">One Page Styles</Link>
-            <ul className="sub-menu">
-              <li>
-                <Link to="/one-page-style-one" className={activeMenu === '/one-page-style-one' ? 'active-menu' : ''}>
-                  One Page Styles One
-                </Link>
-              </li>
-              <li>
-                <Link to="/one-page-style-two" className={activeMenu === '/one-page-style-two' ? 'active-menu' : ''}>
-                  One Page Styles Two
-                </Link>
-              </li>
-              <li>
-                <Link to="/one-page-style-three" className={activeMenu === '/one-page-style-three' ? 'active-menu' : ''}>
-                  One Page Styles Three
-                </Link>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <li className={parentMenu === 'Home' ? 'current-menu-item' : ''}>
+        <Link to="/" className={activeMenu === '/' ? 'active-menu' : ''}>
+          Home
+        </Link>
       </li>
       <li className={parentMenu === 'Pages' ? 'dropdown current-menu-item' : 'dropdown'}>
         <Link to="#">Pages</Link>
@@ -74,12 +19,12 @@ const MenuItems = ({ parentMenu, secondParentMenu, activeMenu }) => {
           </li>
           <li>
             <Link to="/team" className={activeMenu === '/team' ? 'active-menu' : ''}>
-              Team
+              Committee Members
             </Link>
           </li>
           <li>
             <Link to="/team-details" className={activeMenu === '/team-details' ? 'active-menu' : ''}>
-              Team Details
+              Referees
             </Link>
           </li>
           <li>
@@ -89,7 +34,7 @@ const MenuItems = ({ parentMenu, secondParentMenu, activeMenu }) => {
           </li>
           <li>
             <Link to="/pricing" className={activeMenu === '/pricing' ? 'active-menu' : ''}>
-              Pricing
+              Results
             </Link>
           </li>
           <li>
@@ -114,52 +59,52 @@ const MenuItems = ({ parentMenu, secondParentMenu, activeMenu }) => {
           </li>
         </ul>
       </li>
-      <li className={parentMenu === 'Services' ? 'dropdown current-menu-item' : 'dropdown'}>
-        <Link to="#">Services</Link>
+      <li className={parentMenu === 'Championships' ? 'dropdown current-menu-item' : 'dropdown'}>
+        <Link to="#">Championships</Link>
         <ul className="sub-menu">
           <li>
             <Link to="/services" className={activeMenu === '/services' ? 'active-menu' : ''}>
-              Services
+              District Championships
             </Link>
           </li>
           <li>
             <Link to="/event-prodigy" className={activeMenu === '/event-prodigy' ? 'active-menu' : ''}>
-              Event Prodigy
+              State Championships
             </Link>
           </li>
           <li>
             <Link to="/stellar-events-co" className={activeMenu === '/stellar-events-co' ? 'active-menu' : ''}>
-              Stellar Events Co
+              Open Meets
             </Link>
           </li>
           <li>
             <Link to="/elite-event-management" className={activeMenu === '/elite-event-management' ? 'active-menu' : ''}>
-              Elite Event Management
+              Benchpress Events
             </Link>
           </li>
           <li>
             <Link to="/infinite-occasions" className={activeMenu === '/infinite-occasions' ? 'active-menu' : ''}>
-              Infinite Occasions
+              Deadlift Events
             </Link>
           </li>
           <li>
             <Link to="/dream-event-planners" className={activeMenu === '/dream-event-planners' ? 'active-menu' : ''}>
-              Dream Event Planners
+              Powerlifting Events
             </Link>
           </li>
         </ul>
       </li>
-      <li className={parentMenu === 'Event' ? 'dropdown current-menu-item' : 'dropdown'}>
-        <Link to="#">Event</Link>
+      <li className={parentMenu === 'Membership' ? 'dropdown current-menu-item' : 'dropdown'}>
+        <Link to="#">Membership</Link>
         <ul className="sub-menu">
           <li>
             <Link to="/event" className={activeMenu === '/event' ? 'active-menu' : ''}>
-              Event
+              How to Join
             </Link>
           </li>
           <li>
             <Link to="/event-details" className={activeMenu === '/event-details' ? 'active-menu' : ''}>
-              Event Details
+              Benefits & Rules
             </Link>
           </li>
         </ul>

@@ -50,89 +50,10 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
           {/* /.logo-box */}
           <div className="mobile-nav__container">
           <ul className="main-menu__list">
-  <li className={isActive.key === 1 ? "dropdown current" : "dropdown"}>
+  <li>
     <Link to="/" onClick={handleMobileMenu}>
-      Home{" "}
+      Home
     </Link>
-    <ul style={{ display: `${isActive.key === 1 ? "block" : "none"}` }}>
-      <li>
-        <Link to="/" onClick={handleMobileMenu}>
-          Home One
-        </Link>
-      </li>
-      <li>
-        <Link to="/index-2" onClick={handleMobileMenu}>
-          Home Two
-        </Link>
-      </li>
-      <li>
-        <Link to="/index-3" onClick={handleMobileMenu}>
-          Home Three
-        </Link>
-      </li>
-      <li className={isActive.subMenuKey === 2 ? "dropdown current" : "dropdown"}>
-        <Link to="#" onClick={handleMobileMenu}>
-          Header Styles
-        </Link>
-        <ul style={{ display: `${isActive.subMenuKey === 2 ? "block" : "none"}` }}>
-          <li>
-            <Link to="/header-one" onClick={handleMobileMenu}>
-              Header One
-            </Link>
-          </li>
-          <li>
-            <Link to="/header-two" onClick={handleMobileMenu}>
-              Header Two
-            </Link>
-          </li>
-          <li>
-            <Link to="/header-three" onClick={handleMobileMenu}>
-              Header Three
-            </Link>
-          </li>
-        </ul>
-        <div
-          className={isActive.subMenuKey === 2 ? "dropdown-btn open" : "dropdown-btn"}
-          onClick={() => handleToggle(1, 2)}
-        >
-          <span className="fa fa-angle-right" />
-        </div>
-      </li>
-      <li className={isActive.subMenuKey === 3 ? "dropdown current" : "dropdown"}>
-        <Link to="#" onClick={handleMobileMenu}>
-          One Page Styles
-        </Link>
-        <ul style={{ display: `${isActive.subMenuKey === 3 ? "block" : "none"}` }}>
-          <li>
-            <Link to="/one-page-style-one" onClick={handleMobileMenu}>
-              One Page Styles One
-            </Link>
-          </li>
-          <li>
-            <Link to="/one-page-style-two" onClick={handleMobileMenu}>
-              One Page Styles Two
-            </Link>
-          </li>
-          <li>
-            <Link to="/one-page-style-three" onClick={handleMobileMenu}>
-              One Page Styles Three
-            </Link>
-          </li>
-        </ul>
-        <div
-          className={isActive.subMenuKey === 3 ? "dropdown-btn open" : "dropdown-btn"}
-          onClick={() => handleToggle(1, 3)}
-        >
-          <span className="fa fa-angle-right" />
-        </div>
-      </li>
-    </ul>
-    <div
-      className={isActive.key === 1 ? "dropdown-btn open" : "dropdown-btn"}
-      onClick={() => handleToggle(1)}
-    >
-      <span className="fa fa-angle-right" />
-    </div>
   </li>
 
   <li className={isActive.key === 2 ? "dropdown current" : "dropdown"}>
@@ -142,17 +63,17 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
     <ul style={{ display: `${isActive.key === 2 ? "block" : "none"}` }}>
       <li>
         <Link to="/about" onClick={handleMobileMenu}>
-          About Us
+          About WPC–Telangana
         </Link>
       </li>
       <li>
         <Link to="/team" onClick={handleMobileMenu}>
-          Team
+          Committee Members
         </Link>
       </li>
       <li>
         <Link to="/team-details" onClick={handleMobileMenu}>
-          Team Details
+          Referees
         </Link>
       </li>
       <li>
@@ -162,7 +83,7 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
       </li>
       <li>
         <Link to="/pricing" onClick={handleMobileMenu}>
-          Pricing
+          Results
         </Link>
       </li>
       <li>
@@ -196,37 +117,37 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
 
   <li className={isActive.key === 3 ? "dropdown current" : "dropdown"}>
     <Link to="#" onClick={handleMobileMenu}>
-      Services
+      Championships
     </Link>
     <ul style={{ display: `${isActive.key === 3 ? "block" : "none"}` }}>
       <li>
         <Link to="/services" onClick={handleMobileMenu}>
-          Services
+          District Championships
         </Link>
       </li>
       <li>
         <Link to="/event-prodigy" onClick={handleMobileMenu}>
-          Event Prodigy
+          State Championships
         </Link>
       </li>
       <li>
         <Link to="/stellar-events-co" onClick={handleMobileMenu}>
-          Stellar Events Co
+          Open Meets
         </Link>
       </li>
       <li>
         <Link to="/elite-event-management" onClick={handleMobileMenu}>
-          Elite Event Management
+          Benchpress Events
         </Link>
       </li>
       <li>
         <Link to="/infinite-occasions" onClick={handleMobileMenu}>
-          Infinite Occasions
+          Deadlift Events
         </Link>
       </li>
       <li>
         <Link to="/dream-event-planners" onClick={handleMobileMenu}>
-          Dream Event Planners
+          Powerlifting Events
         </Link>
       </li>
     </ul>
@@ -240,17 +161,17 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
 
   <li className={isActive.key === 4 ? "dropdown current" : "dropdown"}>
     <Link to="#" onClick={handleMobileMenu}>
-      Event
+      Membership
     </Link>
     <ul style={{ display: `${isActive.key === 4 ? "block" : "none"}` }}>
       <li>
         <Link to="/event" onClick={handleMobileMenu}>
-          Event
+          How to Join
         </Link>
       </li>
       <li>
         <Link to="/event-details" onClick={handleMobileMenu}>
-          Event Details
+          Benefits & Rules
         </Link>
       </li>
     </ul>
@@ -264,22 +185,22 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
 
   <li className={isActive.key === 5 ? "dropdown current" : "dropdown"}>
     <Link to="#" onClick={handleMobileMenu}>
-      Blog
+      News & Updates
     </Link>
     <ul style={{ display: `${isActive.key === 5 ? "block" : "none"}` }}>
       <li>
         <Link to="/blog" onClick={handleMobileMenu}>
-          Blog
+          Latest News
         </Link>
       </li>
       <li>
         <Link to="/blog-list" onClick={handleMobileMenu}>
-          Blog List
+          All Updates
         </Link>
       </li>
       <li>
         <Link to="/blog-details" onClick={handleMobileMenu}>
-          Blog Details
+          News Details
         </Link>
       </li>
     </ul>
@@ -301,13 +222,13 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
           <ul className="mobile-nav__contact list-unstyled">
             <li>
               <i className="fa fa-envelope" />
-              <a href="mailto:needhelp@packageName__.com">
-                needhelp@eventflow.com
+              <a href="mailto:info@wpctelangana.in">
+                info@wpctelangana.in
               </a>
             </li>
             <li>
               <i className="fa fa-phone-alt" />
-              <a href="tel:666-888-0000">666 888 0000</a>
+              <a href="tel:+91XXXXXXXXXXX">+91 XXXXX XXXXX</a>
             </li>
           </ul>
           {/* /.mobile-nav__contact */}

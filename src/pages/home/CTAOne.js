@@ -4,7 +4,7 @@ export default function CTAOne() {
       <div className="container">
         <div className="cta-one__inner">
           <h3 className="cta-one__title">
-            Get Latest Updates Subscribe <br /> to Our Newsletter
+            Stay Updated with WPC–Telangana <br /> Championship & Events Newsletter
           </h3>
           <form
             className="cta-one__form mc-form"
