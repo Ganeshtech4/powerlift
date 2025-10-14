@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import the Link component from React Router
 
 // Import images
-import footerLogo from '../../../assets/images/resources/site-footer-logo-2.png'; // Replace with your actual path
+import footerLogo from '../../../assets/images/plat2.png'; // Replace with your actual path
 
 const FooterTwo = () => {
     const events = [

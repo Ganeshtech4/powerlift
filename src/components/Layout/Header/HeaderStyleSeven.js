@@ -4,7 +4,7 @@ import OnepageMenuItemsThree from './OnepageMenuItemsThree';
 import MobileMenu4 from './MobileMenu4';
 import SearchPopup from './SearchPopup';
 import Sidebar from './Sidebar';
-import navLogo from "../../../assets/images/resources/logo-1.png";
+import navLogo from "../../../assets/images/plat2.png";
 
 const HeaderStyleSeven = (props) => {
     const { item2, item3, item4, item5, item6} = props;

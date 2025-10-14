@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import MenuItems from './MenuItems';
 import MobileMenu from './MobileMenu';
 import SearchPopup from './SearchPopup';
-import navImg from "../../../assets/images/resources/logo-1.png";
+import navLogo from "../../../assets/images/plat2.png";
 
 const HeaderStyleFour = (props) => {
     const { parentMenu, secondParentMenu, activeMenu } = props;
@@ -44,7 +44,7 @@ const HeaderStyleFour = (props) => {
                             <div className="main-menu-four__left">
                                 <div className="main-menu-four__logo">
                                     <Link to="/">
-                                        <img src={navImg} alt="Logo" />
+                                        <img src={navLogo} alt="Logo" />
                                     </Link>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@ const HeaderStyleFour = (props) => {
                                 <div className="main-menu-four__left">
                                     <div className="main-menu-four__logo">
                                         <Link to="/">
-                                            <img src={navImg} alt="Logo" />
+                                            <img src={navLogo} alt="Logo" />
                                         </Link>
                                     </div>
                                 </div>

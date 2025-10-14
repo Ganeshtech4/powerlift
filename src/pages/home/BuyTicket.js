@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Link } from 'react-router-dom';
-import ticketImg from '../../assets/images/resources/buy-ticket-img.jpg';
+import ticketImg from '../../assets/images/resources/schedule-one-1-1.jpg';
 
 export default function BuyTicket() {
   // State for dynamic content

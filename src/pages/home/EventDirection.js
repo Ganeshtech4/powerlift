@@ -7,12 +7,13 @@ import directionIcon from '../../assets/images/icon/event-direction-chat-icon.pn
 export default function EventDirection() {
   // State for dynamic content
   const [eventContent] = useState({
-    tagline: "Our Event Direction",
-    title: "Creating Memories <br> One Event Time",
-    text: "Events bring people together for a shared experience and celebration. <br> From weddings and birthdays to conferences.",
-    phone: "3075550133",
-    callText: "Call Us",
-    callNumber: "(307) 555-0133",
+    tagline: "WPC-Telangana Leadership",
+    title: "Building Strength <br> Across Telangana",
+    text: "The World Powerlifting Congress Telangana chapter is dedicated to promoting powerlifting excellence <br> throughout the state with professional guidance and championship opportunities.",
+    phone: "7330778111",
+    callText: "Contact President",
+    callNumber: "Inturi Rekha (+91 73307 78111)",
+    email: "powerliftingassociationofts@gmail.com",
     iconSrc: directionIcon,
   });
 
@@ -34,11 +35,14 @@ export default function EventDirection() {
                   <p className="event-direction__text" dangerouslySetInnerHTML={{ __html: eventContent.text }}></p>
                   <div className="event-direction__call">
                     <div className="event-direction__call-icon">
-                      <img src={eventContent.iconSrc} alt="Call Icon" />
+                      <img src={eventContent.iconSrc} alt="Contact Icon" />
                     </div>
                     <div className="event-direction__call-content">
                       <p>{eventContent.callText}</p>
                       <h4><a href={`tel:${eventContent.phone}`}>{eventContent.callNumber}</a></h4>
+                      <p style={{marginTop: "10px", fontSize: "14px"}}>
+                        Email: <a href={`mailto:${eventContent.email}`} style={{color: "#ff6b35"}}>{eventContent.email}</a>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -50,14 +54,14 @@ export default function EventDirection() {
                       <div className="event-direction__counter-single">
                         <div className="event-direction__counter-box">
                           <h3 className="odometer">
-                            <CountUp start={0} end={100} duration={2} />
+                            <CountUp start={0} end={150} duration={2} />
                           </h3>
                           <span className="event-direction__counter-plus">
                             +
                           </span>
                         </div>
                         <p className="event-direction__counter-text">
-                          Our Event Artists
+                          Registered Athletes
                         </p>
                       </div>
                     </li>
@@ -65,14 +69,14 @@ export default function EventDirection() {
                       <div className="event-direction__counter-single">
                         <div className="event-direction__counter-box">
                           <h3 className="odometer">
-                            <CountUp start={0} end={101} duration={2} />
+                            <CountUp start={0} end={25} duration={2} />
                           </h3>
                           <span className="event-direction__counter-plus">
                             +
                           </span>
                         </div>
                         <p className="event-direction__counter-text">
-                          Hours Of Music
+                          Championships Held
                         </p>
                       </div>
                     </li>
@@ -80,14 +84,14 @@ export default function EventDirection() {
                       <div className="event-direction__counter-single">
                         <div className="event-direction__counter-box">
                           <h3 className="odometer">
-                            <CountUp start={0} end={10} duration={2} />
+                            <CountUp start={0} end={15} duration={2} />
                           </h3>
                           <span className="event-direction__counter-plus">
                             +
                           </span>
                         </div>
                         <p className="event-direction__counter-text">
-                          Event Stages
+                          Certified Coaches
                         </p>
                       </div>
                     </li>
@@ -95,14 +99,14 @@ export default function EventDirection() {
                       <div className="event-direction__counter-single">
                         <div className="event-direction__counter-box">
                           <h3 className="odometer">
-                            <CountUp start={0} end={20} duration={2} />
+                            <CountUp start={0} end={8} duration={2} />
                           </h3>
                           <span className="event-direction__counter-plus">
                             +
                           </span>
                         </div>
                         <p className="event-direction__counter-text">
-                          Music Brands
+                          District Chapters
                         </p>
                       </div>
                     </li>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BackToTop from '../components/elements/BackToTop';
 import Header from '../components/Layout/Header';
-import navImg1 from '../assets/images/resources/logo-1.png';
+import navImg1 from '../assets/images/plat2.png';
 import Footer from '../components/Layout/Footer';
 import SiteBreadcrumb from '../components/Common/Breadcumb';
 import bannerbg from '../assets/images/backgrounds/page-header-bg.jpg';

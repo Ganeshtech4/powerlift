@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
-import MobileLogo from '../../..//assets/images/resources/logo-1.png'
+import MobileLogo from '../../..//assets/images/plat2.png'
 
 const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
   const [isActive, setIsActive] = useState({
