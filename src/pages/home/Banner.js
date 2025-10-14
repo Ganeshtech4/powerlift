@@ -8,8 +8,8 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 import BannerImg from "../../assets/images/resources/main-slider-1.jpg";
-import BannerImg2 from "../../assets/images/resources/main-slider-img-1-2.jpg";
-import BannerImg3 from "../../assets/images/resources/main-slider-img-1-3.jpg";
+import BannerImg2 from "../../assets/images/resources/main-slider-2.jpg";
+import BannerImg3 from "../../assets/images/resources/main-slider-3.jpg";
 import BannerShape1 from "../../assets/images/shapes/main-slider-shape-1.png";
 import BannerShape2 from "../../assets/images/shapes/main-slider-shape-2.png";
 import BannerShape3 from "../../assets/images/shapes/main-slider-star-1.png";
