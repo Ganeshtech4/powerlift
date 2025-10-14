@@ -7,25 +7,25 @@ import eventImg from '../../assets/images/resources/Event-one-img.jpg';
 export default function EventOne() {
   // State for dynamic content
   const [eventContent] = useState({
-    sectionTagline: "About Our Event",
-    sectionTitle: "Uniting Creating of the Memories",
-    buttonText: "Join The Event",
+    sectionTagline: "About WPC–Telangana",
+    sectionTitle: "Building Champions Through Strength & Discipline",
+    buttonText: "Join Our Federation",
     buttonLink: "/event-details",
     points: [
       {
         id: 1,
         iconClass: "icon-air-horn",
-        title: "Artists & bands",
+        title: "Championship Events",
         description:
-          "Events bring people together for a shared experience celebration. From weddings and birthdays to conferences.",
+          "We organize District, State, and National level powerlifting championships under WPC regulations with certified referees and international standards.",
         link: "/event",
       },
       {
         id: 2,
         iconClass: "icon-party-blower",
-        title: "Audience Event Planner",
+        title: "Training & Development",
         description:
-          "Events bring people together for a shared experience celebration. From weddings and birthdays to conferences.",
+          "Providing structured training programs, coaching workshops, and referee certification to build a strong powerlifting community in Telangana.",
         link: "/event",
       },
     ],
