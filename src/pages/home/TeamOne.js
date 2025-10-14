@@ -5,38 +5,40 @@ import { Link } from 'react-router-dom';
 import teamImg1 from '../../assets/images/team/team-1-1.jpg';
 import teamImg2 from '../../assets/images/team/team-1-2.jpg';
 import teamImg3 from '../../assets/images/team/team-1-3.jpg';
+import teamMembers from '../../data/teamMembers';
 
 export default function TeamOne() {
+  
   // State for dynamic content
   const [teamContent] = useState({
-    tagline: "Committee Members",
-    title: "WPC–Telangana Leadership & Officials",
+    tagline: "Our Team Member",
+    title: "Our Amazing & Learned Event Speakers",
     members: [
       {
         id: 1,
-        name: "[President Name]",
-        role: "President",
+        name: "Inturi Rekha",
+        role: "President, WPC Telangana | First Female International Referee",
         image: teamImg1,
         hoverText:
-          "Leading WPC–Telangana with vision and dedication to promote powerlifting across all districts in Telangana state under WPC regulations.",
+          "",
         link: "/team-details",
       },
       {
         id: 2,
-        name: "[General Secretary Name]",
-        role: "General Secretary",
+        name: "Inturi Kumari",
+        role: "Chairman, WPC Telangana",
         image: teamImg2,
         hoverText:
-          "Managing day-to-day operations, organizing championships, and coordinating with WPC–India for state-level powerlifting activities.",
+          "",
         link: "/team-details",
       },
       {
         id: 3,
-        name: "[Technical Head Name]",
-        role: "Technical Head",
+        name: "Dr.H.A.Pradeep Kumar",
+        role: "Vice Chairman, WPC Telangana",
         image: teamImg3,
         hoverText:
-          "Overseeing technical aspects of powerlifting events, referee training, and ensuring compliance with WPC international standards.",
+          "",
         link: "/team-details",
       },
     ],
@@ -61,30 +63,34 @@ export default function TeamOne() {
             </h2>
           </div>
           <div className="row">
-            {teamContent.members.map((member, index) => (
+            {teamMembers.slice(0, 3).map((member, index) => (
               <div
                 key={member.id}
-                className={`col-xl-4 col-lg-6 wow fadeIn${
-                  index === 0 ? "Left" : index === 1 ? "Up" : "Right"
+                className={`col-xl-4 col-lg-6 col-md-6 wow fadeIn${
+                  index % 2 === 0 ? "Left" : "Right"
                 }`}
                 data-wow-delay={`${(index + 1) * 100}ms`}
               >
                 <div className="team-one__single">
                   <div className="team-one__img-box">
                     <div className="team-one__img">
-                      <img src={member.image} alt={member.name} />
+                      <img src={member.img} alt={member.name} />
                       <div className="team-one__content">
                         <h4 className="team-one__name">
-                          <Link to={member.link}>{member.name}</Link>
+                          <Link to={`/team-details/${member.id}`}>{member.name}</Link>
                         </h4>
                         <p className="team-one__sub-title">{member.role}</p>
                       </div>
                       <div className="team-one__content-hover">
                         <h4 className="team-one__name-hover">
-                          <Link to={member.link}>{member.name}</Link>
+                          <Link to={`/team-details/${member.id}`}>{member.name}</Link>
                         </h4>
-                        <p className="team-one__sub-title-hover">{member.role}</p>
-                        <p className="team-one__text-hover">{member.hoverText}</p>
+                        <p className="team-one__sub-title-hover">
+                          {member.role}
+                        </p>
+                        <p className="team-one__text-hover">
+                          {member.description.slice(0, 100)}...
+                        </p>
                       </div>
                     </div>
                   </div>
