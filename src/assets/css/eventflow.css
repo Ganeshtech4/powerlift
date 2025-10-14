@@ -9609,8 +9609,8 @@ ul {
   position: relative;
   display: block;
   background-color: #0E0A17;
-  border-radius: 20px;
-  padding: 40px 70px 100px;
+  border-radius: 10px;
+  padding: 40px 70px 70px;
   text-align: center;
   overflow: hidden;
   z-index: 1;
@@ -9639,10 +9639,17 @@ ul {
 }
 
 .team-details__client-img img {
-  border-radius: 50%;
-  padding: 10px;
+  width: 180px; /* adjust as needed (e.g. 150px or 200px) */
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%; /* makes the image a perfect circle */
   background-color: rgba(var(--eventflow-white-rgb), .10);
+  display: block;
+  margin: 0 auto; /* centers the image */
 }
+
+
+
 
 .team-details__img-content {
   position: relative;
