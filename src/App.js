@@ -62,6 +62,7 @@ export default function App() {
          <Route path="blog-list" element={<Bloglist />} />
          <Route path="blog-details" element={<BlogDetails />} />
          <Route path="contact" element={<Contact />} />
+         <Route path="/event-details/:eventId" element={<EventDetails />} />
       </Routes>
     </BrowserRouter>
   );
