@@ -43,7 +43,7 @@ export default function App() {
         <Route path="one-page-style-two" element={<OnePageHomeTwo />} />
         <Route path="one-page-style-three" element={<OnepageHomeThree />} />
         <Route path="team" element={<Team />} />
-        <Route path="team-details" element={<TeamDetails />} />
+        <Route path="team-details/:id" element={<TeamDetails />} />
         <Route path="testimonials" element={<Testimonials />} />
         <Route path="pricing" element={<Pricing />} />
         <Route path="gallery" element={<Gallery />} />
