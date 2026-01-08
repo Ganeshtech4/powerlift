@@ -1,0 +1,169 @@
+2025-12-03T14:40:02: 📴 Mongoose disconnected from MongoDB
+2025-12-03T14:40:02: MongoDB connection closed through app termination
+2025-12-03T14:40:06: 📡 Mongoose connected to MongoDB
+2025-12-03T14:40:06: ✅ MongoDB Connected: localhost
+2025-12-03T14:40:06:    Database: rekhapowerlift
+2025-12-03T14:40:06: 
+2025-12-03T14:40:06: ============================================================
+2025-12-03T14:40:06: 🚀 Rekhapowerlift Server Running
+2025-12-03T14:40:06: ============================================================
+2025-12-03T14:40:06:    Port: 5000
+2025-12-03T14:40:06:    Environment: production
+2025-12-03T14:40:06:    S3 Bucket: rekhawpc
+2025-12-03T14:40:06:    Health Check: http://localhost:5000/api/health
+2025-12-03T14:40:06: ============================================================
+2025-12-03T14:40:06: 
+2025-12-03T14:48:16: 📴 Mongoose disconnected from MongoDB
+2025-12-03T14:48:16: MongoDB connection closed through app termination
+2025-12-03T14:48:20: 📡 Mongoose connected to MongoDB
+2025-12-03T14:48:20: ✅ MongoDB Connected: localhost
+2025-12-03T14:48:20:    Database: rekhapowerlift
+2025-12-03T14:48:20: 
+2025-12-03T14:48:20: ============================================================
+2025-12-03T14:48:20: 🚀 Rekhapowerlift Server Running
+2025-12-03T14:48:20: ============================================================
+2025-12-03T14:48:20:    Port: 5000
+2025-12-03T14:48:20:    Environment: production
+2025-12-03T14:48:20:    S3 Bucket: rekhawpc
+2025-12-03T14:48:20:    Health Check: http://localhost:5000/api/health
+2025-12-03T14:48:20: ============================================================
+2025-12-03T14:48:20: 
+2025-12-03T14:51:36: 📴 Mongoose disconnected from MongoDB
+2025-12-03T14:51:36: MongoDB connection closed through app termination
+2025-12-03T14:51:41: 📡 Mongoose connected to MongoDB
+2025-12-03T14:51:41: ✅ MongoDB Connected: localhost
+2025-12-03T14:51:41:    Database: rekhapowerlift
+2025-12-03T14:51:41: 
+2025-12-03T14:51:41: ============================================================
+2025-12-03T14:51:41: 🚀 Rekhapowerlift Server Running
+2025-12-03T14:51:41: ============================================================
+2025-12-03T14:51:41:    Port: 5000
+2025-12-03T14:51:41:    Environment: production
+2025-12-03T14:51:41:    S3 Bucket: rekhawpc
+2025-12-03T14:51:41:    Health Check: http://localhost:5000/api/health
+2025-12-03T14:51:41: ============================================================
+2025-12-03T14:51:41: 
+2025-12-03T14:56:26: 📴 Mongoose disconnected from MongoDB
+2025-12-03T14:56:26: MongoDB connection closed through app termination
+2025-12-03T14:56:30: 📡 Mongoose connected to MongoDB
+2025-12-03T14:56:30: ✅ MongoDB Connected: localhost
+2025-12-03T14:56:30:    Database: rekhapowerlift
+2025-12-03T14:56:30: 
+2025-12-03T14:56:30: ============================================================
+2025-12-03T14:56:30: 🚀 Rekhapowerlift Server Running
+2025-12-03T14:56:30: ============================================================
+2025-12-03T14:56:30:    Port: 5000
+2025-12-03T14:56:30:    Environment: production
+2025-12-03T14:56:30:    S3 Bucket: rekhawpc
+2025-12-03T14:56:30:    Health Check: http://localhost:5000/api/health
+2025-12-03T14:56:30: ============================================================
+2025-12-03T14:56:30: 
+2025-12-03T15:16:44: 📴 Mongoose disconnected from MongoDB
+2025-12-03T15:16:44: MongoDB connection closed through app termination
+2025-12-03T15:16:47: 📡 Mongoose connected to MongoDB
+2025-12-03T15:16:47: ✅ MongoDB Connected: localhost
+2025-12-03T15:16:47:    Database: rekhapowerlift
+2025-12-03T15:16:48: 
+2025-12-03T15:16:48: ============================================================
+2025-12-03T15:16:48: 🚀 Rekhapowerlift Server Running
+2025-12-03T15:16:48: ============================================================
+2025-12-03T15:16:48:    Port: 5000
+2025-12-03T15:16:48:    Environment: production
+2025-12-03T15:16:48:    S3 Bucket: rekhawpc
+2025-12-03T15:16:48:    Health Check: http://localhost:5000/api/health
+2025-12-03T15:16:48: ============================================================
+2025-12-03T15:16:48: 
+2025-12-03T15:21:13: 📴 Mongoose disconnected from MongoDB
+2025-12-03T15:21:13: MongoDB connection closed through app termination
+2025-12-03T15:21:15: 📡 Mongoose connected to MongoDB
+2025-12-03T15:21:15: ✅ MongoDB Connected: localhost
+2025-12-03T15:21:15:    Database: rekhapowerlift
+2025-12-03T15:21:15: 
+2025-12-03T15:21:15: ============================================================
+2025-12-03T15:21:15: 🚀 Rekhapowerlift Server Running
+2025-12-03T15:21:15: ============================================================
+2025-12-03T15:21:15:    Port: 5000
+2025-12-03T15:21:15:    Environment: production
+2025-12-03T15:21:15:    S3 Bucket: rekhawpc
+2025-12-03T15:21:15:    Health Check: http://localhost:5000/api/health
+2025-12-03T15:21:15: ============================================================
+2025-12-03T15:21:15: 
+2025-12-03T15:22:21: 📴 Mongoose disconnected from MongoDB
+2025-12-03T15:22:21: MongoDB connection closed through app termination
+2025-12-03T15:22:22: 📡 Mongoose connected to MongoDB
+2025-12-03T15:22:22: ✅ MongoDB Connected: localhost
+2025-12-03T15:22:22:    Database: rekhapowerlift
+2025-12-03T15:22:22: 
+2025-12-03T15:22:22: ============================================================
+2025-12-03T15:22:22: 🚀 Rekhapowerlift Server Running
+2025-12-03T15:22:22: ============================================================
+2025-12-03T15:22:22:    Port: 5000
+2025-12-03T15:22:22:    Environment: production
+2025-12-03T15:22:22:    S3 Bucket: rekhawpc
+2025-12-03T15:22:22:    Health Check: http://localhost:5000/api/health
+2025-12-03T15:22:22: ============================================================
+2025-12-03T15:22:22: 
+2025-12-03T15:25:12: 📴 Mongoose disconnected from MongoDB
+2025-12-03T15:25:12: MongoDB connection closed through app termination
+2025-12-03T15:25:13: 📡 Mongoose connected to MongoDB
+2025-12-03T15:25:13: ✅ MongoDB Connected: localhost
+2025-12-03T15:25:13:    Database: rekhapowerlift
+2025-12-03T15:25:13: 
+2025-12-03T15:25:13: ============================================================
+2025-12-03T15:25:13: 🚀 Rekhapowerlift Server Running
+2025-12-03T15:25:13: ============================================================
+2025-12-03T15:25:13:    Port: 5000
+2025-12-03T15:25:13:    Environment: production
+2025-12-03T15:25:13:    S3 Bucket: rekhawpc
+2025-12-03T15:25:13:    Health Check: http://localhost:5000/api/health
+2025-12-03T15:25:13: ============================================================
+2025-12-03T15:25:13: 
+2025-12-03T15:26:01: 📴 Mongoose disconnected from MongoDB
+2025-12-03T15:26:01: MongoDB connection closed through app termination
+2025-12-03T15:26:02: 📡 Mongoose connected to MongoDB
+2025-12-03T15:26:02: ✅ MongoDB Connected: localhost
+2025-12-03T15:26:02:    Database: rekhapowerlift
+2025-12-03T15:26:02: 
+2025-12-03T15:26:02: ============================================================
+2025-12-03T15:26:02: 🚀 Rekhapowerlift Server Running
+2025-12-03T15:26:02: ============================================================
+2025-12-03T15:26:02:    Port: 5000
+2025-12-03T15:26:02:    Environment: production
+2025-12-03T15:26:02:    S3 Bucket: rekhawpc
+2025-12-03T15:26:02:    Health Check: http://localhost:5000/api/health
+2025-12-03T15:26:02: ============================================================
+2025-12-03T15:26:02: 
+2025-12-04T07:36:31: 📴 Mongoose disconnected from MongoDB
+2025-12-04T07:36:41: 📡 Mongoose connected to MongoDB
+2025-12-04T09:26:37: 📴 Mongoose disconnected from MongoDB
+2025-12-04T09:26:37: MongoDB connection closed through app termination
+2025-12-04T09:26:39: 📡 Mongoose connected to MongoDB
+2025-12-04T09:26:39: ✅ MongoDB Connected: localhost
+2025-12-04T09:26:39:    Database: rekhapowerlift
+2025-12-04T09:26:39: 
+2025-12-04T09:26:39: ============================================================
+2025-12-04T09:26:39: 🚀 Rekhapowerlift Server Running
+2025-12-04T09:26:39: ============================================================
+2025-12-04T09:26:39:    Port: 5000
+2025-12-04T09:26:39:    Environment: production
+2025-12-04T09:26:39:    S3 Bucket: rekhawpc
+2025-12-04T09:26:39:    Health Check: http://localhost:5000/api/health
+2025-12-04T09:26:39: ============================================================
+2025-12-04T09:26:39: 
+2025-12-04T09:31:04: 📴 Mongoose disconnected from MongoDB
+2025-12-04T09:31:04: MongoDB connection closed through app termination
+2025-12-04T09:31:06: 📡 Mongoose connected to MongoDB
+2025-12-04T09:31:06: ✅ MongoDB Connected: localhost
+2025-12-04T09:31:06:    Database: rekhapowerlift
+2025-12-04T09:31:06: 
+2025-12-04T09:31:06: ============================================================
+2025-12-04T09:31:06: 🚀 Rekhapowerlift Server Running
+2025-12-04T09:31:06: ============================================================
+2025-12-04T09:31:06:    Port: 5000
+2025-12-04T09:31:06:    Environment: production
+2025-12-04T09:31:06:    S3 Bucket: rekhawpc
+2025-12-04T09:31:06:    Health Check: http://localhost:5000/api/health
+2025-12-04T09:31:06: ============================================================
+2025-12-04T09:31:06: 
+2025-12-04T09:35:55: 📴 Mongoose disconnected from MongoDB
+2025-12-04T09:35:55: MongoDB connection closed through app termination

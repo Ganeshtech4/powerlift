@@ -1,0 +1,29 @@
+# FastAPI Backend Requirements
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+python-dotenv==1.0.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# AWS Services (S3 + DynamoDB)
+boto3==1.34.34
+botocore==1.34.34
+
+# Image Processing
+Pillow==10.2.0
+
+# Authentication
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+# bcrypt 4.x breaks passlib's backend detection; pin to 3.2.0
+bcrypt==3.2.0
+
+# CORS
+fastapi-cors==0.0.6
+
+# Utilities
+python-slugify==8.0.2
+
+# Email
+fastapi-mail==1.4.1

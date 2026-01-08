@@ -1,0 +1,33 @@
+{
+  "short_name": "Rekha WPC",
+  "name": "Rekha WPC Telangana - Women Powerlifting Committee",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#ff1493",
+  "background_color": "#ffffff",
+  "description": "Women Powerlifting Committee of Telangana State - Empowering athletes through strength and determination"
+}

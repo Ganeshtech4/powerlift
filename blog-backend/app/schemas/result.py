@@ -1,0 +1,53 @@
+"""
+Results Pydantic schemas
+"""
+from pydantic import BaseModel
+from typing import Optional
+from datetime import datetime
+from enum import Enum
+
+
+class ResultCategory(str, Enum):
+    DISTRICT = "district"
+    STATE = "state"
+    NATIONALS = "nationals"
+
+
+class ResultType(str, Enum):
+    ID_CARD = "id_card"
+    RESULT_IMAGE = "result_image"
+
+
+class ResultBase(BaseModel):
+    title: str
+    category: ResultCategory
+    result_type: ResultType
+    athlete_name: Optional[str] = None
+    event_name: Optional[str] = None
+    event_date: Optional[str] = None
+    description: Optional[str] = None
+    image_url: str
+
+
+class ResultCreate(ResultBase):
+    pass
+
+
+class ResultUpdate(BaseModel):
+    title: Optional[str] = None
+    category: Optional[ResultCategory] = None
+    result_type: Optional[ResultType] = None
+    athlete_name: Optional[str] = None
+    event_name: Optional[str] = None
+    event_date: Optional[str] = None
+    description: Optional[str] = None
+    image_url: Optional[str] = None
+
+
+class ResultResponse(ResultBase):
+    id: str
+    created_at: str
+    updated_at: Optional[str] = None
+
+    class Config:
+        from_attributes = True

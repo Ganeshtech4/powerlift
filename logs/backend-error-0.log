@@ -1,0 +1,288 @@
+2025-12-03T15:19:17: File exists check error: Unknown: UnknownError
+2025-12-03T15:19:17:     at ProtocolLib.getErrorSchemaOrThrowBaseException (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:69:67)
+2025-12-03T15:19:17:     at AwsRestXmlProtocol.handleError (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1648:65)
+2025-12-03T15:19:17:     at AwsRestXmlProtocol.deserializeResponse (/root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:301:24)
+2025-12-03T15:19:17:     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2025-12-03T15:19:17:     at async /root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:26:24
+2025-12-03T15:19:17:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:386:20
+2025-12-03T15:19:17:     at async /root/Rekhapowerlift/server/node_modules/@smithy/middleware-retry/dist-cjs/index.js:254:46
+2025-12-03T15:19:17:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:63:28
+2025-12-03T15:19:17:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:90:20
+2025-12-03T15:19:17:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-logger/dist-cjs/index.js:5:26 {
+2025-12-03T15:19:17:   '$fault': 'client',
+2025-12-03T15:19:17:   '$retryable': undefined,
+2025-12-03T15:19:17:   '$metadata': {
+2025-12-03T15:19:17:     httpStatusCode: 403,
+2025-12-03T15:19:17:     requestId: '14W8FE0KVHQQ1ET6',
+2025-12-03T15:19:17:     extendedRequestId: '8btVCVh+9x/7EgKrHKDPSOYMGEpjezDm//MshwKrsz3k4LaBYU927Ul+wthRX97Q1fbLd2SfuIMOPxGtqz64W7DaZPU/oWEx',
+2025-12-03T15:19:17:     cfId: undefined,
+2025-12-03T15:19:17:     attempts: 1,
+2025-12-03T15:19:17:     totalRetryDelay: 0
+2025-12-03T15:19:17:   }
+2025-12-03T15:19:17: }
+2025-12-03T15:20:27: File exists check error: Unknown: UnknownError
+2025-12-03T15:20:27:     at ProtocolLib.getErrorSchemaOrThrowBaseException (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:69:67)
+2025-12-03T15:20:27:     at AwsRestXmlProtocol.handleError (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1648:65)
+2025-12-03T15:20:27:     at AwsRestXmlProtocol.deserializeResponse (/root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:301:24)
+2025-12-03T15:20:27:     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2025-12-03T15:20:27:     at async /root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:26:24
+2025-12-03T15:20:27:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:386:20
+2025-12-03T15:20:27:     at async /root/Rekhapowerlift/server/node_modules/@smithy/middleware-retry/dist-cjs/index.js:254:46
+2025-12-03T15:20:27:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:63:28
+2025-12-03T15:20:27:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:90:20
+2025-12-03T15:20:27:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-logger/dist-cjs/index.js:5:26 {
+2025-12-03T15:20:27:   '$fault': 'client',
+2025-12-03T15:20:27:   '$retryable': undefined,
+2025-12-03T15:20:27:   '$metadata': {
+2025-12-03T15:20:27:     httpStatusCode: 403,
+2025-12-03T15:20:27:     requestId: 'PYMPVD2MY2T8SXWR',
+2025-12-03T15:20:27:     extendedRequestId: 'pX4owFU6oUXwwjkN+4uayO6HBw144UcTW7kmDuwi2SDJ/AWdk2KkQL6KKGjgVeK2FuvsLWpgZlD0KKMcV72l/qUSU3UWsMc4',
+2025-12-03T15:20:27:     cfId: undefined,
+2025-12-03T15:20:27:     attempts: 1,
+2025-12-03T15:20:27:     totalRetryDelay: 0
+2025-12-03T15:20:27:   }
+2025-12-03T15:20:27: }
+2025-12-03T15:21:19: File exists check error: Unknown: UnknownError
+2025-12-03T15:21:19:     at ProtocolLib.getErrorSchemaOrThrowBaseException (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:69:67)
+2025-12-03T15:21:19:     at AwsRestXmlProtocol.handleError (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1648:65)
+2025-12-03T15:21:19:     at AwsRestXmlProtocol.deserializeResponse (/root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:301:24)
+2025-12-03T15:21:19:     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:26:24
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:386:20
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@smithy/middleware-retry/dist-cjs/index.js:254:46
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:63:28
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:90:20
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-logger/dist-cjs/index.js:5:26 {
+2025-12-03T15:21:19:   '$fault': 'client',
+2025-12-03T15:21:19:   '$retryable': undefined,
+2025-12-03T15:21:19:   '$metadata': {
+2025-12-03T15:21:19:     httpStatusCode: 403,
+2025-12-03T15:21:19:     requestId: 'A6HDAR6J8GRYNJJG',
+2025-12-03T15:21:19:     extendedRequestId: 'VimZcy0Mz33RDEYeUlKtNcbsymiEmPmeFBvc+V/2ZD+pQB754lhkYmmA6s4so46xcYdD4wCzFu5XnW2+F6xk72ASIkJMcTb4',
+2025-12-03T15:21:19:     cfId: undefined,
+2025-12-03T15:21:19:     attempts: 1,
+2025-12-03T15:21:19:     totalRetryDelay: 0
+2025-12-03T15:21:19:   }
+2025-12-03T15:21:19: }
+2025-12-03T15:21:19: File exists check error: Unknown: UnknownError
+2025-12-03T15:21:19:     at ProtocolLib.getErrorSchemaOrThrowBaseException (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:69:67)
+2025-12-03T15:21:19:     at AwsRestXmlProtocol.handleError (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1648:65)
+2025-12-03T15:21:19:     at AwsRestXmlProtocol.deserializeResponse (/root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:301:24)
+2025-12-03T15:21:19:     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:26:24
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:386:20
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@smithy/middleware-retry/dist-cjs/index.js:254:46
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:63:28
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:90:20
+2025-12-03T15:21:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-logger/dist-cjs/index.js:5:26 {
+2025-12-03T15:21:19:   '$fault': 'client',
+2025-12-03T15:21:19:   '$retryable': undefined,
+2025-12-03T15:21:19:   '$metadata': {
+2025-12-03T15:21:19:     httpStatusCode: 403,
+2025-12-03T15:21:19:     requestId: 'A6H3PF8647HQEVWR',
+2025-12-03T15:21:19:     extendedRequestId: 'a/U0D+tYjugzb0m9/8Ukbxxg3AloMAHqXHhWHACoAjYVlIHZT74RdSHNLBMM0dQn2X4MCTyGpwsQxWwx0ahcUjWTKZLaEuCc',
+2025-12-03T15:21:19:     cfId: undefined,
+2025-12-03T15:21:19:     attempts: 1,
+2025-12-03T15:21:19:     totalRetryDelay: 0
+2025-12-03T15:21:19:   }
+2025-12-03T15:21:19: }
+2025-12-03T15:21:30: File exists check error: Unknown: UnknownError
+2025-12-03T15:21:30:     at ProtocolLib.getErrorSchemaOrThrowBaseException (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:69:67)
+2025-12-03T15:21:30:     at AwsRestXmlProtocol.handleError (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1648:65)
+2025-12-03T15:21:30:     at AwsRestXmlProtocol.deserializeResponse (/root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:301:24)
+2025-12-03T15:21:30:     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2025-12-03T15:21:30:     at async /root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:26:24
+2025-12-03T15:21:30:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:386:20
+2025-12-03T15:21:30:     at async /root/Rekhapowerlift/server/node_modules/@smithy/middleware-retry/dist-cjs/index.js:254:46
+2025-12-03T15:21:30:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:63:28
+2025-12-03T15:21:30:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:90:20
+2025-12-03T15:21:30:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-logger/dist-cjs/index.js:5:26 {
+2025-12-03T15:21:30:   '$fault': 'client',
+2025-12-03T15:21:30:   '$retryable': undefined,
+2025-12-03T15:21:30:   '$metadata': {
+2025-12-03T15:21:30:     httpStatusCode: 403,
+2025-12-03T15:21:30:     requestId: '2W9W8TJDRY0SRT2P',
+2025-12-03T15:21:30:     extendedRequestId: 'MXZ7Yx1yF17SZJB1U+S60TH5Vl1tzLyyrkfY/FF3U7APFK6hE1phrwazt9uRnnJ6BtOziCR+iHZib1Zku2eorj7A70CLIEzE',
+2025-12-03T15:21:30:     cfId: undefined,
+2025-12-03T15:21:30:     attempts: 1,
+2025-12-03T15:21:30:     totalRetryDelay: 0
+2025-12-03T15:21:30:   }
+2025-12-03T15:21:30: }
+2025-12-03T15:25:14: PDF serve error: ReferenceError: getS3Url is not defined
+2025-12-03T15:25:14:     at /root/Rekhapowerlift/server/server.js:289:17
+2025-12-03T15:25:14:     at Layer.handle [as handle_request] (/root/Rekhapowerlift/server/node_modules/express/lib/router/layer.js:95:5)
+2025-12-03T15:25:14:     at next (/root/Rekhapowerlift/server/node_modules/express/lib/router/route.js:149:13)
+2025-12-03T15:25:14:     at Route.dispatch (/root/Rekhapowerlift/server/node_modules/express/lib/router/route.js:119:3)
+2025-12-03T15:25:14:     at Layer.handle [as handle_request] (/root/Rekhapowerlift/server/node_modules/express/lib/router/layer.js:95:5)
+2025-12-03T15:25:14:     at /root/Rekhapowerlift/server/node_modules/express/lib/router/index.js:284:15
+2025-12-03T15:25:14:     at param (/root/Rekhapowerlift/server/node_modules/express/lib/router/index.js:365:14)
+2025-12-03T15:25:14:     at param (/root/Rekhapowerlift/server/node_modules/express/lib/router/index.js:376:14)
+2025-12-03T15:25:14:     at router.process_params (/root/Rekhapowerlift/server/node_modules/express/lib/router/index.js:421:3)
+2025-12-03T15:25:14:     at next (/root/Rekhapowerlift/server/node_modules/express/lib/router/index.js:280:10)
+2025-12-03T15:25:20: PDF serve error: ReferenceError: getS3Url is not defined
+2025-12-03T15:25:20:     at /root/Rekhapowerlift/server/server.js:289:17
+2025-12-03T15:25:20:     at Layer.handle [as handle_request] (/root/Rekhapowerlift/server/node_modules/express/lib/router/layer.js:95:5)
+2025-12-03T15:25:20:     at next (/root/Rekhapowerlift/server/node_modules/express/lib/router/route.js:149:13)
+2025-12-03T15:25:20:     at Route.dispatch (/root/Rekhapowerlift/server/node_modules/express/lib/router/route.js:119:3)
+2025-12-03T15:25:20:     at Layer.handle [as handle_request] (/root/Rekhapowerlift/server/node_modules/express/lib/router/layer.js:95:5)
+2025-12-03T15:25:20:     at /root/Rekhapowerlift/server/node_modules/express/lib/router/index.js:284:15
+2025-12-03T15:25:20:     at param (/root/Rekhapowerlift/server/node_modules/express/lib/router/index.js:365:14)
+2025-12-03T15:25:20:     at param (/root/Rekhapowerlift/server/node_modules/express/lib/router/index.js:376:14)
+2025-12-03T15:25:20:     at router.process_params (/root/Rekhapowerlift/server/node_modules/express/lib/router/index.js:421:3)
+2025-12-03T15:25:20:     at next (/root/Rekhapowerlift/server/node_modules/express/lib/router/index.js:280:10)
+2025-12-04T09:25:19: Error listing S3 files: InvalidAccessKeyId: The AWS Access Key Id you provided does not exist in our records.
+2025-12-04T09:25:19:     at ProtocolLib.getErrorSchemaOrThrowBaseException (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:69:67)
+2025-12-04T09:25:19:     at AwsRestXmlProtocol.handleError (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1648:65)
+2025-12-04T09:25:19:     at AwsRestXmlProtocol.deserializeResponse (/root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:301:24)
+2025-12-04T09:25:19:     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:26:24
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:386:20
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@smithy/middleware-retry/dist-cjs/index.js:254:46
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:63:28
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:90:20
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-logger/dist-cjs/index.js:5:26 {
+2025-12-04T09:25:19:   '$fault': 'client',
+2025-12-04T09:25:19:   '$retryable': undefined,
+2025-12-04T09:25:19:   '$metadata': {
+2025-12-04T09:25:19:     httpStatusCode: 403,
+2025-12-04T09:25:19:     requestId: 'WCW3CDW8FJF8GS12',
+2025-12-04T09:25:19:     extendedRequestId: 'WTHhsb2pqoNZ24QafhpNHovwN7Dy/Inx5bIDrIn+K2QUmWUva1UZUpMUSdMUv8m7PPWPZq0cXek=',
+2025-12-04T09:25:19:     cfId: undefined,
+2025-12-04T09:25:19:     attempts: 1,
+2025-12-04T09:25:19:     totalRetryDelay: 0
+2025-12-04T09:25:19:   },
+2025-12-04T09:25:19:   Code: 'InvalidAccessKeyId',
+2025-12-04T09:25:19:   AWSAccessKeyId: 'AKIA5AIL5ZNHQCSEWCHW',
+2025-12-04T09:25:19:   RequestId: 'WCW3CDW8FJF8GS12',
+2025-12-04T09:25:19:   HostId: 'WTHhsb2pqoNZ24QafhpNHovwN7Dy/Inx5bIDrIn+K2QUmWUva1UZUpMUSdMUv8m7PPWPZq0cXek='
+2025-12-04T09:25:19: }
+2025-12-04T09:25:19: List files error: InvalidAccessKeyId: The AWS Access Key Id you provided does not exist in our records.
+2025-12-04T09:25:19:     at ProtocolLib.getErrorSchemaOrThrowBaseException (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:69:67)
+2025-12-04T09:25:19:     at AwsRestXmlProtocol.handleError (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1648:65)
+2025-12-04T09:25:19:     at AwsRestXmlProtocol.deserializeResponse (/root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:301:24)
+2025-12-04T09:25:19:     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:26:24
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:386:20
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@smithy/middleware-retry/dist-cjs/index.js:254:46
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:63:28
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:90:20
+2025-12-04T09:25:19:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-logger/dist-cjs/index.js:5:26 {
+2025-12-04T09:25:19:   '$fault': 'client',
+2025-12-04T09:25:19:   '$retryable': undefined,
+2025-12-04T09:25:19:   '$metadata': {
+2025-12-04T09:25:19:     httpStatusCode: 403,
+2025-12-04T09:25:19:     requestId: 'WCW3CDW8FJF8GS12',
+2025-12-04T09:25:19:     extendedRequestId: 'WTHhsb2pqoNZ24QafhpNHovwN7Dy/Inx5bIDrIn+K2QUmWUva1UZUpMUSdMUv8m7PPWPZq0cXek=',
+2025-12-04T09:25:19:     cfId: undefined,
+2025-12-04T09:25:19:     attempts: 1,
+2025-12-04T09:25:19:     totalRetryDelay: 0
+2025-12-04T09:25:19:   },
+2025-12-04T09:25:19:   Code: 'InvalidAccessKeyId',
+2025-12-04T09:25:19:   AWSAccessKeyId: 'AKIA5AIL5ZNHQCSEWCHW',
+2025-12-04T09:25:19:   RequestId: 'WCW3CDW8FJF8GS12',
+2025-12-04T09:25:19:   HostId: 'WTHhsb2pqoNZ24QafhpNHovwN7Dy/Inx5bIDrIn+K2QUmWUva1UZUpMUSdMUv8m7PPWPZq0cXek='
+2025-12-04T09:25:19: }
+2025-12-04T09:25:46: Error uploading to S3: InvalidAccessKeyId: The AWS Access Key Id you provided does not exist in our records.
+2025-12-04T09:25:46:     at ProtocolLib.getErrorSchemaOrThrowBaseException (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:69:67)
+2025-12-04T09:25:46:     at AwsRestXmlProtocol.handleError (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1648:65)
+2025-12-04T09:25:46:     at AwsRestXmlProtocol.deserializeResponse (/root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:301:24)
+2025-12-04T09:25:46:     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:26:24
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:386:20
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@smithy/middleware-retry/dist-cjs/index.js:254:46
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-flexible-checksums/dist-cjs/index.js:247:20
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:63:28
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:90:20 {
+2025-12-04T09:25:46:   '$fault': 'client',
+2025-12-04T09:25:46:   '$retryable': undefined,
+2025-12-04T09:25:46:   '$metadata': {
+2025-12-04T09:25:46:     httpStatusCode: 403,
+2025-12-04T09:25:46:     requestId: 'PCVSTWW9GXKJP53N',
+2025-12-04T09:25:46:     extendedRequestId: 'CvWo8pLXQKPlpYOrnjgTuSddhTFn/kbHhE+5yR/cVmUl9v9P4AXfeKABM2HSxgoD1B0ZXgmb11LKZXw74YDn7waX+9rRBQTH',
+2025-12-04T09:25:46:     cfId: undefined,
+2025-12-04T09:25:46:     attempts: 1,
+2025-12-04T09:25:46:     totalRetryDelay: 0
+2025-12-04T09:25:46:   },
+2025-12-04T09:25:46:   Code: 'InvalidAccessKeyId',
+2025-12-04T09:25:46:   AWSAccessKeyId: 'AKIA5AIL5ZNHQCSEWCHW',
+2025-12-04T09:25:46:   RequestId: 'PCVSTWW9GXKJP53N',
+2025-12-04T09:25:46:   HostId: 'CvWo8pLXQKPlpYOrnjgTuSddhTFn/kbHhE+5yR/cVmUl9v9P4AXfeKABM2HSxgoD1B0ZXgmb11LKZXw74YDn7waX+9rRBQTH'
+2025-12-04T09:25:46: }
+2025-12-04T09:25:46: Upload error: InvalidAccessKeyId: The AWS Access Key Id you provided does not exist in our records.
+2025-12-04T09:25:46:     at ProtocolLib.getErrorSchemaOrThrowBaseException (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:69:67)
+2025-12-04T09:25:46:     at AwsRestXmlProtocol.handleError (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1648:65)
+2025-12-04T09:25:46:     at AwsRestXmlProtocol.deserializeResponse (/root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:301:24)
+2025-12-04T09:25:46:     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:26:24
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:386:20
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@smithy/middleware-retry/dist-cjs/index.js:254:46
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-flexible-checksums/dist-cjs/index.js:247:20
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:63:28
+2025-12-04T09:25:46:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:90:20 {
+2025-12-04T09:25:46:   '$fault': 'client',
+2025-12-04T09:25:46:   '$retryable': undefined,
+2025-12-04T09:25:46:   '$metadata': {
+2025-12-04T09:25:46:     httpStatusCode: 403,
+2025-12-04T09:25:46:     requestId: 'PCVSTWW9GXKJP53N',
+2025-12-04T09:25:46:     extendedRequestId: 'CvWo8pLXQKPlpYOrnjgTuSddhTFn/kbHhE+5yR/cVmUl9v9P4AXfeKABM2HSxgoD1B0ZXgmb11LKZXw74YDn7waX+9rRBQTH',
+2025-12-04T09:25:46:     cfId: undefined,
+2025-12-04T09:25:46:     attempts: 1,
+2025-12-04T09:25:46:     totalRetryDelay: 0
+2025-12-04T09:25:46:   },
+2025-12-04T09:25:46:   Code: 'InvalidAccessKeyId',
+2025-12-04T09:25:46:   AWSAccessKeyId: 'AKIA5AIL5ZNHQCSEWCHW',
+2025-12-04T09:25:46:   RequestId: 'PCVSTWW9GXKJP53N',
+2025-12-04T09:25:46:   HostId: 'CvWo8pLXQKPlpYOrnjgTuSddhTFn/kbHhE+5yR/cVmUl9v9P4AXfeKABM2HSxgoD1B0ZXgmb11LKZXw74YDn7waX+9rRBQTH'
+2025-12-04T09:25:46: }
+2025-12-04T09:35:28: Error listing S3 files: InvalidAccessKeyId: The AWS Access Key Id you provided does not exist in our records.
+2025-12-04T09:35:28:     at ProtocolLib.getErrorSchemaOrThrowBaseException (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:69:67)
+2025-12-04T09:35:28:     at AwsRestXmlProtocol.handleError (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1648:65)
+2025-12-04T09:35:28:     at AwsRestXmlProtocol.deserializeResponse (/root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:301:24)
+2025-12-04T09:35:28:     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:26:24
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:386:20
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@smithy/middleware-retry/dist-cjs/index.js:254:46
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:63:28
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:90:20
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-logger/dist-cjs/index.js:5:26 {
+2025-12-04T09:35:28:   '$fault': 'client',
+2025-12-04T09:35:28:   '$retryable': undefined,
+2025-12-04T09:35:28:   '$metadata': {
+2025-12-04T09:35:28:     httpStatusCode: 403,
+2025-12-04T09:35:28:     requestId: 'KPTNC352AG1NY8X0',
+2025-12-04T09:35:28:     extendedRequestId: '5bbp3iGEAqiSuPw6XriODFrN49eHo2D26j4vjrl1qQTsA8iX9CTU80dH13tRvWik+Mqck8D8YZqt3MZTdJv7l7Pf62bpeF5w',
+2025-12-04T09:35:28:     cfId: undefined,
+2025-12-04T09:35:28:     attempts: 2,
+2025-12-04T09:35:28:     totalRetryDelay: 94
+2025-12-04T09:35:28:   },
+2025-12-04T09:35:28:   Code: 'InvalidAccessKeyId',
+2025-12-04T09:35:28:   AWSAccessKeyId: 'AKIA5AIL5ZNHQCSEWCHW',
+2025-12-04T09:35:28:   RequestId: 'KPTNC352AG1NY8X0',
+2025-12-04T09:35:28:   HostId: '5bbp3iGEAqiSuPw6XriODFrN49eHo2D26j4vjrl1qQTsA8iX9CTU80dH13tRvWik+Mqck8D8YZqt3MZTdJv7l7Pf62bpeF5w'
+2025-12-04T09:35:28: }
+2025-12-04T09:35:28: List files error: InvalidAccessKeyId: The AWS Access Key Id you provided does not exist in our records.
+2025-12-04T09:35:28:     at ProtocolLib.getErrorSchemaOrThrowBaseException (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:69:67)
+2025-12-04T09:35:28:     at AwsRestXmlProtocol.handleError (/root/Rekhapowerlift/server/node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1648:65)
+2025-12-04T09:35:28:     at AwsRestXmlProtocol.deserializeResponse (/root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:301:24)
+2025-12-04T09:35:28:     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:26:24
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:386:20
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@smithy/middleware-retry/dist-cjs/index.js:254:46
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:63:28
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/index.js:90:20
+2025-12-04T09:35:28:     at async /root/Rekhapowerlift/server/node_modules/@aws-sdk/middleware-logger/dist-cjs/index.js:5:26 {
+2025-12-04T09:35:28:   '$fault': 'client',
+2025-12-04T09:35:28:   '$retryable': undefined,
+2025-12-04T09:35:28:   '$metadata': {
+2025-12-04T09:35:28:     httpStatusCode: 403,
+2025-12-04T09:35:28:     requestId: 'KPTNC352AG1NY8X0',
+2025-12-04T09:35:28:     extendedRequestId: '5bbp3iGEAqiSuPw6XriODFrN49eHo2D26j4vjrl1qQTsA8iX9CTU80dH13tRvWik+Mqck8D8YZqt3MZTdJv7l7Pf62bpeF5w',
+2025-12-04T09:35:28:     cfId: undefined,
+2025-12-04T09:35:28:     attempts: 2,
+2025-12-04T09:35:28:     totalRetryDelay: 94
+2025-12-04T09:35:28:   },
+2025-12-04T09:35:28:   Code: 'InvalidAccessKeyId',
+2025-12-04T09:35:28:   AWSAccessKeyId: 'AKIA5AIL5ZNHQCSEWCHW',
+2025-12-04T09:35:28:   RequestId: 'KPTNC352AG1NY8X0',
+2025-12-04T09:35:28:   HostId: '5bbp3iGEAqiSuPw6XriODFrN49eHo2D26j4vjrl1qQTsA8iX9CTU80dH13tRvWik+Mqck8D8YZqt3MZTdJv7l7Pf62bpeF5w'
+2025-12-04T09:35:28: }
