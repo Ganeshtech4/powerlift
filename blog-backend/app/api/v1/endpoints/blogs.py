@@ -38,13 +38,25 @@ def get_blogs(
 @router.get("/{blog_id}", response_model=BlogResponse)
 def get_blog(blog_id: str, table = Depends(get_blog_table)):
     """Get blog by ID"""
-    blog = blog_service.get_blog_by_id(table, blog_id)
-    if not blog:
-        raise HTTPException(status_code=404, detail="Blog not found")
-    
-    # Increment view count
-    blog_service.increment_views(table, blog_id)
-    return blog
+    try:
+        blog = blog_service.get_blog_by_id(table, blog_id)
+        if not blog:
+            raise HTTPException(status_code=404, detail="Blog not found")
+        
+        # Increment view count
+        try:
+            blog_service.increment_views(table, blog_id)
+        except Exception as e:
+            print(f"Warning: Could not increment views: {e}")
+        
+        return blog
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error in get_blog: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 
 @router.get("/slug/{slug}", response_model=BlogResponse)

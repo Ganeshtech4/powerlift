@@ -114,7 +114,7 @@ export default function GalleryOne() {
         </div>
         {galleryItems.length > 6 && (
           <div className="text-center mt-4">
-            <Link to="/gallery-blog" className="thm-btn gallery-one__btn">
+            <Link to="/gallery" className="thm-btn gallery-one__btn">
               View All Gallery <span className="icon-arrow-right"></span>
             </Link>
           </div>

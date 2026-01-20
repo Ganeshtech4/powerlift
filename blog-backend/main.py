@@ -65,9 +65,12 @@ async def health_check():
 
 
 if __name__ == "__main__":
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
     uvicorn.run(
-        "main:app",
+        app,
         host="0.0.0.0",
         port=8000,
-        reload=True
+        reload=False,
+        log_level="debug"
     )

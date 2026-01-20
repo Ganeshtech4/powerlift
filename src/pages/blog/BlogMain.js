@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './BlogMain.css';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1';
 const SERVER_URL = process.env.REACT_APP_SERVER_URL || '';
 
 const BlogMain = () => {
@@ -17,22 +18,23 @@ const BlogMain = () => {
   useEffect(() => {
     const loadBlogsAndImages = async () => {
       try {
+        setLoading(true);
         // Fetch published blogs from API
-        const response = await fetch('/blog-api/api/v1/blogs?published_only=true');
+        const response = await fetch(`${API_URL}/blogs/`);
         if (response.ok) {
           const blogsData = await response.json();
-          setBlogs(blogsData);
-          setFilteredBlogs(blogsData);
-
-          // Load images from S3
-          await loadImagesFromS3(blogsData);
+          // Filter only published blogs
+          const publishedBlogs = blogsData.filter(blog => blog.is_published !== false);
+          setBlogs(publishedBlogs);
+          setFilteredBlogs(publishedBlogs);
         } else {
-          console.error('Failed to load blogs from API');
+          console.error('Failed to fetch blogs:', response.statusText);
         }
       } catch (error) {
         console.error('Error loading blogs:', error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     loadBlogsAndImages();

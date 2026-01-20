@@ -1,43 +1,218 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { axiosInstance, API_URL } from '../../../config/axiosConfig';
+import './ResultsManager.css';
 
 const ResultsManager = () => {
+    const navigate = useNavigate();
+    const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [selectedCategory, setSelectedCategory] = useState('all');
+    const [selectedType, setSelectedType] = useState('all');
+
+    useEffect(() => {
+        fetchResults();
+    }, []);
+
+    const fetchResults = async () => {
+        try {
+            setLoading(true);
+            const response = await axiosInstance.get('/results/');
+            setResults(response.data);
+        } catch (error) {
+            console.error('Error fetching results:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleCreateResult = () => {
+        navigate('/admin/results/new');
+    };
+
+    const handleCreateIDCard = () => {
+        navigate('/admin/id-cards/new');
+    };
+
+    const handleEdit = (result) => {
+        if (result.type === 'id_card') {
+            navigate(`/admin/id-cards/edit/${result.id}`);
+        } else {
+            navigate(`/admin/results/edit/${result.id}`);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this result?')) return;
+
+        try {
+            await axiosInstance.delete(`/results/${id}`);
+            fetchResults();
+            alert('Deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting result:', error);
+            alert('Failed to delete result');
+        }
+    };
+
+    const filteredResults = results.filter(r => {
+        const matchesCategory = selectedCategory === 'all' || r.category === selectedCategory;
+        return matchesCategory && r.type === 'result'; // Only show results, not ID cards
+    });
+
+    const stats = {
+        total: results.filter(r => r.type === 'result').length,
+    };
+
     return (
-        <div className="manager-section">
-            <div className="section-header">
-                <h2><i className="fas fa-trophy"></i> Results & ID Cards Manager</h2>
-                <button className="btn-primary">
-                    <i className="fas fa-upload"></i> Upload Result
-                </button>
-            </div>
-
-            <div className="manager-content">
-                <p className="info-text">
-                    <i className="fas fa-info-circle"></i>
-                    Upload and manage competition results and member ID cards
-                </p>
-
-                <div className="upload-types">
-                    <div className="upload-card">
+        <div className="results-manager">
+            <div className="manager-header">
+                <div>
+                    <h2><i className="fas fa-trophy"></i> Results Manager</h2>
+                    <p className="subtitle">Manage competition results</p>
+                </div>
+                <div className="header-buttons">
+                    <button className="btn-create" onClick={handleCreateResult}>
                         <i className="fas fa-trophy"></i>
-                        <h4>Competition Results</h4>
-                        <p>Upload result images from District, State, or National competitions</p>
-                        <button className="btn-upload">Upload Results</button>
-                    </div>
-                    <div className="upload-card">
-                        <i className="fas fa-id-card"></i>
-                        <h4>Member ID Cards</h4>
-                        <p>Upload scanned ID cards for registered members</p>
-                        <button className="btn-upload">Upload ID Card</button>
-                    </div>
-                </div>
-
-                <div className="placeholder-content">
-                    <i className="fas fa-trophy fa-5x"></i>
-                    <h3>Results Management</h3>
-                    <p>Results are categorized by competition level and type.</p>
-                    <p>Use the Results API to upload images and manage result data.</p>
+                        Upload Result
+                    </button>
                 </div>
             </div>
+
+            {/* Stats */}
+            <div className="stats-grid">
+                <div className="stat-card">
+                    <div className="stat-icon">
+                        <i className="fas fa-trophy"></i>
+                    </div>
+                    <div className="stat-content">
+                        <h3>{stats.total}</h3>
+                        <p>Competition Results</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Category & Type Filters */}
+            <div className="filters-container">
+                <div className="filter-group">
+                    <label>Filter by Category:</label>
+                    <div className="category-filters">
+                        <button
+                            className={`filter-btn ${selectedCategory === 'all' ? 'active' : ''}`}
+                            onClick={() => setSelectedCategory('all')}
+                        >
+                            All
+                        </button>
+                        <button
+                            className={`filter-btn ${selectedCategory === 'district' ? 'active' : ''}`}
+                            onClick={() => setSelectedCategory('district')}
+                        >
+                            District
+                        </button>
+                        <button
+                            className={`filter-btn ${selectedCategory === 'state' ? 'active' : ''}`}
+                            onClick={() => setSelectedCategory('state')}
+                        >
+                            State
+                        </button>
+                        <button
+                            className={`filter-btn ${selectedCategory === 'nationals' ? 'active' : ''}`}
+                            onClick={() => setSelectedCategory('nationals')}
+                        >
+                            Nationals
+                        </button>
+                        <button
+                            className={`filter-btn ${selectedCategory === 'internationals' ? 'active' : ''}`}
+                            onClick={() => setSelectedCategory('internationals')}
+                        >
+                            Internationals
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Results Grid */}
+            {loading ? (
+                <div className="loading-state">
+                    <i className="fas fa-spinner fa-spin fa-3x"></i>
+                    <p>Loading results...</p>
+                </div>
+            ) : filteredResults.length === 0 ? (
+                <div className="empty-state">
+                    <i className="fas fa-trophy fa-5x"></i>
+                    <h3>No Results Found</h3>
+                    <p>Upload your first competition result</p>
+                    <div className="empty-state-actions">
+                        <button className="btn-create" onClick={handleCreateResult}>
+                            <i className="fas fa-trophy"></i>
+                            Upload Result
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                <div className="results-grid">
+                    {filteredResults.map(result => (
+                        <div key={result.id} className="result-card">
+                            <div className="result-image">
+                                {result.images && result.images.length > 0 ? (
+                                    <img src={result.images[0]} alt={result.title} />
+                                ) : (
+                                    <div className="no-image">
+                                        <i className="fas fa-image"></i>
+                                    </div>
+                                )}
+                                <span className="type-badge">
+                                    {result.type === 'id_card' ? (
+                                        <><i className="fas fa-id-card"></i> ID Card</>
+                                    ) : (
+                                        <><i className="fas fa-trophy"></i> Result</>
+                                    )}
+                                </span>
+                                <span className="category-badge">{result.category}</span>
+                                {result.images && result.images.length > 1 && (
+                                    <span className="image-count">
+                                        <i className="fas fa-images"></i> {result.images.length}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="result-content">
+                                <h3>{result.title}</h3>
+                                {result.description && <p className="description">{result.description}</p>}
+                                <div className="result-meta">
+                                    {result.event_date && (
+                                        <span>
+                                            <i className="fas fa-calendar"></i>
+                                            {new Date(result.event_date).toLocaleDateString()}
+                                        </span>
+                                    )}
+                                    {result.location && (
+                                        <span>
+                                            <i className="fas fa-map-marker-alt"></i>
+                                            {result.location}
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="result-actions">
+                                    <button
+                                        className="btn-edit"
+                                        onClick={() => handleEdit(result)}
+                                    >
+                                        <i className="fas fa-edit"></i>
+                                        Edit
+                                    </button>
+                                    <button
+                                        className="btn-delete"
+                                        onClick={() => handleDelete(result.id)}
+                                    >
+                                        <i className="fas fa-trash"></i>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

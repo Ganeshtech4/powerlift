@@ -16,7 +16,7 @@ export const uploadToS3 = async (file, folder = 'uploads') => {
     formData.append('file', file);
     formData.append('folder', folder);
 
-    const response = await fetch(`${API_URL}/api/v1/s3/upload`, {
+    const response = await fetch(`${API_URL}/s3/upload`, {
       method: 'POST',
       body: formData,
     });
@@ -50,7 +50,7 @@ export const uploadMultipleToS3 = async (files, folder = 'uploads') => {
 
     formData.append('folder', folder);
 
-    const response = await fetch(`${API_URL}/api/v1/s3/upload-multiple`, {
+    const response = await fetch(`${API_URL}/s3/upload-multiple`, {
       method: 'POST',
       body: formData,
     });
@@ -75,7 +75,7 @@ export const uploadMultipleToS3 = async (files, folder = 'uploads') => {
  */
 export const deleteFromS3 = async (key) => {
   try {
-    const response = await fetch(`${API_URL}/api/v1/s3/delete/${encodeURIComponent(key)}`, {
+    const response = await fetch(`${API_URL}/s3/delete/${encodeURIComponent(key)}`, {
       method: 'DELETE',
     });
 
@@ -100,8 +100,8 @@ export const deleteFromS3 = async (key) => {
 export const listS3Files = async (prefix = '') => {
   try {
     const url = prefix
-      ? `${API_URL}/api/v1/s3/list?prefix=${encodeURIComponent(prefix)}`
-      : `${API_URL}/api/v1/s3/list`;
+      ? `${API_URL}/s3/list?prefix=${encodeURIComponent(prefix)}`
+      : `${API_URL}/s3/list`;
 
     const response = await fetch(url);
     const result = await response.json();
@@ -124,7 +124,7 @@ export const listS3Files = async (prefix = '') => {
  */
 export const fileExistsInS3 = async (key) => {
   try {
-    const response = await fetch(`${API_URL}/api/v1/s3/exists/${encodeURIComponent(key)}`);
+    const response = await fetch(`${API_URL}/s3/exists/${encodeURIComponent(key)}`);
     const result = await response.json();
 
     return result.success && result.exists;
@@ -143,7 +143,7 @@ export const fileExistsInS3 = async (key) => {
 export const getPresignedUrl = async (key, expiresIn = 3600) => {
   try {
     const response = await fetch(
-      `${API_URL}/api/v1/s3/presigned-url/${encodeURIComponent(key)}?expiresIn=${expiresIn}`
+      `${API_URL}/s3/presigned-url/${encodeURIComponent(key)}?expiresIn=${expiresIn}`
     );
 
     const result = await response.json();

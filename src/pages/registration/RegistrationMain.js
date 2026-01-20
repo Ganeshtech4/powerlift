@@ -37,6 +37,7 @@ const RegistrationMain = () => {
             url: `${API_BASE}/pdfs/${encodeURIComponent(d.fileName)}`
         }));
         setDocuments(list);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [API_BASE]);
 
     // Optional: verify existence of each PDF via /api/s3/exists
@@ -62,6 +63,7 @@ const RegistrationMain = () => {
         };
         check();
         return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [API_BASE]);
 
     const handleDownload = () => {

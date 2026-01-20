@@ -100,7 +100,7 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
               </li>
 
               <li>
-                <Link to="/gallery-blog" onClick={(e) => { e.preventDefault(); handleLinkClick('/gallery-blog'); }}>
+                <Link to="/gallery" onClick={(e) => { e.preventDefault(); handleLinkClick('/gallery'); }}>
                   Gallery
                 </Link>
               </li>
@@ -141,10 +141,18 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
           {/* /.mobile-nav__contact */}
           <div className="mobile-nav__top">
             <div className="mobile-nav__social">
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="fab fa-twitter" />
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="fab fa-facebook-square" />
-              <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="fab fa-pinterest-p" />
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="fab fa-instagram" />
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="fab fa-twitter" aria-label="Twitter">
+                <i className="fab fa-twitter"></i>
+              </a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="fab fa-facebook-square" aria-label="Facebook">
+                <i className="fab fa-facebook-square"></i>
+              </a>
+              <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="fab fa-pinterest-p" aria-label="Pinterest">
+                <i className="fab fa-pinterest-p"></i>
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="fab fa-instagram" aria-label="Instagram">
+                <i className="fab fa-instagram"></i>
+              </a>
             </div>
             {/* /.mobile-nav__social */}
           </div>

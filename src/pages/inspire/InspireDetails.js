@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import BackToTop from "../../components/elements/BackToTop";
 import Header from "../../components/Layout/Header";
-const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
 import Footer from "../../components/Layout/Footer";
 import SiteBreadcrumb from "../../components/Common/Breadcumb";
-const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/page6-header-bg.jpg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");
 import CtaTwo from "../../components/Common/CtaSection/CtaTwo";
+
+const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/page6-header-bg.jpg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");
 const inspireimg1 = `${process.env.PUBLIC_URL}/images/team/Adobe Express - file.jpg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");
 const inspireimg2 = `${process.env.PUBLIC_URL}/images/team/team-1-3.jpg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");
 const inspireimg3 = `${process.env.PUBLIC_URL}/images/team/Adobe Express - file (1).jpg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");

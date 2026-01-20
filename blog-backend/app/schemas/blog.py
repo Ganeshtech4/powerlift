@@ -21,6 +21,9 @@ class BlogBase(BaseModel):
     category: Optional[GalleryCategory] = None
     tags: Optional[str] = None  # Comma-separated
     is_published: bool = False
+    images: Optional[List[str]] = []
+    thumbnail_url: Optional[str] = None
+    author: Optional[str] = "Admin"
 
 
 class BlogCreate(BlogBase):
@@ -34,19 +37,32 @@ class BlogUpdate(BaseModel):
     category: Optional[GalleryCategory] = None
     tags: Optional[str] = None
     is_published: Optional[bool] = None
+    images: Optional[List[str]] = None
+    thumbnail_url: Optional[str] = None
+    author: Optional[str] = None
 
 
-class BlogResponse(BlogBase):
+class BlogResponse(BaseModel):
     id: str
+    title: str
     slug: str
+    content: str
+    excerpt: Optional[str] = None
+    category: Optional[str] = None  # Allow any string, not just enum
+    tags: Optional[str] = None
+    is_published: bool
     s3_folder_path: str
-    thumbnail_url: Optional[str]
+    thumbnail_url: Optional[str] = None
     image_count: int
+    images: Optional[List[str]] = []
     author: str
     views: int
-    created_at: datetime
-    updated_at: Optional[datetime]
-    published_at: Optional[datetime]
+    created_at: str  # ISO format string from DynamoDB
+    updated_at: Optional[str] = None  # ISO format string
+    published_at: Optional[str] = None  # ISO format string
+
+    class Config:
+        from_attributes = True
 
 
 class BlogListResponse(BaseModel):
@@ -59,8 +75,9 @@ class BlogListResponse(BaseModel):
     author: str
     views: int
     is_published: bool
-    created_at: datetime
-    published_at: Optional[datetime]
+    images: Optional[List[str]] = []
+    created_at: str  # ISO format string
+    published_at: Optional[str] = None  # ISO format string
 
 
 class ImageUploadResponse(BaseModel):

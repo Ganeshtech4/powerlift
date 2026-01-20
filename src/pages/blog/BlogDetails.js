@@ -16,9 +16,10 @@ const BlogDetails = () => {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
-  const [showAllImages, setShowAllImages] = useState(false);
+  const [imagesToDisplay, setImagesToDisplay] = useState(25); // Start with 25 images
   const [imageUrls, setImageUrls] = useState({});
   const [lightboxImage, setLightboxImage] = useState(null);
+  const IMAGES_PER_LOAD = 25; // Load 25 images at a time
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
@@ -33,15 +34,17 @@ const BlogDetails = () => {
   useEffect(() => {
     const loadBlog = async () => {
       try {
+        const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1';
+        
         // Fetch blog from API
-        const response = await fetch(`/blog-api/api/v1/blogs/${id}`);
+        const response = await fetch(`${API_URL}/blogs/${id}`);
         if (response.ok) {
           const blogData = await response.json();
           
           // Fetch blog images from S3
           if (blogData.image_count > 0) {
             try {
-              const imagesResponse = await fetch(`/blog-api/api/v1/images/${id}/list`);
+              const imagesResponse = await fetch(`${API_URL}/images/${id}/list`);
               if (imagesResponse.ok) {
                 const imagesData = await imagesResponse.json();
                 // Filter out thumbnail and add images to blog data
@@ -166,7 +169,19 @@ const BlogDetails = () => {
     );
   }
 
-  const imagesToShow = showAllImages ? blog.blogImages : blog.blogImages?.slice(0, 6);
+  const imagesToShow = blog.blogImages?.slice(0, imagesToDisplay) || [];
+  const hasMoreImages = blog.blogImages && blog.blogImages.length > imagesToDisplay;
+  const remainingImages = blog.blogImages ? blog.blogImages.length - imagesToDisplay : 0;
+
+  const loadMoreImages = () => {
+    setImagesToDisplay(prev => prev + IMAGES_PER_LOAD);
+  };
+
+  const showLessImages = () => {
+    setImagesToDisplay(IMAGES_PER_LOAD);
+    // Scroll to gallery section
+    window.scrollTo({ top: document.querySelector('.event-details__img-box')?.offsetTop - 100 || 0, behavior: 'smooth' });
+  };
 
   return (
     <React.Fragment>
@@ -222,37 +237,49 @@ const BlogDetails = () => {
                                     onClick={() => setLightboxImage(imageUrls[`img${index}`] || img.url)}
                                     style={{cursor: 'pointer'}}
                                   >
-                                    <img
-                                      src={imageUrls[`img${index}`] || img.url}
-                                      alt={img.name || `Image ${index + 1}`}
-                                    />
+                                    {imageUrls[`img${index}`] ? (
+                                      <img 
+                                        src={imageUrls[`img${index}`]} 
+                                        alt={`Blog Image ${index + 1}`}
+                                        style={{width: '100%', height: 'auto'}}
+                                      />
+                                    ) : (
+                                      <div style={{padding: '20px', textAlign: 'center'}}>Loading...</div>
+                                    )}
                                   </div>
                                 </div>
                               ))}
                             </div>
                           </div>
 
-                          {/* View All / Show Less Button */}
-                          {blog.blogImages.length > 6 && (
-                            <div style={{textAlign: 'center', marginTop: '20px', marginBottom: '30px'}}>
+                          {/* Load More / Show Less Buttons */}
+                          <div style={{textAlign: 'center', marginTop: '30px', marginBottom: '30px'}}>
+                            {hasMoreImages && (
                               <button 
-                                onClick={() => setShowAllImages(!showAllImages)}
+                                onClick={loadMoreImages}
                                 className="thm-btn"
+                                style={{marginRight: '15px'}}
                               >
-                                {showAllImages ? (
-                                  <>
-                                    Show Less
-                                    <span className="icon-arrow-up"></span>
-                                  </>
-                                ) : (
-                                  <>
-                                    View All {blog.blogImages.length} Images
-                                    <span className="icon-arrow-right"></span>
-                                  </>
-                                )}
+                                Load {remainingImages > IMAGES_PER_LOAD ? IMAGES_PER_LOAD : remainingImages} More Images
+                                <span className="icon-arrow-down"></span>
                               </button>
-                            </div>
-                          )}
+                            )}
+                            {imagesToDisplay > IMAGES_PER_LOAD && (
+                              <button 
+                                onClick={showLessImages}
+                                className="thm-btn"
+                                style={{backgroundColor: '#6c757d'}}
+                              >
+                                Show Less
+                                <span className="icon-arrow-up"></span>
+                              </button>
+                            )}
+                            {!hasMoreImages && blog.blogImages && blog.blogImages.length > IMAGES_PER_LOAD && (
+                              <p style={{color: '#666', marginTop: '15px', fontSize: '14px'}}>
+                                Showing all {blog.blogImages.length} images
+                              </p>
+                            )}
+                          </div>
                         </>
                       )}
 

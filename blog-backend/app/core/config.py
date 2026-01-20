@@ -3,7 +3,8 @@ Application Configuration
 Loads environment variables and application settings
 """
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from typing import List
+from typing import List, Union
+from pydantic import field_validator
 
 
 class Settings(BaseSettings):
@@ -24,19 +25,21 @@ class Settings(BaseSettings):
     ADMIN_PASSWORD: str
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 10080  # 7 days
     
     # API
     API_V1_PREFIX: str = "/api/v1"
-    CORS_ORIGINS: List[str] = [
+    CORS_ORIGINS: Union[List[str], str] = [
         "http://localhost:3000",
-        "http://localhost:5000",  # React dev server
-        "https://www.rekhawpctelangana.com",
-        "http://www.rekhawpctelangana.com",
-        "https://rekhawpctelangana.com",
-        "http://rekhawpctelangana.com",
-        "http://72.61.226.238"
+        "http://localhost:5000",
     ]
+    
+    @field_validator('CORS_ORIGINS', mode='before')
+    @classmethod
+    def parse_cors_origins(cls, v):
+        if isinstance(v, str):
+            return [origin.strip() for origin in v.split(',')]
+        return v
     
     # Image Processing
     MAX_IMAGE_SIZE_MB: int = 20

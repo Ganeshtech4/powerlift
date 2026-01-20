@@ -5,6 +5,7 @@ import GalleryManager from './sections/GalleryManager';
 import DistrictsManager from './sections/DistrictsManager';
 import ResultsManager from './sections/ResultsManager';
 import CalendarManager from './sections/CalendarManager';
+import IDCardsManager from './sections/IDCardsManager';
 
 const AdminDashboard = () => {
   const [activeSection, setActiveSection] = useState('overview');
@@ -16,7 +17,8 @@ const AdminDashboard = () => {
     { id: 'overview', label: 'Overview', icon: 'tachometer-alt' },
     { id: 'gallery', label: 'Gallery Posts', icon: 'images' },
     { id: 'districts', label: 'Districts', icon: 'map-marked-alt' },
-    { id: 'results', label: 'Results & ID Cards', icon: 'trophy' },
+    { id: 'results', label: 'Results', icon: 'trophy' },
+    { id: 'idcards', label: 'ID Cards', icon: 'id-card' },
     { id: 'calendar', label: 'Events Calendar', icon: 'calendar' },
   ];
 
@@ -51,6 +53,8 @@ const AdminDashboard = () => {
         return <DistrictsManager />;
       case 'results':
         return <ResultsManager />;
+      case 'idcards':
+        return <IDCardsManager />;
       case 'calendar':
         return <CalendarManager />;
       default:
@@ -131,11 +135,7 @@ const OverviewSection = () => {
 
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1';
 
-  React.useEffect(() => {
-    fetchRealData();
-  }, []);
-
-  const fetchRealData = async () => {
+  const fetchRealData = React.useCallback(async () => {
     try {
       // Fetch Districts
       const districtsRes = await fetch(`${API_URL}/districts/`);
@@ -197,7 +197,11 @@ const OverviewSection = () => {
         events: { value: 'Error', loading: false, label: 'Events', icon: 'calendar', color: '#28a745' }
       });
     }
-  };
+  }, [API_URL]);
+
+  React.useEffect(() => {
+    fetchRealData();
+  }, [fetchRealData]);
 
   const statsArray = Object.values(stats);
 

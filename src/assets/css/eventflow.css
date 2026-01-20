@@ -4540,13 +4540,13 @@ ul {
 .footer-widget__contact-list li {
   position: relative;
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  gap: 15px;
 }
 
 .footer-widget__contact-list li+li {
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .footer-widget__contact-list li .icon {
@@ -4557,14 +4557,16 @@ ul {
   flex-wrap: wrap;
   height: 40px;
   width: 40px;
+  min-width: 40px;
   border: 1px solid rgba(var(--eventflow-bdr-color-rgb), .20);
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .footer-widget__contact-list li .icon span {
   position: relative;
   display: inline-block;
-  font-size: 15px;
+  font-size: 16px;
   background: linear-gradient(90deg, #B20D5D 0%, #4A0AB4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -4575,12 +4577,16 @@ ul {
 .footer-widget__contact-list li .text {
   position: relative;
   display: block;
+  flex: 1;
+  padding-top: 3px;
 }
 
 .footer-widget__contact-list li .text p {
-  font-size: 16px;
+  font-size: 15px;
   color: rgba(var(--eventflow-white-rgb), .90);
-  line-height: 26px;
+  line-height: 24px;
+  margin: 0;
+  word-break: break-word;
 }
 
 .footer-widget__contact-list li .text p a {

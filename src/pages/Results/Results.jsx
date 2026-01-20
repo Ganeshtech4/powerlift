@@ -45,6 +45,7 @@ const Results = () => {
 
     useEffect(() => {
         filterResults();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeTab, results]);
 
     const fetchResults = async () => {

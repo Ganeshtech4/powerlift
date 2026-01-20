@@ -39,6 +39,7 @@ const Calendar = () => {
 
     useEffect(() => {
         filterEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFilter, events]);
 
     const fetchEvents = async () => {

@@ -40,9 +40,10 @@ def _serialize_blog(item: Dict[str, Any]) -> Dict[str, Any]:
         "s3_folder_path": item.get("s3_folder_path"),
         "thumbnail_url": item.get("thumbnail_url"),
         "image_count": item.get("image_count", 0),
+        "images": item.get("images", []),
         "author": item.get("author", "Admin"),
         "category": item.get("category"),
-        "tags": item.get("tags", []),
+        "tags": item.get("tags", ""),
         "is_published": item.get("is_published", False),
         "views": item.get("views", 0),
         "created_at": item.get("created_at"),
@@ -85,11 +86,12 @@ class BlogService:
             "content": blog_data.content,
             "excerpt": blog_data.excerpt,
             "category": blog_data.category,
-            "tags": blog_data.tags if blog_data.tags else [],
+            "tags": blog_data.tags if blog_data.tags else "",
             "s3_folder_path": s3_folder_path,
-            "thumbnail_url": None,
-            "image_count": 0,
-            "author": "Admin",
+            "thumbnail_url": blog_data.thumbnail_url if hasattr(blog_data, 'thumbnail_url') and blog_data.thumbnail_url else None,
+            "image_count": len(blog_data.images) if hasattr(blog_data, 'images') and blog_data.images else 0,
+            "images": blog_data.images if hasattr(blog_data, 'images') and blog_data.images else [],
+            "author": blog_data.author if hasattr(blog_data, 'author') and blog_data.author else "Admin",
             "is_published": blog_data.is_published,
             "views": 0,
             "created_at": now,
@@ -194,11 +196,17 @@ class BlogService:
                     expr_attr_values[":published_at"] = None
             
             # Update other fields
-            for key in ['title', 'content', 'excerpt', 'category', 'tags']:
+            for key in ['title', 'content', 'excerpt', 'category', 'tags', 'images', 'thumbnail_url', 'author']:
                 if key in update_data:
                     update_expr_parts.append(f"#{key} = :{key}")
                     expr_attr_names[f"#{key}"] = key
                     expr_attr_values[f":{key}"] = update_data[key]
+            
+            # Update image count if images array is provided
+            if 'images' in update_data and update_data['images'] is not None:
+                update_expr_parts.append("#image_count = :image_count")
+                expr_attr_names["#image_count"] = "image_count"
+                expr_attr_values[":image_count"] = len(update_data['images'])
             
             update_expression = "SET " + ", ".join(update_expr_parts)
             
@@ -243,6 +251,13 @@ class BlogService:
     def increment_views(table, blog_id: str):
         """Increment view count"""
         try:
+            # First check if item exists
+            response = table.get_item(Key={'id': blog_id})
+            if 'Item' not in response:
+                print(f"Cannot increment views - blog {blog_id} not found")
+                return
+            
+            # Update with ADD expression - works even if views doesn't exist
             table.update_item(
                 Key={'id': blog_id},
                 UpdateExpression="ADD #views :inc",
@@ -251,6 +266,7 @@ class BlogService:
             )
         except Exception as e:
             print(f"Error incrementing views: {e}")
+            # Don't raise - this is not critical
 
     @staticmethod
     def update_image_count(table, blog_id: str, count: int):

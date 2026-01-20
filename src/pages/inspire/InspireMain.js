@@ -1,10 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const inspireimg1 = `${process.env.PUBLIC_URL}/images/Inspire/img1.jpg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");
-const inspireimg2 = `${process.env.PUBLIC_URL}/images/Inspire/img2.jpg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");
-const inspireimg3 = `${process.env.PUBLIC_URL}/images/Inspire/img3.jpeg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");
-const inspireimg4 = `${process.env.PUBLIC_URL}/images/Inspire/img4.jpeg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");
-const inspireimg5 = `${process.env.PUBLIC_URL}/images/Inspire/img5.jpeg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");
 
 // S3 bucket URL for PDFs and images
 const S3_PDF_BASE_URL = "https://rekhawpc.s3.ap-south-2.amazonaws.com/pdfs/";

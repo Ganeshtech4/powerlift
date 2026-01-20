@@ -1,6 +1,5 @@
 "use client"; // Ensures the component runs on the client side
 
-import { Link } from 'react-router-dom';
 import { useState } from "react";
 
 export default function ServicesOne() {

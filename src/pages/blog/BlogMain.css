@@ -44,8 +44,8 @@
 
 .search-box input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #B20D5D;
+  box-shadow: 0 0 0 3px rgba(178, 13, 93, 0.1);
 }
 
 .filter-container {
@@ -72,7 +72,7 @@
 
 .filter-container select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #B20D5D;
 }
 
 .results-count {
@@ -92,7 +92,7 @@
 
 .blog-loading i {
   margin-bottom: 15px;
-  color: #667eea;
+  color: #B20D5D;
 }
 
 .blog-loading p {
@@ -164,7 +164,7 @@
   position: absolute;
   bottom: 15px;
   right: 15px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(90deg, #B20D5D 0%, #4A0AB4 100%);
   color: white;
   padding: 6px 12px;
   border-radius: 20px;
@@ -179,7 +179,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(102, 126, 234, 0.8);
+  background: linear-gradient(135deg, rgba(178, 13, 93, 0.85) 0%, rgba(74, 10, 180, 0.85) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -209,7 +209,7 @@
 .blog-one__hover-icon-2 {
   width: 20px;
   height: 20px;
-  background: #667eea;
+  background: #B20D5D;
   border-radius: 50%;
 }
 
@@ -235,7 +235,7 @@
 
 .blog-one__meta .icon-user,
 .blog-one__meta .icon-calendar {
-  color: #667eea;
+  color: #B20D5D;
 }
 
 .blog-one__title {
@@ -251,7 +251,7 @@
 }
 
 .blog-one__title a:hover {
-  color: #667eea;
+  color: #B20D5D;
 }
 
 .blog-excerpt {
@@ -283,7 +283,7 @@
 }
 
 .blog-one__btn-2 {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(90deg, #B20D5D 0%, #4A0AB4 100%);
   color: white;
   padding: 12px 25px;
   border-radius: 8px;
@@ -297,7 +297,7 @@
 
 .blog-one__btn-2:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 20px rgba(178, 13, 93, 0.4);
   color: white;
   text-decoration: none;
 }
