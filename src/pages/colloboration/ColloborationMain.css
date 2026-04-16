@@ -1,0 +1,207 @@
+.partnership-directory {
+  --part-bg: #f4f1eb;
+  --part-panel: rgba(251, 249, 244, 0.9);
+  --part-border: rgba(46, 40, 31, 0.12);
+  --part-text: #2e281f;
+  --part-muted: #6b6257;
+  --part-accent: #927851;
+  --part-shadow: 0 24px 60px rgba(28, 24, 18, 0.08);
+  padding: 92px 0 110px;
+  background:
+    radial-gradient(circle at top left, rgba(146, 120, 81, 0.18), transparent 30%),
+    linear-gradient(180deg, #f7f3ed 0%, #efe8de 100%);
+}
+
+.partnership-directory__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  gap: 28px;
+  align-items: end;
+  margin-bottom: 34px;
+}
+
+.partnership-directory__eyebrow {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--part-accent);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.partnership-directory__title {
+  margin: 0;
+  color: var(--part-text);
+  font-family: "Bodoni MT", "Didot", serif;
+  font-size: clamp(2.4rem, 4vw, 4.25rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.partnership-directory__summary {
+  margin: 18px 0 0;
+  max-width: 62ch;
+  color: var(--part-muted);
+  line-height: 1.9;
+}
+
+.partnership-directory__stats {
+  display: grid;
+  gap: 14px;
+}
+
+.partnership-directory__stat-card,
+.partnership-directory__state,
+.partnership-card {
+  border: 1px solid var(--part-border);
+  border-radius: 28px;
+  background: var(--part-panel);
+  box-shadow: var(--part-shadow);
+}
+
+.partnership-directory__stat-card {
+  padding: 22px 24px;
+}
+
+.partnership-directory__stat-card span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--part-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.partnership-directory__stat-card strong {
+  color: var(--part-text);
+  font-size: 2.2rem;
+  font-family: "Bodoni MT", "Didot", serif;
+}
+
+.partnership-directory__state {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 56px 28px;
+  color: var(--part-muted);
+  text-align: center;
+}
+
+.partnership-directory__state i {
+  font-size: 2.8rem;
+  color: rgba(46, 40, 31, 0.3);
+}
+
+.partnership-directory__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.partnership-card {
+  overflow: hidden;
+}
+
+.partnership-card__media {
+  height: 230px;
+  background: linear-gradient(135deg, #e6ded1, #d7c8b1);
+}
+
+.partnership-card__media img,
+.partnership-card__placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.partnership-card__media img {
+  object-fit: cover;
+  display: block;
+}
+
+.partnership-card__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(46, 40, 31, 0.3);
+  font-size: 3rem;
+}
+
+.partnership-card__body {
+  padding: 24px;
+}
+
+.partnership-card__header h3 {
+  margin: 0;
+  color: var(--part-text);
+  font-family: "Bodoni MT", "Didot", serif;
+  font-size: 2rem;
+  line-height: 0.98;
+}
+
+.partnership-card__header p {
+  margin: 12px 0 0;
+  color: var(--part-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.partnership-card__description {
+  margin: 16px 0 0;
+  color: var(--part-muted);
+  line-height: 1.8;
+}
+
+.partnership-card__list {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.partnership-card__list li,
+.partnership-card__meta span {
+  display: flex;
+  gap: 12px;
+  color: var(--part-text);
+  line-height: 1.65;
+}
+
+.partnership-card__list i,
+.partnership-card__meta i {
+  margin-top: 3px;
+  color: var(--part-accent);
+}
+
+.partnership-card__meta {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--part-border);
+}
+
+@media (max-width: 991px) {
+  .partnership-directory__hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .partnership-directory {
+    padding: 74px 0 86px;
+  }
+
+  .partnership-directory__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .partnership-card__body,
+  .partnership-directory__stat-card {
+    padding: 20px;
+  }
+}

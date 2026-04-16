@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import the Link component from React Router
 
 // Import images
-const footerLogo = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const footerLogo = `${process.env.PUBLIC_URL}/images/logo-wpc.png`;
 
 const FooterTwo = () => {
     const events = [

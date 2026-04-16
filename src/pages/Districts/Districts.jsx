@@ -9,11 +9,12 @@ import './Districts.css';
 
 const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
 const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/page-header-bg.jpg`;
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1';
+const API_URL = process.env.REACT_APP_API_URL || '/api/v1';
 
 const Districts = () => {
     const [districts, setDistricts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
     const [selectedDistrict, setSelectedDistrict] = useState(null);
     const [showEnquiryModal, setShowEnquiryModal] = useState(false);
     const [enquiryForm, setEnquiryForm] = useState({
@@ -42,20 +43,12 @@ const Districts = () => {
 
     const fetchDistricts = async () => {
         try {
-            console.log('Fetching districts from:', `${API_URL}/districts/`);
             const response = await axios.get(`${API_URL}/districts/`);
-            console.log('Districts response:', response.data);
-            console.log('Total districts fetched:', response.data.length);
-            setDistricts(response.data);
+            setDistricts(Array.isArray(response.data) ? response.data : []);
+            setError('');
         } catch (error) {
             console.error('Error fetching districts:', error);
-            console.error('API URL:', API_URL);
-            if (error.response) {
-                console.error('Response status:', error.response.status);
-                console.error('Response data:', error.response.data);
-            }
-            // Show error message to user
-            alert('Failed to load districts. Please check if the backend is running on port 8000.');
+            setError('Unable to load district information right now. Please try again in a moment.');
         } finally {
             setLoading(false);
         }
@@ -89,13 +82,17 @@ const Districts = () => {
         }
     };
 
+    const sortedDistricts = [...districts].sort((left, right) => left.name.localeCompare(right.name));
+    const assignedDistricts = sortedDistricts.filter((district) => !district.is_available).length;
+    const availableDistricts = sortedDistricts.filter((district) => district.is_available).length;
+
     if (loading) {
         return (
             <React.Fragment>
                 <Header navImg={navImg1} parentMenu='About' activeMenu="/districts" />
                 <div className="districts-loading">
                     <div className="loading-spinner"></div>
-                    <p>Loading districts...</p>
+                    <p>Loading district directory...</p>
                 </div>
                 <Footer />
             </React.Fragment>
@@ -116,45 +113,72 @@ const Districts = () => {
             {/* Districts Section */}
             <div className="districts-section section-padding">
                 <div className="container">
-                    <div className="section-title text-center mb-60">
-                        <h2 className="title">33 Districts of Telangana</h2>
-                        <p className="desc">
-                            Connect with district representatives and powerlifting presidents across Telangana
+                    <section className="districts-overview">
+                        <div className="districts-overview__copy">
+                            <span className="districts-overview__eyebrow">District network</span>
+                            <h2 className="districts-overview__title">Leadership across Telangana, presented as a clear working directory.</h2>
+                            <p className="districts-overview__desc">
+                                Browse district presidents, reach out directly where leadership is assigned, and send enquiries for districts that are still open for representation.
+                            </p>
+                        </div>
+                        <div className="districts-overview__stats">
+                            <div className="districts-stat-card">
+                                <span className="districts-stat-card__label">Total districts</span>
+                                <strong>{sortedDistricts.length}</strong>
+                            </div>
+                            <div className="districts-stat-card">
+                                <span className="districts-stat-card__label">Assigned presidents</span>
+                                <strong>{assignedDistricts}</strong>
+                            </div>
+                            <div className="districts-stat-card">
+                                <span className="districts-stat-card__label">Open positions</span>
+                                <strong>{availableDistricts}</strong>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="districts-directory-header">
+                        <div>
+                            <span className="districts-directory-header__eyebrow">Directory</span>
+                            <h3 className="districts-directory-header__title">District presidents and enquiries</h3>
+                        </div>
+                        <p className="districts-directory-header__text">
+                            Each district card keeps contact details, representation status, and enquiry access in one place.
                         </p>
                     </div>
 
                     <div className="districts-grid">
-                        {districts.length === 0 ? (
-                            <div className="no-districts-message" style={{
-                                gridColumn: '1 / -1',
-                                textAlign: 'center',
-                                padding: '4rem 2rem',
-                                background: '#fff',
-                                borderRadius: '16px',
-                                boxShadow: '0 5px 20px rgba(0,0,0,0.08)'
-                            }}>
-                                <i className="fas fa-info-circle" style={{ fontSize: '4rem', color: '#e74c3c', marginBottom: '1rem' }}></i>
-                                <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>No Districts Found</h3>
-                                <p style={{ color: '#666', marginBottom: '1rem' }}>
-                                    Unable to load districts. Please make sure the backend API is running.
-                                </p>
-                                <p style={{ color: '#999', fontSize: '0.9rem' }}>
-                                    Backend URL: {API_URL}<br />
-                                    Check browser console (F12) for details.
-                                </p>
+                        {error ? (
+                            <div className="districts-state-card">
+                                <i className="fas fa-circle-exclamation"></i>
+                                <h3>District directory unavailable</h3>
+                                <p>{error}</p>
+                                <button className="btn-enquiry btn-enquiry--compact" onClick={fetchDistricts}>
+                                    <i className="fas fa-rotate-right"></i>
+                                    Try again
+                                </button>
+                            </div>
+                        ) : sortedDistricts.length === 0 ? (
+                            <div className="districts-state-card">
+                                <i className="fas fa-map-marked-alt"></i>
+                                <h3>No districts published yet</h3>
+                                <p>The district directory is currently empty. Please check back after the admin team publishes district records.</p>
                             </div>
                         ) : (
-                            districts.map((district) => (
+                            sortedDistricts.map((district) => (
                                 <div key={district.id} className={`district-card ${district.is_available ? 'available' : 'assigned'}`}>
                                     <div className="district-header">
-                                        <h3 className="district-name">{district.name}</h3>
+                                        <div>
+                                            <span className="district-kicker">Telangana district</span>
+                                            <h3 className="district-name">{district.name}</h3>
+                                        </div>
                                         {district.is_available ? (
                                             <span className="status-badge available">
-                                                <i className="fas fa-user-plus"></i> Position Available
+                                                <i className="fas fa-user-plus"></i> Open position
                                             </span>
                                         ) : (
                                             <span className="status-badge assigned">
-                                                <i className="fas fa-check-circle"></i> President Assigned
+                                                <i className="fas fa-check-circle"></i> President assigned
                                             </span>
                                         )}
                                     </div>
@@ -163,17 +187,17 @@ const Districts = () => {
                                         {district.is_available ? (
                                             <div className="available-info">
                                                 <div className="available-icon">
-                                                    <i className="fas fa-users"></i>
+                                                    <i className="fas fa-flag"></i>
                                                 </div>
                                                 <p className="available-text">
-                                                    We are looking for a passionate powerlifter to represent this district
+                                                    This district does not have an assigned president yet. If you want to lead local powerlifting activity here, send your interest to the federation team.
                                                 </p>
                                                 <button
                                                     className="btn-enquiry"
                                                     onClick={() => handleEnquiry(district)}
                                                 >
                                                     <i className="fas fa-paper-plane"></i>
-                                                    Express Interest
+                                                    Apply for District Lead
                                                 </button>
                                             </div>
                                         ) : (
@@ -190,6 +214,7 @@ const Districts = () => {
                                                 )}
 
                                                 <h4 className="president-name">{district.president_name}</h4>
+                                                <p className="president-label">District president</p>
 
                                                 {district.description && (
                                                     <p className="president-description">{district.description}</p>
@@ -238,6 +263,7 @@ const Districts = () => {
                         </button>
 
                         <h3 className="modal-title">Send Enquiry - {selectedDistrict?.name}</h3>
+                        <p className="modal-subtitle">Share your details and the federation will get back to you regarding this district.</p>
 
                         <form onSubmit={handleSubmitEnquiry} className="enquiry-form">
                             <div className="form-group">

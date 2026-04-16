@@ -17,16 +17,19 @@ import GalleryBlogDetails from "./pages/blog/BlogDetails";
 import Contact from "./pages/contact";
 import Referees from "./pages/referees";
 import Inspire from "./pages/inspire";
-import InspireDetails from "./pages/inspire/InspireDetails";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import BlogEditor from "./pages/admin/sections/BlogEditor";
+import CommitteeMemberEditor from "./pages/admin/sections/CommitteeMemberEditor";
+import RefereeEditor from "./pages/admin/sections/RefereeEditor";
 import ResultEditor from "./pages/admin/sections/ResultEditor";
 import Registration from "./pages/registration";
 import ScrollToTop from "./ScrollToTop";
 import ResultsNew from "./pages/Results/Results";
+import ResultDetailsPage from "./pages/Results/ResultDetailsPage";
 import Districts from "./pages/Districts/Districts";
 import Calendar from "./pages/Calendar/Calendar";
+import RefereeDetailsPage from "./pages/referees/RefereeDetailsPage";
 
 // Redirect component for old blog routes
 const BlogRedirect = () => {
@@ -47,6 +50,7 @@ export default function App() {
         <Route path="testimonials" element={<Testimonials />} />
         <Route path="testimonials-main" element={<TestimonialsMain />} />
         <Route path="referees" element={<Referees />} />
+        <Route path="referees/:id" element={<RefereeDetailsPage />} />
         <Route path="gallery" element={<Gallery />} />
         <Route path="colloboration" element={<Colloboration />} />
         <Route path="gallery-details" element={<GalleryDetails />} />
@@ -61,13 +65,19 @@ export default function App() {
         <Route path="admin/dashboard" element={<AdminDashboard />} />
         <Route path="admin/blog-editor" element={<BlogEditor />} />
         <Route path="admin/blog-editor/:id" element={<BlogEditor />} />
+        <Route path="admin/team-members/new" element={<CommitteeMemberEditor />} />
+        <Route path="admin/team-members/edit/:id" element={<CommitteeMemberEditor />} />
+        <Route path="admin/referees/new" element={<RefereeEditor />} />
+        <Route path="admin/referees/edit/:id" element={<RefereeEditor />} />
         <Route path="admin/results/new" element={<ResultEditor />} />
         <Route path="admin/results/edit/:id" element={<ResultEditor />} />
         <Route path="contact" element={<Contact />} />
         <Route path="registration" element={<Registration />} />
-        <Route path="inspire" element={<Inspire />} />
-        <Route path="inspire-details/:id" element={<InspireDetails />} />
+        <Route path="inkspire" element={<Inspire />} />
+        <Route path="inspire" element={<Navigate to="/inkspire" replace />} />
+        <Route path="inspire-details/:id" element={<Navigate to="/inkspire" replace />} />
         <Route path="results" element={<ResultsNew />} />
+        <Route path="results/:id" element={<ResultDetailsPage />} />
         <Route path="calendar" element={<Calendar />} />
         <Route path="*" element={<NoPage />} />
       </Routes>

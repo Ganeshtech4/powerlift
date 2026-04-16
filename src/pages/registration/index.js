@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react';
 import BackToTop from '../../components/elements/BackToTop';
 import Header from '../../components/Layout/Header';
 import Footer from '../../components/Layout/Footer';
-import SiteBreadcrumb from '../../components/Common/Breadcumb';
 import RegistrationMain from './RegistrationMain';
 import RegistrationAdmin from './RegistrationAdmin';
 import BrandOne from '../home/BrandOne';
-
-const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/page-header-bg.jpg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");
 
 const Registration = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -32,14 +29,7 @@ const Registration = () => {
                 parentMenu='registration'
                 activeMenu="/registration"
             />
-            {/* SiteBreadcrumb */}
-            <SiteBreadcrumb
-                pageTitle="Registration"
-                pageName="Registration"
-                breadcrumbsImg={bannerbg}
-            />
-            {/* SiteBreadcrumb End */}
-            
+
             {/* Registration Main */}
             <RegistrationMain />
             {/* Registration Main End */}

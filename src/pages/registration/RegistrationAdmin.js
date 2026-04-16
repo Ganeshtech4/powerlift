@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 // Uses /api/s3/upload with forceName to store predictable keys.
 // Requires server patch enabling forceName (already added).
 
-const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000';
+const API_BASE = process.env.REACT_APP_API_BASE || '/api/v1';
 
 const TARGET_FILES = [
   { key: 'wpc-registration-form.pdf', label: 'Registration Form PDF' },
@@ -46,7 +46,7 @@ const RegistrationAdmin = () => {
     const status = {};
     for (const f of TARGET_FILES) {
       try {
-        const res = await fetch(`${API_BASE}/api/s3/exists/pdfs/${encodeURIComponent(f.key)}`);
+        const res = await fetch(`${API_BASE}/s3/exists/${encodeURIComponent(`pdfs/${f.key}`)}`);
         const data = await res.json();
         status[f.key] = !!data.exists;
       } catch {
@@ -65,7 +65,7 @@ const RegistrationAdmin = () => {
       fd.append('file', file);
       fd.append('folder', 'pdfs');
       fd.append('forceName', targetName); // deterministic name
-      const res = await fetch(`${API_BASE}/api/s3/upload`, { method: 'POST', body: fd });
+      const res = await fetch(`${API_BASE}/s3/upload`, { method: 'POST', body: fd });
       const data = await res.json();
       if (!data.success) throw new Error(data.error || 'Upload failed');
       setMessage(`${targetName} uploaded successfully.`);
@@ -91,7 +91,7 @@ const RegistrationAdmin = () => {
   const removeKey = async (targetName) => {
     if (!window.confirm(`Delete ${targetName}? This cannot be undone.`)) return;
     try {
-      const res = await fetch(`${API_BASE}/api/s3/delete/pdfs/${encodeURIComponent(targetName)}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/s3/delete/${encodeURIComponent(`pdfs/${targetName}`)}`, { method: 'DELETE' });
       const data = await res.json();
       if (!data.success) throw new Error(data.error || 'Delete failed');
       setMessage(`${targetName} deleted.`);

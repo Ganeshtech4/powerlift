@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { axiosInstance } from '../../config/axiosConfig';
 
 export default function BlogOne() {
   const [blogs, setBlogs] = useState([]);
@@ -9,18 +10,18 @@ export default function BlogOne() {
   useEffect(() => {
     const loadBlogs = async () => {
       try {
-        // Fetch recent 3 published blogs from MongoDB - MUST have trailing slash for FastAPI
-        const response = await fetch('/blog-api/api/v1/blogs/?published_only=true&limit=3');
-        if (response.ok) {
-          const blogsData = await response.json();
-          console.log('Home page loaded blogs:', blogsData);
-          setBlogs(blogsData);
-          
-          // Load thumbnail images from S3
-          await loadImagesFromS3(blogsData);
-        } else {
-          console.error('Failed to load blogs:', response.status);
-        }
+        const response = await axiosInstance.get('/blogs/');
+        const publishedBlogs = (Array.isArray(response.data) ? response.data : [])
+          .filter((blog) => blog.is_published)
+          .sort((left, right) => {
+            const leftDate = new Date(left.published_at || left.created_at || 0).getTime();
+            const rightDate = new Date(right.published_at || right.created_at || 0).getTime();
+            return rightDate - leftDate;
+          })
+          .slice(0, 3);
+
+        setBlogs(publishedBlogs);
+        await loadImagesFromS3(publishedBlogs);
       } catch (error) {
         console.error('Error loading blogs:', error);
       }
@@ -52,12 +53,14 @@ export default function BlogOne() {
   };
 
   const getDisplayImage = (blog) => {
-    // Use thumbnail_url from API response
     if (imageUrls[`thumbnail_${blog.id}`]) {
       return imageUrls[`thumbnail_${blog.id}`];
     }
     if (blog.thumbnail_url) {
       return blog.thumbnail_url;
+    }
+    if (Array.isArray(blog.images)) {
+      return blog.images.find(Boolean) || null;
     }
     return null;
   };

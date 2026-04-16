@@ -1,6 +1,9 @@
 node_modules
 build
 dist
+.deploy/*.tgz
+blog-backend/.env#
+blog-backend/On
 .env
 .env.local
 .env.development.local

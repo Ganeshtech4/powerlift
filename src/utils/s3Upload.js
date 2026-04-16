@@ -2,7 +2,7 @@
  * Utility functions for uploading files to AWS S3
  */
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const API_URL = process.env.REACT_APP_API_URL || '/api/v1';
 
 /**
  * Upload a single file to S3

@@ -114,12 +114,11 @@ async def get_presigned_url(
 
 @router.get("/pdfs/{filename}")
 async def serve_pdf(filename: str):
-    """Serve PDF by redirecting to presigned URL"""
+    """Serve PDF by redirecting to the regional public S3 URL."""
     try:
         from fastapi.responses import RedirectResponse
         key = f"pdfs/{filename}"
-        # URL expire time (e.g. 1 hour)
-        url = s3_service.get_presigned_url(key, expiration=3600)
+        url = s3_service.get_public_url(key)
         return RedirectResponse(url=url)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

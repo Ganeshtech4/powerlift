@@ -4,16 +4,11 @@ import BackToTop from '../../components/elements/BackToTop';
 import Header from '../../components/Layout/Header';
 
 import Footer from '../../components/Layout/Footer';
-import SiteBreadcrumb from '../../components/Common/Breadcumb';
 
 import CtaTwo from '../../components/Common/CtaSection/CtaTwo';
 import TeamOne from '../home/TeamOne';
 
 const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
-const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/page-header-bg.jpg`;
-
-
-// Breadcrumbs Background Image
 
 const Team = () => {
 
@@ -39,14 +34,7 @@ const Team = () => {
             parentMenu='team'
             activeMenu="/team"
         />
-        {/* SiteBreadcrumb */}
-        <SiteBreadcrumb
-            pageTitle="Committee Members"
-            pageName="Committee Members"
-            breadcrumbsImg={bannerbg}
-        />
-        {/* SiteBreadcrumb */}
-        <TeamOne />
+        <TeamOne variant="page" />
         {/* cta-section */}
         <CtaTwo/>
         {/* cta-section end */}

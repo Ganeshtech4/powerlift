@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_URL } from '../../config/axiosConfig';
 
 
 
@@ -8,8 +9,8 @@ const RegistrationMain = () => {
     const [checking, setChecking] = useState(false);
     const [missingDocs, setMissingDocs] = useState([]);
 
-    // Use relative URL to work with Nginx proxy
-    const API_BASE = process.env.REACT_APP_API_BASE || '';
+    const pdfBaseUrl = `${API_URL}/s3/pdfs`;
+    const existsBaseUrl = `${API_URL}/s3/exists/pdfs`;
 
     // Define desired PDF filenames that should exist in S3 under prefix 'pdfs/'
     // IMPORTANT: Upload these exact filenames to S3 bucket 'rekhawpc' inside folder 'pdfs/'
@@ -34,11 +35,11 @@ const RegistrationMain = () => {
             value: d.fileName,
             label: d.label,
             description: d.description,
-            url: `${API_BASE}/pdfs/${encodeURIComponent(d.fileName)}`
+            url: `${pdfBaseUrl}/${encodeURIComponent(d.fileName)}`
         }));
         setDocuments(list);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [API_BASE]);
+    }, [pdfBaseUrl]);
 
     // Optional: verify existence of each PDF via /api/s3/exists
     useEffect(() => {
@@ -48,12 +49,14 @@ const RegistrationMain = () => {
             const missing = [];
             for (const doc of targetDocs) {
                 try {
-                    const res = await fetch(`${API_BASE}/api/s3/exists/pdfs/${encodeURIComponent(doc.fileName)}`);
+                    const res = await fetch(`${existsBaseUrl}/${encodeURIComponent(doc.fileName)}`);
+                    if (!res.ok) {
+                        continue;
+                    }
                     const data = await res.json();
                     if (!data.exists) missing.push(doc.fileName);
                 } catch (e) {
-                    // If error, mark as missing
-                    missing.push(doc.fileName);
+                    // Do not mark files as missing on transient API failures.
                 }
             }
             if (!cancelled) {
@@ -64,7 +67,7 @@ const RegistrationMain = () => {
         check();
         return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [API_BASE]);
+    }, [existsBaseUrl]);
 
     const handleDownload = () => {
         if (!selectedDocument) {

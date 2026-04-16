@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 const Footershape = `/images/shapes/site-footer-shape-1.png`;
-const footerLogo = `/images/logo wpc.png`;
+const footerLogo = `/images/logo-wpc.png`;
 
 const Footer = () => {
 
@@ -29,7 +29,6 @@ const Footer = () => {
                                 <Link to="https://www.facebook.com/p/Telangana-State-Powerlifting-Association-100066545078243/"><i className="icon-facebook"></i></Link>
 
                                 <Link to="https://www.instagram.com/wpc_telangana_powerlifting/"><i className="icon-instagram"></i></Link>
-
                             </div>
                         </div>
                     </div>

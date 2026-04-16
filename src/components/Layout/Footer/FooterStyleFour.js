@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const footerLogo = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const footerLogo = `${process.env.PUBLIC_URL}/images/logo-wpc.png`;
 
 // Example footer data (replace with actual dynamic data)
 const footerData = {

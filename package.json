@@ -2,6 +2,7 @@
   "name": "eventflow",
   "version": "0.1.0",
   "homepage": "/",
+  "proxy": "http://127.0.0.1:8000",
   "private": true,
   "dependencies": {
     "@aws-sdk/client-s3": "^3.940.0",

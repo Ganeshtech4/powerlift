@@ -34,7 +34,7 @@ const BlogDetails = () => {
   useEffect(() => {
     const loadBlog = async () => {
       try {
-        const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1';
+        const API_URL = process.env.REACT_APP_API_URL || '/api/v1';
         
         // Fetch blog from API
         const response = await fetch(`${API_URL}/blogs/${id}`);

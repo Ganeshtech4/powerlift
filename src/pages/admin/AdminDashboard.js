@@ -1,26 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './AdminDashboard.css';
 import GalleryManager from './sections/GalleryManager';
 import DistrictsManager from './sections/DistrictsManager';
 import ResultsManager from './sections/ResultsManager';
 import CalendarManager from './sections/CalendarManager';
 import IDCardsManager from './sections/IDCardsManager';
+import CommitteeMembersManager from './sections/CommitteeMembersManager';
+import RefereesManager from './sections/RefereesManager';
+import PartnershipsManager from './sections/PartnershipsManager';
+import InkspireManager from './sections/InkspireManager';
+
+const MENU_ITEMS = [
+  { id: 'overview', label: 'Overview', icon: 'tachometer-alt' },
+  { id: 'gallery', label: 'Gallery Posts', icon: 'images' },
+  { id: 'districts', label: 'Districts', icon: 'map-marked-alt' },
+  { id: 'results', label: 'Results', icon: 'trophy' },
+  { id: 'idcards', label: 'ID Cards', icon: 'id-card' },
+  { id: 'calendar', label: 'Events Calendar', icon: 'calendar' },
+  { id: 'committee', label: 'Team Members', icon: 'users' },
+  { id: 'referees', label: 'Referees', icon: 'gavel' },
+  { id: 'partnerships', label: 'Partnerships', icon: 'handshake' },
+  { id: 'inkspire', label: 'Inkspire Books', icon: 'book-open' },
+];
+
+const DEFAULT_SECTION = 'overview';
 
 const AdminDashboard = () => {
-  const [activeSection, setActiveSection] = useState('overview');
+  const [searchParams, setSearchParams] = useSearchParams();
   const [adminUser, setAdminUser] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const navigate = useNavigate();
-
-  const menuItems = [
-    { id: 'overview', label: 'Overview', icon: 'tachometer-alt' },
-    { id: 'gallery', label: 'Gallery Posts', icon: 'images' },
-    { id: 'districts', label: 'Districts', icon: 'map-marked-alt' },
-    { id: 'results', label: 'Results', icon: 'trophy' },
-    { id: 'idcards', label: 'ID Cards', icon: 'id-card' },
-    { id: 'calendar', label: 'Events Calendar', icon: 'calendar' },
-  ];
+  const sectionParam = searchParams.get('section');
+  const activeSection = MENU_ITEMS.some((item) => item.id === sectionParam)
+    ? sectionParam
+    : DEFAULT_SECTION;
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isAdminLoggedIn');
@@ -35,6 +49,20 @@ const AdminDashboard = () => {
 
     setAdminUser('rekhawpc');
   }, [navigate]);
+
+  useEffect(() => {
+    if (!sectionParam || !MENU_ITEMS.some((item) => item.id === sectionParam)) {
+      setSearchParams({ section: DEFAULT_SECTION }, { replace: true });
+    }
+  }, [sectionParam, setSearchParams]);
+
+  const handleSectionChange = (sectionId) => {
+    if (sectionId === activeSection) {
+      return;
+    }
+
+    setSearchParams({ section: sectionId }, { replace: true });
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('isAdminLoggedIn');
@@ -57,6 +85,14 @@ const AdminDashboard = () => {
         return <IDCardsManager />;
       case 'calendar':
         return <CalendarManager />;
+      case 'committee':
+        return <CommitteeMembersManager />;
+      case 'referees':
+        return <RefereesManager />;
+      case 'partnerships':
+        return <PartnershipsManager />;
+      case 'inkspire':
+        return <InkspireManager />;
       default:
         return <OverviewSection />;
     }
@@ -77,11 +113,11 @@ const AdminDashboard = () => {
         </div>
 
         <nav className="sidebar-nav">
-          {menuItems.map(item => (
+          {MENU_ITEMS.map(item => (
             <button
               key={item.id}
               className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
-              onClick={() => setActiveSection(item.id)}
+              onClick={() => handleSectionChange(item.id)}
             >
               <i className={`fas fa-${item.icon}`}></i>
               {isSidebarOpen && <span>{item.label}</span>}
@@ -104,7 +140,7 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <main className="admin-content">
         <header className="content-header">
-          <h1>{menuItems.find(item => item.id === activeSection)?.label || 'Dashboard'}</h1>
+          <h1>{MENU_ITEMS.find(item => item.id === activeSection)?.label || 'Dashboard'}</h1>
           <div className="header-actions">
             <button className="btn-icon" title="Notifications">
               <i className="fas fa-bell"></i>
@@ -133,7 +169,7 @@ const OverviewSection = () => {
     events: { value: '...', loading: true }
   });
 
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1';
+  const API_URL = process.env.REACT_APP_API_URL || '/api/v1';
 
   const fetchRealData = React.useCallback(async () => {
     try {

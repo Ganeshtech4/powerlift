@@ -1,22 +1,11 @@
-// src/components/BrandOne.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
-// Import local images
-import BrandImg1 from '../../assets/images/brand/brand-1-1.jpg';
-import BrandImg2 from '../../assets/images/brand/brand-1-2.jpg';
-import BrandImg3 from '../../assets/images/brand/brand-1-3.jpg';
-import BrandImg4 from '../../assets/images/brand/brand-1-4.jpg';
-import BrandImg5 from '../../assets/images/brand/brand-1-5.jpg';
-import BrandImg6 from '../../assets/images/brand/brand-1-6.jpg';
-import BrandImg7 from '../../assets/images/brand/brand-1-7.jpg';
-import BrandImg8 from '../../assets/images/brand/brand-1-8.jpg';
-import BrandImg9 from '../../assets/images/brand/brand-1-9.jpg';
+import { fetchPartnerships } from '../../utils/partnershipApi';
 
 
 
@@ -72,45 +61,46 @@ const swiperOptions = {
   },
 };
 
-// Dynamic data array
-const brandData = [
-  { src: BrandImg1, alt: 'Brand 1' },
-  { src: BrandImg2, alt: 'Brand 2' },
-  { src: BrandImg3, alt: 'Brand 3' },
-  { src: BrandImg4, alt: 'Brand 4' },
-  { src: BrandImg5, alt: 'Brand 5' },
-  { src: BrandImg6, alt: 'Brand 6' },
-  { src: BrandImg7, alt: 'Brand 7' },
-  { src: BrandImg8, alt: 'Brand 8' },
-  { src: BrandImg9, alt: 'Brand 9' },
-
-  { src: BrandImg1, alt: 'Brand 1' },
-  { src: BrandImg2, alt: 'Brand 2' },
-  { src: BrandImg3, alt: 'Brand 3' },
-  { src: BrandImg4, alt: 'Brand 4' },
-  { src: BrandImg5, alt: 'Brand 5' },
-  { src: BrandImg6, alt: 'Brand 6' },
-  { src: BrandImg7, alt: 'Brand 7' },
-  { src: BrandImg8, alt: 'Brand 8' },
-  { src: BrandImg9, alt: 'Brand 9' },
-];
-
 export default function BrandOne() {
+  const [partnerships, setPartnerships] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadPartnerships = async () => {
+      try {
+        const data = await fetchPartnerships();
+        if (isMounted) {
+          setPartnerships(data.filter((item) => item.logoUrl));
+        }
+      } catch (error) {
+        if (isMounted) {
+          setPartnerships([]);
+        }
+      }
+    };
+
+    loadPartnerships();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (partnerships.length === 0) {
+    return null;
+  }
+
   return (
-    <>
-      {/* Brand One Start */}
-      
       <section className="brand-one">
         <div className="container">
           <h2 className="ourcollaborations">Our Collaborations</h2>
-          {/* Swiper Slider */}
           <Swiper {...swiperOptions}>
-            {brandData.map((brand, index) => (
-              <SwiperSlide key={index}>
+            {partnerships.map((brand) => (
+              <SwiperSlide key={brand.id}>
                 <div className="brand-one__single">
                   <div className="brand-one__img">
-                    <img src={brand.src} alt={brand.alt} />
-                    
+                    <img src={brand.logoUrl} alt={brand.title} />
                   </div>
                 </div>
               </SwiperSlide>
@@ -118,7 +108,5 @@ export default function BrandOne() {
           </Swiper>
         </div>
       </section>
-      {/* Brand One End */}
-    </>
   );
 }

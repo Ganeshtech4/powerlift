@@ -1,6 +1,16 @@
-/* Districts Page Styles - WPC Telangana Theme (Red & Blue) */
+/* Districts Page Styles */
 
 .districts-loading {
+  --district-bg: #f4f0e8;
+  --district-panel: rgba(255, 255, 255, 0.97);
+  --district-panel-strong: #faf7f1;
+  --district-border: rgba(46, 40, 31, 0.14);
+  --district-border-strong: rgba(46, 40, 31, 0.24);
+  --district-text: #1f1b15;
+  --district-muted: #544b40;
+  --district-accent: #8d7758;
+  --district-accent-soft: #d8c8ae;
+  --district-success: #556b55;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,14 +18,16 @@
   min-height: 50vh;
   gap: 1.5rem;
   padding: 4rem 0;
+  color: var(--district-muted);
+  background: linear-gradient(180deg, #f7f3ed 0%, #efe9e0 100%);
 }
 
 .loading-spinner {
   width: 70px;
   height: 70px;
-  border: 6px solid #f3f3f3;
-  border-top-color: #ff4444;
-  border-right-color: #4da6ff;
+  border: 6px solid rgba(47, 41, 32, 0.1);
+  border-top-color: var(--district-accent);
+  border-right-color: #c1ab84;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -27,7 +39,19 @@
 }
 
 .districts-section {
-  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  --district-bg: #f4f0e8;
+  --district-panel: rgba(255, 255, 255, 0.97);
+  --district-panel-strong: #faf7f1;
+  --district-border: rgba(46, 40, 31, 0.14);
+  --district-border-strong: rgba(46, 40, 31, 0.24);
+  --district-text: #1f1b15;
+  --district-muted: #544b40;
+  --district-accent: #8d7758;
+  --district-accent-soft: #d8c8ae;
+  --district-success: #556b55;
+  background:
+    radial-gradient(circle at top left, rgba(141, 119, 88, 0.16), transparent 28%),
+    linear-gradient(180deg, #f7f3ed 0%, #efe9e0 100%);
   position: relative;
 }
 
@@ -37,8 +61,10 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 200px;
-  background: linear-gradient(135deg, rgba(255, 68, 68, 0.05) 0%, rgba(77, 166, 255, 0.05) 100%);
+  height: 240px;
+  background:
+    linear-gradient(135deg, rgba(216, 200, 174, 0.24) 0%, rgba(255, 255, 255, 0) 72%),
+    repeating-linear-gradient(90deg, rgba(47, 41, 32, 0.03) 0 1px, transparent 1px 56px);
   z-index: 0;
 }
 
@@ -48,65 +74,144 @@
 }
 
 .section-padding {
-  padding: 100px 0;
+  padding: 96px 0 112px;
 }
 
-.mb-60 {
-  margin-bottom: 60px;
+.districts-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.9fr);
+  gap: 28px;
+  align-items: stretch;
+  margin-bottom: 34px;
 }
 
-.section-title {
-  margin-bottom: 3rem;
+.districts-overview__copy,
+.districts-overview__stats,
+.districts-directory-header,
+.district-card,
+.districts-state-card,
+.modal-content {
+  border: 1px solid var(--district-border);
+  border-radius: 30px;
+  background: var(--district-panel);
+  box-shadow: 0 24px 60px rgba(28, 24, 18, 0.08);
+  backdrop-filter: blur(10px);
 }
 
-.section-title .title {
-  font-size: 3.2rem;
-  font-weight: 800;
-  color: #1a1a1a;
-  margin-bottom: 1rem;
-  line-height: 1.2;
+.districts-overview__copy {
+  padding: 34px;
+}
+
+.districts-overview__eyebrow,
+.districts-directory-header__eyebrow,
+.district-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--district-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  letter-spacing: -1px;
-  position: relative;
 }
 
-.section-title .title::after {
+.districts-overview__eyebrow::before,
+.districts-directory-header__eyebrow::before,
+.district-kicker::before {
   content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 4px;
-  background: linear-gradient(90deg, #ff4444 0%, #4da6ff 100%);
-  border-radius: 2px;
+  width: 32px;
+  height: 1px;
+  background: currentColor;
 }
 
-.section-title .desc {
-  font-size: 1.1rem;
-  color: #666;
-  max-width: 700px;
-  margin: 0 auto;
-  line-height: 1.6;
+.districts-overview__title,
+.districts-directory-header__title,
+.modal-title {
+  margin: 16px 0 0;
+  color: var(--district-text);
+  font-family: "Bodoni MT", "Didot", "Times New Roman", serif;
+  letter-spacing: -0.03em;
 }
 
-/* Districts Grid */
+.districts-overview__title {
+  max-width: 13ch;
+  font-size: clamp(2.4rem, 4vw, 4.25rem);
+  line-height: 0.94;
+}
+
+.districts-overview__desc,
+.districts-directory-header__text,
+.available-text,
+.president-description,
+.modal-subtitle {
+  color: var(--district-muted);
+  line-height: 1.8;
+}
+
+.districts-overview__desc {
+  max-width: 62ch;
+  margin: 18px 0 0;
+}
+
+.districts-overview__stats {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.districts-stat-card {
+  padding: 24px 22px;
+  border: 1px solid var(--district-border);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.districts-stat-card__label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--district-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.districts-stat-card strong {
+  color: var(--district-text);
+  font-family: "Bodoni MT", "Didot", serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1;
+}
+
+.districts-directory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  padding: 24px 30px;
+  margin-bottom: 28px;
+}
+
+.districts-directory-header__title {
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  line-height: 0.98;
+}
+
+.districts-directory-header__text {
+  max-width: 42ch;
+  margin: 0;
+}
+
 .districts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 35px;
-  margin-top: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 26px;
 }
 
 .district-card {
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid transparent;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   position: relative;
-  backdrop-filter: blur(10px);
 }
 
 .district-card::before {
@@ -115,11 +220,11 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 6px;
-  background: linear-gradient(90deg, #ff4444 0%, #4da6ff 100%);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(141, 119, 88, 0.2), rgba(141, 119, 88, 0.9), rgba(141, 119, 88, 0.2));
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s ease;
 }
 
 .district-card:hover::before {
@@ -127,130 +232,132 @@
 }
 
 .district-card:hover {
-  transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-  border-color: #ff4444;
+  transform: translateY(-6px);
+  box-shadow: 0 30px 70px rgba(28, 24, 18, 0.12);
+  border-color: var(--district-border-strong);
 }
 
 .district-header {
-  padding: 2rem 2.2rem;
-  background: linear-gradient(135deg, #4da6ff 0%, #3399ff 100%);
-  color: #fff;
+  padding: 28px 28px 24px;
+  color: var(--district-text);
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
   position: relative;
   overflow: hidden;
+  border-bottom: 1px solid var(--district-border);
 }
 
 .district-header::before {
   content: '';
   position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 200px;
-  height: 200px;
-  background: rgba(255, 255, 255, 0.1);
+  inset: auto -12% -42% auto;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(216, 200, 174, 0.32), rgba(216, 200, 174, 0));
   border-radius: 50%;
-  transition: transform 0.6s ease;
+  transition: transform 0.4s ease;
 }
 
 .district-card:hover .district-header::before {
-  transform: scale(1.5);
+  transform: scale(1.08);
 }
 
 .district-card.available .district-header {
-  background: linear-gradient(135deg, #ff4444 0%, #ff3333 100%);
+  background: linear-gradient(180deg, rgba(255, 249, 244, 0.98), rgba(248, 239, 228, 0.96));
 }
 
 .district-card.assigned .district-header {
-  background: linear-gradient(135deg, #4da6ff 0%, #3399ff 100%);
+  background: linear-gradient(180deg, rgba(251, 249, 244, 0.98), rgba(243, 237, 228, 0.98));
 }
 
 .district-name {
-  font-size: 1.7rem;
-  font-weight: 800;
-  margin: 0;
-  line-height: 1.3;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 12px 0 0;
+  color: var(--district-text);
+  font-family: "Bodoni MT", "Didot", serif;
+  font-size: 2rem;
+  line-height: 0.98;
   position: relative;
   z-index: 1;
 }
 
 .status-badge {
-  padding: 0.6rem 1.4rem;
-  border-radius: 30px;
-  font-size: 0.95rem;
+  padding: 0.72rem 1rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
   font-weight: 700;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.76);
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   width: fit-content;
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--district-border);
   position: relative;
   z-index: 1;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  color: var(--district-text);
+}
+
+.status-badge.available {
+  background: rgba(255, 247, 242, 0.9);
+}
+
+.status-badge.assigned {
+  background: rgba(245, 248, 243, 0.9);
 }
 
 .status-badge i {
-  font-size: 1rem;
+  color: var(--district-accent);
 }
 
 .district-body {
-  padding: 2.5rem 2rem;
+  padding: 28px;
 }
 
-/* Available Info */
 .available-info {
   text-align: center;
 }
 
 .available-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 1.5rem;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ff4444 0%, #ff3333 100%);
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 18px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #b4956f 0%, #8d7758 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 2.5rem;
-  box-shadow: 0 8px 20px rgba(255, 68, 68, 0.3);
+  font-size: 2rem;
+  box-shadow: 0 16px 36px rgba(141, 119, 88, 0.26);
 }
 
 .available-text {
-  color: #666;
-  font-size: 1rem;
-  margin-bottom: 2rem;
-  line-height: 1.7;
+  margin-bottom: 24px;
 }
 
-/* President Info */
 .president-info {
   text-align: center;
 }
 
 .president-photo {
-  width: 150px;
-  height: 150px;
-  margin: 0 auto 1.8rem;
-  border-radius: 50%;
+  width: 168px;
+  height: 168px;
+  margin: 0 auto 20px;
+  border-radius: 30px;
   overflow: hidden;
-  border: 6px solid #4da6ff;
-  box-shadow: 0 12px 30px rgba(77, 166, 255, 0.3);
+  border: 1px solid var(--district-border);
+  box-shadow: 0 18px 42px rgba(28, 24, 18, 0.12);
   position: relative;
-  background: #f8f9fa;
-  transition: all 0.4s ease;
+  background: var(--district-panel-strong);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .district-card:hover .president-photo {
-  transform: scale(1.08);
-  box-shadow: 0 15px 40px rgba(77, 166, 255, 0.4);
+  transform: scale(1.03);
+  box-shadow: 0 22px 52px rgba(28, 24, 18, 0.16);
 }
 
 .president-photo img {
@@ -263,52 +370,57 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f0f0f0 0%, #d0d0d0 100%);
-  color: #666;
-  font-size: 3.5rem;
+  background: linear-gradient(135deg, #ddd5c8 0%, #efe7da 100%);
+  color: rgba(47, 41, 32, 0.34);
+  font-size: 3rem;
 }
 
 .president-name {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: #1a1a1a;
-  margin-bottom: 1.2rem;
-  line-height: 1.3;
-  letter-spacing: -0.5px;
+  margin: 0;
+  color: var(--district-text);
+  font-family: "Bodoni MT", "Didot", serif;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.president-label {
+  margin: 10px 0 16px;
+  color: var(--district-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .president-description {
-  color: #666;
-  line-height: 1.7;
-  margin-bottom: 1.8rem;
-  font-size: 0.95rem;
+  margin-bottom: 22px;
 }
 
 .contact-info {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .contact-link {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  color: #1a1a1a;
+  gap: 14px;
+  color: var(--district-text);
   text-decoration: none;
-  padding: 1rem 1.2rem;
-  border-radius: 10px;
-  background: #f8f9fa;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.66);
   transition: all 0.3s ease;
   font-size: 0.95rem;
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--district-border);
 }
 
 .contact-link:hover {
-  background: #4da6ff;
+  background: var(--district-text);
   color: #fff;
-  border-color: #4da6ff;
+  border-color: var(--district-text);
   transform: translateX(5px);
 }
 
@@ -323,72 +435,97 @@
   text-align: left;
 }
 
-/* Buttons */
 .btn-enquiry {
   width: 100%;
-  padding: 1.2rem 2rem;
-  background: linear-gradient(135deg, #ff4444 0%, #ff3333 100%);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.1rem;
+  padding: 1rem 1.4rem;
+  background: var(--district-text);
+  color: #f8f4ee;
+  border: 1px solid var(--district-text);
+  border-radius: 999px;
+  font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
-  box-shadow: 0 6px 20px rgba(255, 68, 68, 0.35);
+  gap: 0.7rem;
+  box-shadow: 0 16px 30px rgba(28, 24, 18, 0.12);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  position: relative;
-  overflow: hidden;
+  letter-spacing: 0.14em;
 }
 
-.btn-enquiry::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+.btn-enquiry,
+.btn-enquiry span,
+.btn-enquiry i {
+  color: #f8f4ee !important;
 }
 
-.btn-enquiry:hover::before {
-  width: 300px;
-  height: 300px;
+.btn-enquiry--compact {
+  width: auto;
+  margin: 0 auto;
 }
 
 .btn-enquiry:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 10px 30px rgba(255, 68, 68, 0.5);
-  background: linear-gradient(135deg, #ff3333 0%, #ff4444 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 34px rgba(28, 24, 18, 0.18);
+  background: var(--district-accent);
+  border-color: var(--district-accent);
+}
+
+.btn-enquiry:hover,
+.btn-enquiry:hover span,
+.btn-enquiry:hover i {
+  color: #ffffff !important;
 }
 
 .btn-enquiry i {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
-/* Modal Styles */
+.districts-state-card {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 14px;
+  padding: 56px 32px;
+  text-align: center;
+  color: var(--district-muted);
+}
+
+.districts-state-card i {
+  font-size: 3rem;
+  color: rgba(47, 41, 32, 0.28);
+}
+
+.districts-state-card h3 {
+  margin: 0;
+  color: var(--district-text);
+  font-family: "Bodoni MT", "Didot", serif;
+  font-size: 2rem;
+}
+
+.districts-state-card p {
+  max-width: 54ch;
+  margin: 0;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(20, 18, 14, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 99999;
   padding: 1.5rem;
   animation: fadeIn 0.3s ease;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
 }
 
 @keyframes fadeIn {
@@ -402,16 +539,13 @@
 }
 
 .modal-content {
-  background: #fff;
-  border-radius: 20px;
   max-width: 600px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  padding: 3rem;
+  padding: 2.4rem;
   position: relative;
   animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes slideUp {
@@ -430,9 +564,9 @@
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
-  background: #ff4444;
-  color: #fff;
-  border: none;
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--district-text);
+  border: 1px solid var(--district-border);
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -446,49 +580,55 @@
 }
 
 .modal-close:hover {
-  background: #ff3333;
-  transform: rotate(90deg) scale(1.1);
+  background: var(--district-text);
+  color: #fff;
+  transform: rotate(90deg) scale(1.05);
 }
 
 .modal-title {
-  font-size: 2rem;
-  color: #1a1a1a;
-  margin-bottom: 2rem;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
   padding-right: 3rem;
-  font-weight: 700;
   line-height: 1.3;
-  border-bottom: 3px solid #ff4444;
-  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--district-border);
+  padding-bottom: 16px;
+}
+
+.modal-subtitle {
+  margin: 0 0 24px;
 }
 
 .enquiry-form .form-group {
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.4rem;
 }
 
 .enquiry-form label {
   display: block;
-  font-weight: 600;
-  color: #1a1a1a;
+  font-weight: 700;
+  color: var(--district-text);
   margin-bottom: 0.7rem;
-  font-size: 1rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .enquiry-form .form-control {
   width: 100%;
-  padding: 1rem 1.2rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--district-border);
+  border-radius: 16px;
   font-size: 1rem;
   transition: all 0.3s ease;
   font-family: inherit;
-  background: #f8f9fa;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.72);
 }
 
 .enquiry-form .form-control:focus {
   outline: none;
-  border-color: #4da6ff;
+  border-color: var(--district-border-strong);
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(77, 166, 255, 0.1);
+  box-shadow: 0 0 0 4px rgba(141, 119, 88, 0.08);
 }
 
 .enquiry-form textarea.form-control {
@@ -498,13 +638,13 @@
 
 .btn-submit {
   width: 100%;
-  padding: 1.2rem 2rem;
-  background: linear-gradient(135deg, #ff4444 0%, #ff3333 100%);
+  padding: 1.05rem 1.6rem;
+  background: var(--district-text);
   color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  border: 1px solid var(--district-text);
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -512,12 +652,16 @@
   justify-content: center;
   gap: 0.7rem;
   margin-top: 1rem;
-  box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+  box-shadow: 0 16px 30px rgba(28, 24, 18, 0.12);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
 }
 
 .btn-submit:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 68, 68, 0.4);
+  box-shadow: 0 20px 34px rgba(28, 24, 18, 0.18);
+  background: var(--district-accent);
+  border-color: var(--district-accent);
 }
 
 .btn-submit:disabled {
@@ -531,9 +675,17 @@
 
 /* Responsive Design */
 @media (max-width: 1200px) {
+  .districts-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .districts-directory-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .districts-grid {
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 30px;
   }
 }
 
@@ -543,28 +695,21 @@
     gap: 25px;
   }
 
-  .section-title .title {
-    font-size: 2.4rem;
-  }
-
-  .section-title .desc {
-    font-size: 1rem;
-  }
-
   .district-header {
-    padding: 1.6rem 1.8rem;
+    padding: 22px;
+    flex-direction: column;
   }
 
   .district-name {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
 
   .district-body {
-    padding: 2rem 1.8rem;
+    padding: 22px;
   }
 
   .modal-content {
-    padding: 2.5rem 2rem;
+    padding: 2rem 1.5rem;
   }
 
   .modal-title {
@@ -572,8 +717,8 @@
   }
 
   .president-photo {
-    width: 130px;
-    height: 130px;
+    width: 144px;
+    height: 144px;
   }
 
   .section-padding {
@@ -582,13 +727,18 @@
 }
 
 @media (max-width: 480px) {
-  .section-title .title {
-    font-size: 2rem;
-    letter-spacing: -0.5px;
+  .districts-overview__copy,
+  .districts-overview__stats,
+  .districts-directory-header,
+  .district-body,
+  .district-header {
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
-  .district-header {
-    padding: 1.2rem;
+  .districts-overview__title,
+  .districts-directory-header__title {
+    font-size: 2rem;
   }
 
   .district-name {
@@ -596,8 +746,7 @@
   }
 
   .status-badge {
-    font-size: 0.85rem;
-    padding: 0.4rem 1rem;
+    font-size: 0.72rem;
   }
 
   .contact-link {
@@ -622,10 +771,10 @@
 }
 
 .modal-content::-webkit-scrollbar-thumb {
-  background: #ff4444;
+  background: var(--district-accent);
   border-radius: 10px;
 }
 
 .modal-content::-webkit-scrollbar-thumb:hover {
-  background: #ff3333;
+  background: #756143;
 }

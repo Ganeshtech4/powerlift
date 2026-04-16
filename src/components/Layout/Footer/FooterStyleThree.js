@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import footerShape1 from '../../../assets/images/shapes/site-footer-three-bg-shape.png';
 
-const footerLogo = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const footerLogo = `${process.env.PUBLIC_URL}/images/logo-wpc.png`;
 
 const footerData = {
   newsletterTitle: 'Subscribe to Our',

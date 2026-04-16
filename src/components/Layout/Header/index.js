@@ -4,7 +4,35 @@ import MenuItems from './MenuItems';
 import MobileMenu from './MobileMenu';
 import SearchPopup from './SearchPopup';
 import Sidebar from './Sidebar';
-const defaultLogo = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const defaultLogo = `${process.env.PUBLIC_URL}/images/logo-wpc.png`;
+
+const getSafeImageUrl = (url) => encodeURI(url || defaultLogo);
+
+const handleLogoError = (event) => {
+    if (event.currentTarget.dataset.fallbackApplied === 'true') {
+        return;
+    }
+
+    event.currentTarget.dataset.fallbackApplied = 'true';
+    event.currentTarget.src = getSafeImageUrl(defaultLogo);
+};
+
+const BrandLogo = ({ navLogo }) => (
+    <div className="main-menu__logo">
+        <Link to="/" className="logo-link" aria-label="Rekha WPC Telangana home">
+            <img
+                src={getSafeImageUrl(navLogo)}
+                alt="Rekha WPC Telangana"
+                className="logo-img"
+                onError={handleLogoError}
+            />
+            <div className="logo-text">
+                <span className="logo-title">Rekha</span>
+                <span className="logo-subtitle">WPC Telangana</span>
+            </div>
+        </Link>
+    </div>
+);
 
 const Header = (props) => {
     const { parentMenu, secondParentMenu, activeMenu, navImg } = props;
@@ -17,7 +45,6 @@ const Header = (props) => {
     const handleMobileMenu = (e) => {
         e?.preventDefault();
         e?.stopPropagation();
-        console.log('Mobile menu toggle clicked', !isMobileMenu);
         setMobileMenu(!isMobileMenu);
         if (!isMobileMenu) {
             document.body.classList.add("mobile-menu-visible");
@@ -49,33 +76,18 @@ const Header = (props) => {
                 <div className="main-menu__wrapper">
                     <div className="main-menu__wrapper-inner">
                         <div className="main-menu__left">
-                        <div className="main-menu__logo">
-  <Link to="/" className="logo-link">
-    <img src={navLogo} alt="Logo" className="logo-img" />
-    <div className="logo-text">
-      <span className="logo-title" style={{ color: 'red' }}>Rekha</span>
-      <br />
-      <span className="logo-subtitle">WPC Telangana</span>
-    </div>
-  </Link>
-</div>
+                                                        <BrandLogo navLogo={navLogo} />
 
                         </div>
                         <div className="main-menu__main-menu-box">
-                        <div 
+                                                <button 
                             className="mobile-nav__toggler" 
                             onClick={handleMobileMenu}
-                            role="button"
                             aria-label="Toggle mobile menu"
-                            style={{
-                                cursor: 'pointer',
-                                position: 'relative',
-                                zIndex: 10000,
-                                touchAction: 'manipulation'
-                            }}
+                                                        type="button"
                         >
                             <i className="fa fa-bars" />
-                        </div>
+                                                </button>
                         <ul className="main-menu__list">
                             <MenuItems
                                 parentMenu={parentMenu}
@@ -101,32 +113,17 @@ const Header = (props) => {
                         <div className="main-menu__wrapper">
                             <div className="main-menu__wrapper-inner">
                                 <div className="main-menu__left">
-                                <div className="main-menu__logo">
-                                   <Link to="/" className="logo-link">
-                                        <img src={navLogo} alt="Logo" className="logo-img" />
-                                        <div className="logo-text">
-                                        <span className="logo-title">Rekha</span>
-                                        <br />
-                                        <span className="logo-subtitle">WPC Telangana</span>
-                                        </div>
-                                    </Link>
-                                </div>
+                                    <BrandLogo navLogo={navLogo} />
                                 </div>
                                 <div className="main-menu__main-menu-box">
-                                <div 
+                                <button 
                                     className="mobile-nav__toggler" 
                                     onClick={handleMobileMenu}
-                                    role="button"
                                     aria-label="Toggle mobile menu"
-                                    style={{
-                                        cursor: 'pointer',
-                                        position: 'relative',
-                                        zIndex: 10000,
-                                        touchAction: 'manipulation'
-                                    }}
+                                    type="button"
                                 >
                                     <i className="fa fa-bars" />
-                                </div>
+                                </button>
                                 <ul className="main-menu__list">
                                     <MenuItems
                                         parentMenu={parentMenu}

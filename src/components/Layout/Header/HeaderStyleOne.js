@@ -5,7 +5,7 @@ import MobileMenu from './MobileMenu';
 import SearchPopup from './SearchPopup';
 import Sidebar from './Sidebar';
 // Use the new WPC logo from public folder
-const navLogo = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const navLogo = `${process.env.PUBLIC_URL}/images/logo-wpc.png`;
 
 const HeaderStyleOne = (props) => {
     const { parentMenu, secondParentMenu, activeMenu } = props;

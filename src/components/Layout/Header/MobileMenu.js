@@ -1,7 +1,18 @@
 "use client";
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-const MobileLogo = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const MobileLogo = `${process.env.PUBLIC_URL}/images/logo-wpc.png`;
+
+const getSafeImageUrl = (url) => encodeURI(url || MobileLogo);
+
+const handleLogoError = (event) => {
+  if (event.currentTarget.dataset.fallbackApplied === 'true') {
+    return;
+  }
+
+  event.currentTarget.dataset.fallbackApplied = 'true';
+  event.currentTarget.src = getSafeImageUrl(MobileLogo);
+};
 
 const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
   const [openSubmenu, setOpenSubmenu] = useState(null);
@@ -33,20 +44,20 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
             onClick={handleMobileMenu}
             role="button"
             aria-label="Close mobile menu"
-            style={{
-              cursor: 'pointer',
-              zIndex: 10001,
-              touchAction: 'manipulation'
-            }}
           >
             <i className="fa fa-times" />
           </span>
           <div className="logo-box">
-            <Link to="/" onClick={() => handleLinkClick('/')} aria-label="logo image" className="logo-link" style={{ display: 'flex', alignItems: 'center' }}>
-              <img src={MobileLogo} alt="Logo" className="logo-img" style={{ maxHeight: '60px', width: 'auto' }} />
-              <div className="logo-text" style={{ display: 'inline-block', verticalAlign: 'middle', marginLeft: '10px', lineHeight: '1.2' }}>
-                <span className="logo-title" style={{ display: 'block', fontSize: '18px', fontWeight: 'bold', color: '#333', marginBottom: '2px' }}>Rekha</span>
-                <span className="logo-subtitle" style={{ display: 'block', fontSize: '12px', color: '#666', marginTop: '0' }}>WPC Telangana</span>
+            <Link to="/" onClick={() => handleLinkClick('/')} aria-label="Rekha WPC Telangana home" className="logo-link mobile-logo-link">
+              <img
+                src={getSafeImageUrl(MobileLogo)}
+                alt="Rekha WPC Telangana"
+                className="logo-img mobile-logo-img"
+                onError={handleLogoError}
+              />
+              <div className="logo-text mobile-logo-text">
+                <span className="logo-title">Rekha</span>
+                <span className="logo-subtitle">WPC Telangana</span>
               </div>
             </Link>
           </div>
@@ -112,7 +123,7 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
               </li>
 
               <li>
-                <Link to="/inspire" onClick={(e) => { e.preventDefault(); handleLinkClick('/inspire'); }}>
+                <Link to="/inkspire" onClick={(e) => { e.preventDefault(); handleLinkClick('/inkspire'); }}>
                   Inkspire
                 </Link>
               </li>

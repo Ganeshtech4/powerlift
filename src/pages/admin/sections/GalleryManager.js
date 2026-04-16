@@ -3,6 +3,46 @@ import { useNavigate } from 'react-router-dom';
 import { axiosInstance, API_URL } from '../../../config/axiosConfig';
 import './GalleryManager.css';
 
+const getBlogCategory = (blog) => (blog?.category || 'uncategorized').toLowerCase();
+
+const formatCategoryLabel = (category) => {
+    if (!category) {
+        return 'Uncategorized';
+    }
+
+    return category
+        .split(/[-_\s]+/)
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(' ');
+};
+
+const resolveBlogImage = (blog) => {
+    if (blog?.thumbnail_url) {
+        return blog.thumbnail_url;
+    }
+
+    if (Array.isArray(blog?.images) && blog.images.length > 0) {
+        return blog.images[0];
+    }
+
+    return null;
+};
+
+const getBlogExcerpt = (blog) => {
+    const excerpt = blog?.excerpt?.trim();
+    if (excerpt) {
+        return excerpt;
+    }
+
+    const content = blog?.content?.trim();
+    if (!content) {
+        return 'No summary available for this post yet.';
+    }
+
+    return content.length > 100 ? `${content.substring(0, 100)}...` : content;
+};
+
 const GalleryManager = () => {
     const navigate = useNavigate();
     const [blogs, setBlogs] = useState([]);
@@ -10,8 +50,6 @@ const GalleryManager = () => {
     const [showDetailView, setShowDetailView] = useState(false);
     const [viewingBlog, setViewingBlog] = useState(null);
     const [activeCategory, setActiveCategory] = useState('all');
-
-    const categories = ['all', 'District', 'State', 'Nationals', 'Internationals'];
 
     useEffect(() => {
         fetchBlogs();
@@ -74,9 +112,11 @@ const GalleryManager = () => {
         }
     };
 
+    const categories = ['all', ...new Set(blogs.map((blog) => getBlogCategory(blog)))];
+
     const filteredBlogs = activeCategory === 'all' 
         ? blogs 
-        : blogs.filter(blog => blog.category === activeCategory);
+        : blogs.filter(blog => getBlogCategory(blog) === activeCategory);
 
     return (
         <div className="gallery-manager">
@@ -94,7 +134,7 @@ const GalleryManager = () => {
                         className={`filter-btn ${activeCategory === cat ? 'active' : ''}`}
                         onClick={() => setActiveCategory(cat)}
                     >
-                        {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                        {cat === 'all' ? 'All' : formatCategoryLabel(cat)}
                     </button>
                 ))}
             </div>
@@ -112,27 +152,36 @@ const GalleryManager = () => {
                 </div>
             ) : (
                 <div className="posts-grid">
-                    {filteredBlogs.map(blog => (
+                    {filteredBlogs.map(blog => {
+                        const previewImage = resolveBlogImage(blog);
+
+                        return (
                         <div 
                             key={blog.id} 
                             className="post-card"
                             onClick={() => handleViewDetails(blog)}
                         >
-                            {blog.thumbnail_url && (
-                                <div className="post-image">
-                                    <img src={blog.thumbnail_url} alt={blog.title} />
+                            <div className="post-image">
+                                {previewImage ? (
+                                    <img src={previewImage} alt={blog.title} />
+                                ) : (
+                                    <div className="post-image-placeholder">
+                                        <i className="fas fa-image"></i>
+                                        <span>No image uploaded</span>
+                                    </div>
+                                )}
                                     <span className="category-badge">{blog.category}</span>
                                     <span className={`publish-badge ${blog.is_published ? 'published' : 'draft'}`}>
                                         {blog.is_published ? 'Published' : 'Draft'}
                                     </span>
-                                </div>
-                            )}
+                            </div>
                             <div className="post-content">
                                 <h3>{blog.title}</h3>
-                                <p className="post-excerpt">{blog.excerpt || blog.content?.substring(0, 100)}...</p>
+                                <p className="post-excerpt">{getBlogExcerpt(blog)}</p>
                                 <div className="post-meta">
                                     <span><i className="far fa-calendar"></i> {new Date(blog.created_at).toLocaleDateString()}</span>
                                     <span><i className="fas fa-user"></i> {blog.author}</span>
+                                    <span><i className="fas fa-images"></i> {Array.isArray(blog.images) ? blog.images.length : 0}</span>
                                 </div>
                                 <div className="post-actions" onClick={(e) => e.stopPropagation()}>
                                     <button 
@@ -146,7 +195,7 @@ const GalleryManager = () => {
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    );})}
                 </div>
             )}
 

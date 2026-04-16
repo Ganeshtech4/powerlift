@@ -99,7 +99,7 @@ const MenuItems = ({ parentMenu, secondParentMenu, activeMenu }) => {
       </li>
 
       <li className={parentMenu === 'Resources' ? ' current-menu-item' : ''}>
-        <Link to="/inspire" className={activeMenu === '/inspire' ? 'active-menu' : ''}>
+        <Link to="/inkspire" className={activeMenu === '/inkspire' ? 'active-menu' : ''}>
           Inkspire
         </Link>
 

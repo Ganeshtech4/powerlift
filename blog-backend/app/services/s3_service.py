@@ -5,6 +5,7 @@ import boto3
 from botocore.exceptions import ClientError
 from typing import List, BinaryIO, Optional
 import io
+from urllib.parse import quote
 from PIL import Image
 
 from app.core.config import settings
@@ -196,7 +197,12 @@ class S3Service:
     
     def _get_public_url(self, key: str) -> str:
         """Generate public URL for S3 object"""
-        return f"https://{self.bucket}.s3.{settings.AWS_REGION}.amazonaws.com/{key}"
+        encoded_key = quote(key, safe='/')
+        return f"https://{self.bucket}.s3.{settings.AWS_REGION}.amazonaws.com/{encoded_key}"
+
+    def get_public_url(self, key: str) -> str:
+        """Expose the regional public URL for objects that are directly readable."""
+        return self._get_public_url(key)
     
     def get_presigned_url(self, key: str, expiration: int = 3600) -> str:
         """Generate presigned URL for temporary access"""

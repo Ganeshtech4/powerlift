@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './BlogMain.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1';
+const API_URL = process.env.REACT_APP_API_URL || '/api/v1';
 const SERVER_URL = process.env.REACT_APP_SERVER_URL || '';
 
 const BlogMain = () => {

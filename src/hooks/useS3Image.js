@@ -24,9 +24,9 @@ const useS3Image = (s3Key, expiresIn = 3600) => {
         setLoading(true);
         setError(null);
 
-        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+        const apiUrl = process.env.REACT_APP_API_URL || '/api/v1';
         const response = await fetch(
-          `${apiUrl}/api/s3/presigned-url/${encodeURIComponent(s3Key)}?expiresIn=${expiresIn}`
+          `${apiUrl}/s3/presigned-url/${encodeURIComponent(s3Key)}?expiresIn=${expiresIn}`
         );
 
         if (!response.ok) {
