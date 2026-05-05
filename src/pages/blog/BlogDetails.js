@@ -41,16 +41,20 @@ const BlogDetails = () => {
         if (response.ok) {
           const blogData = await response.json();
           
-          // Fetch blog images from S3
-          if (blogData.image_count > 0) {
+          // Populate blogImages from images array in blog data (direct S3 URLs)
+          if (blogData.images && blogData.images.length > 0) {
+            blogData.blogImages = blogData.images.map((url, index) => ({ url, name: `image-${index}` }));
+          } else if (blogData.image_count > 0) {
+            // Fallback: try S3 folder listing
             try {
               const imagesResponse = await fetch(`${API_URL}/images/${id}/list`);
               if (imagesResponse.ok) {
                 const imagesData = await imagesResponse.json();
-                // Filter out thumbnail and add images to blog data
                 blogData.blogImages = imagesData.images
                   .filter(url => !url.endsWith('/thumbnail.jpg'))
                   .map((url, index) => ({ url, name: `image-${index}` }));
+              } else {
+                blogData.blogImages = [];
               }
             } catch (error) {
               console.error('Error loading images:', error);
@@ -203,20 +207,22 @@ const BlogDetails = () => {
                 <div className="event-details__main-tab-box tabs-box">
                   <div className="tabs-content">
                     <div className="event-details__tab-content-box">
-                      {/* Location and Time */}
+                      {/* Location and Date */}
                       <ul className="event-details__meta list-unstyled">
                         <li>
                           <p>
-                            <span className="icon-clock"></span>
+                            <span className="icon-pin"></span>
                             {blog.location || 'Hyderabad, Telangana, India'}
                           </p>
                         </li>
-                        <li>
-                          <p>
-                            <span className="icon-pin"></span>
-                            {formatTime(blog.startTime, blog.endTime)} | {formatDate(blog.eventDate)}
-                          </p>
-                        </li>
+                        {(blog.event_date || blog.created_at) && (
+                          <li>
+                            <p>
+                              <span className="icon-clock"></span>
+                              {formatDate(blog.event_date || blog.created_at)}
+                            </p>
+                          </li>
+                        )}
                       </ul>
 
                       {/* Title */}

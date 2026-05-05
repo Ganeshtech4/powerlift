@@ -18,7 +18,9 @@ const BlogEditor = () => {
     author: 'Admin',
     is_published: false,
     thumbnail_url: '',
-    images: []
+    images: [],
+    location: 'Hyderabad, Telangana, India',
+    event_date: new Date().toISOString().slice(0, 10)
   });
   const [uploadedImages, setUploadedImages] = useState([]);
   const [thumbnailPreview, setThumbnailPreview] = useState('');
@@ -55,7 +57,9 @@ const BlogEditor = () => {
           author: post.author || 'Admin',
           is_published: post.is_published || false,
           thumbnail_url: post.thumbnail_url || '',
-          images: postImages
+          images: postImages,
+          location: post.location || 'Hyderabad, Telangana, India',
+          event_date: post.event_date || new Date().toISOString().slice(0, 10)
         });
         setUploadedImages(postImages);
         setThumbnailPreview(post.thumbnail_url || '');
@@ -167,7 +171,9 @@ const BlogEditor = () => {
         content: formData.content.trim(),
         is_published: publish,
         images: uploadedImages,
-        category: formData.category.toLowerCase()
+        category: formData.category.toLowerCase(),
+        location: formData.location.trim() || null,
+        event_date: formData.event_date || null
       };
 
       // Only add optional fields if they have values
@@ -481,6 +487,29 @@ const BlogEditor = () => {
                 type="text"
                 name="author"
                 value={formData.author}
+                onChange={handleInputChange}
+                className="author-input"
+              />
+            </div>
+
+            <div className="sidebar-section">
+              <h3>Location</h3>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleInputChange}
+                placeholder="e.g., Hyderabad, Telangana, India"
+                className="author-input"
+              />
+            </div>
+
+            <div className="sidebar-section">
+              <h3>Event Date</h3>
+              <input
+                type="date"
+                name="event_date"
+                value={formData.event_date}
                 onChange={handleInputChange}
                 className="author-input"
               />

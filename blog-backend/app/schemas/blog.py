@@ -24,6 +24,8 @@ class BlogBase(BaseModel):
     images: Optional[List[str]] = []
     thumbnail_url: Optional[str] = None
     author: Optional[str] = "Admin"
+    location: Optional[str] = None
+    event_date: Optional[str] = None
 
 
 class BlogCreate(BlogBase):
@@ -40,6 +42,8 @@ class BlogUpdate(BaseModel):
     images: Optional[List[str]] = None
     thumbnail_url: Optional[str] = None
     author: Optional[str] = None
+    location: Optional[str] = None
+    event_date: Optional[str] = None
 
 
 class BlogResponse(BaseModel):
@@ -57,6 +61,8 @@ class BlogResponse(BaseModel):
     images: Optional[List[str]] = []
     author: str
     views: int
+    location: Optional[str] = None
+    event_date: Optional[str] = None
     created_at: str  # ISO format string from DynamoDB
     updated_at: Optional[str] = None  # ISO format string
     published_at: Optional[str] = None  # ISO format string

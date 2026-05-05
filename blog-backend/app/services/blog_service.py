@@ -46,6 +46,8 @@ def _serialize_blog(item: Dict[str, Any]) -> Dict[str, Any]:
         "tags": item.get("tags", ""),
         "is_published": item.get("is_published", False),
         "views": item.get("views", 0),
+        "location": item.get("location"),
+        "event_date": item.get("event_date"),
         "created_at": item.get("created_at"),
         "updated_at": item.get("updated_at"),
         "published_at": item.get("published_at"),
@@ -94,6 +96,8 @@ class BlogService:
             "author": blog_data.author if hasattr(blog_data, 'author') and blog_data.author else "Admin",
             "is_published": blog_data.is_published,
             "views": 0,
+            "location": blog_data.location if hasattr(blog_data, 'location') and blog_data.location else None,
+            "event_date": blog_data.event_date if hasattr(blog_data, 'event_date') and blog_data.event_date else None,
             "created_at": now,
             "updated_at": None,
             "published_at": now if blog_data.is_published else None,
@@ -196,7 +200,7 @@ class BlogService:
                     expr_attr_values[":published_at"] = None
             
             # Update other fields
-            for key in ['title', 'content', 'excerpt', 'category', 'tags', 'images', 'thumbnail_url', 'author']:
+            for key in ['title', 'content', 'excerpt', 'category', 'tags', 'images', 'thumbnail_url', 'author', 'location', 'event_date']:
                 if key in update_data:
                     update_expr_parts.append(f"#{key} = :{key}")
                     expr_attr_names[f"#{key}"] = key

@@ -5,6 +5,9 @@ Loads environment variables and application settings
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List, Union
 from pydantic import field_validator
+from pathlib import Path
+
+_ENV_FILE = Path(__file__).resolve().parent.parent.parent / ".env"
 
 
 class Settings(BaseSettings):
@@ -67,7 +70,7 @@ class Settings(BaseSettings):
     
     # Pydantic v2 settings
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=str(_ENV_FILE),
         case_sensitive=True,
         extra="ignore",  # Ignore extra env vars like legacy DATABASE_URL
     )
