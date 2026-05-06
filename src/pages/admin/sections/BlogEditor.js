@@ -86,10 +86,6 @@ const BlogEditor = () => {
 
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
-    if (files.length + uploadedImages.length > 500) {
-      alert('Maximum 500 images allowed');
-      return;
-    }
 
     for (const file of files) {
       try {
@@ -347,7 +343,7 @@ const BlogEditor = () => {
             </div>
 
             <div className="form-group">
-              <label>Gallery Images ({uploadedImages.length}/500)</label>
+              <label>Gallery Images ({uploadedImages.length})</label>
               <div className="image-upload-area">
                 <input
                   type="file"
@@ -360,7 +356,7 @@ const BlogEditor = () => {
                 <label htmlFor="gallery-images" className="upload-label">
                   <i className="fas fa-cloud-upload-alt"></i>
                   <span>Click to upload images (or drag and drop)</span>
-                  <small>Maximum 500 images, any size</small>
+                  <small>Upload as many images as needed</small>
                 </label>
               </div>
 

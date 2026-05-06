@@ -17,11 +17,9 @@ const AdminLogin = () => {
   // Check if already logged in
   React.useEffect(() => {
     const isLoggedIn = localStorage.getItem('isAdminLoggedIn');
-    const loginTime = localStorage.getItem('adminLoginTime');
-    const currentTime = Date.now();
-    const sessionDuration = 24 * 60 * 60 * 1000; // 24 hours
+    const token = localStorage.getItem('adminToken');
 
-    if (isLoggedIn === 'true' && loginTime && (currentTime - parseInt(loginTime)) < sessionDuration) {
+    if (isLoggedIn === 'true' && token) {
       navigate('/admin/dashboard');
     }
   }, [navigate]);
