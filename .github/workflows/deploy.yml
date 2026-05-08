@@ -1,0 +1,112 @@
+name: Deploy to Production Server
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build React app
+        run: npm run build
+        env:
+          CI: false  # Treat warnings as warnings, not errors
+
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: Deploy to Production Server
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          # Create temporary script for deployment
+          cat > deploy.sh << 'EOF'
+          #!/bin/bash
+          set -e
+          
+          echo "📦 Deploying to production server..."
+          
+          # Deploy static files
+          echo "📤 Uploading static files..."
+          sshpass -e scp -o StrictHostKeyChecking=no -r build/static "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/"
+          
+          # Deploy root files (index.html, manifest, etc.)
+          echo "📤 Uploading root files..."
+          sshpass -e scp -o StrictHostKeyChecking=no build/index.html build/asset-manifest.json build/manifest.json build/robots.txt "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/" 2>/dev/null || true
+          
+          # Deploy favicon and icons
+          echo "📤 Uploading icons..."
+          sshpass -e scp -o StrictHostKeyChecking=no build/*.png build/*.ico "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/" 2>/dev/null || true
+          
+          # Clean up old bundles (keep only latest)
+          echo "🧹 Cleaning up old bundles..."
+          sshpass -e ssh -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" << 'CLEANUP'
+          cd $DEPLOY_PATH/static/js
+          # Keep only the latest main.*.js and delete others
+          ls -t main.*.js | tail -n +2 | xargs -r rm -f
+          ls -t main.*.js.map | tail -n +2 | xargs -r rm -f
+          ls -t main.*.js.LICENSE.txt | tail -n +2 | xargs -r rm -f
+          
+          cd ../css
+          # Keep only the latest main.*.css and delete others
+          ls -t main.*.css | tail -n +2 | xargs -r rm -f
+          ls -t main.*.css.map | tail -n +2 | xargs -r rm -f
+          
+          echo "✅ Cleanup completed"
+          CLEANUP
+          
+          echo "✅ Deployment completed successfully!"
+          EOF
+          
+          chmod +x deploy.sh
+          export SSHPASS="$SERVER_PASSWORD"
+          ./deploy.sh
+
+      - name: Verify Deployment
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          echo "🔍 Verifying deployment..."
+          sshpass -e ssh -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" << EOF
+          if [ -f "$DEPLOY_PATH/index.html" ]; then
+            echo "✅ index.html exists"
+            echo "📊 Current bundle files:"
+            ls -lh "$DEPLOY_PATH/static/js/main.*.js" 2>/dev/null || echo "No main JS bundle found"
+            ls -lh "$DEPLOY_PATH/static/css/main.*.css" 2>/dev/null || echo "No main CSS bundle found"
+          else
+            echo "❌ Deployment verification failed"
+            exit 1
+          fi
+          EOF
+
+      - name: Deployment Summary
+        if: success()
+        run: |
+          echo "## 🚀 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Server:** ${{ secrets.SERVER_HOST }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Path:** ${{ secrets.DEPLOY_PATH }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build:** React production build" >> $GITHUB_STEP_SUMMARY
+          echo "- **Time:** $(date)" >> $GITHUB_STEP_SUMMARY
