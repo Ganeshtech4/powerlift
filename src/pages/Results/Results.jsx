@@ -22,11 +22,18 @@ const Results = () => {
 
     const tabs = [
         { id: 'all', label: 'All Results', icon: 'trophy' },
-        { id: 'district', label: 'District', icon: 'map-marker-alt' },
-        { id: 'state', label: 'State', icon: 'flag' },
-        { id: 'nationals', label: 'Nationals', icon: 'medal' },
-        { id: 'id_card', label: 'ID Cards', icon: 'id-card' },
-        { id: 'result', label: 'Results', icon: 'file-alt' },
+        { id: 'district-championship', label: 'District Championship', icon: 'award', level: 'district', type: 'championship' },
+        { id: 'district-records', label: 'District Records', icon: 'certificate', level: 'district', type: 'records' },
+        { id: 'district-results', label: 'District Results', icon: 'file-alt', level: 'district', type: 'results' },
+        { id: 'state-championship', label: 'State Championship', icon: 'award', level: 'state', type: 'championship' },
+        { id: 'state-records', label: 'State Records', icon: 'certificate', level: 'state', type: 'records' },
+        { id: 'state-results', label: 'State Results', icon: 'file-alt', level: 'state', type: 'results' },
+        { id: 'nationals-championship', label: 'National Championship', icon: 'award', level: 'nationals', type: 'championship' },
+        { id: 'nationals-records', label: 'National Records', icon: 'certificate', level: 'nationals', type: 'records' },
+        { id: 'nationals-results', label: 'National Results', icon: 'file-alt', level: 'nationals', type: 'results' },
+        { id: 'internationals-championship', label: 'International Championship', icon: 'award', level: 'internationals', type: 'championship' },
+        { id: 'internationals-records', label: 'International Records', icon: 'certificate', level: 'internationals', type: 'records' },
+        { id: 'internationals-results', label: 'International Results', icon: 'file-alt', level: 'internationals', type: 'results' },
     ];
 
     const handleScroll = () => {
@@ -66,9 +73,12 @@ const Results = () => {
         let nextResults = results;
 
         if (activeTab !== 'all') {
-            nextResults = ['district', 'state', 'nationals'].includes(activeTab)
-                ? nextResults.filter((result) => result.category === activeTab)
-                : nextResults.filter((result) => result.type === activeTab);
+            const selectedTab = tabs.find(tab => tab.id === activeTab);
+            if (selectedTab && selectedTab.level && selectedTab.type) {
+                nextResults = nextResults.filter((result) => 
+                    result.category === selectedTab.level && result.type === selectedTab.type
+                );
+            }
         }
 
         const normalizedQuery = searchQuery.trim().toLowerCase();
@@ -144,9 +154,9 @@ const Results = () => {
                                     {tabs.map(tab => {
                                         const count = tab.id === 'all'
                                             ? results.length
-                                            : tab.id === 'district' || tab.id === 'state' || tab.id === 'nationals'
-                                                ? results.filter((result) => result.category === tab.id).length
-                                                : results.filter((result) => result.type === tab.id).length;
+                                            : results.filter((result) => 
+                                                result.category === tab.level && result.type === tab.type
+                                              ).length;
 
                                         return (
                                             <button
@@ -159,7 +169,6 @@ const Results = () => {
                                                 </span>
                                                 <span className="results-filter-copy">
                                                     <strong>{tab.label}</strong>
-                                                    <small>{tab.id === 'all' ? 'All available entries' : `${count} matching items`}</small>
                                                 </span>
                                                 <span className="results-filter-count">{count}</span>
                                             </button>

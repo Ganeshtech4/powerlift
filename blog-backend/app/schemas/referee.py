@@ -2,7 +2,7 @@
 Referee Pydantic schemas
 """
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 
 class RefereeBase(BaseModel):
@@ -13,6 +13,7 @@ class RefereeBase(BaseModel):
     email: Optional[str] = None
     certification_year: Optional[str] = None
     description: Optional[str] = None
+    certificates: Optional[List[str]] = []
     order: int = 0
     is_active: bool = True
 
@@ -29,6 +30,7 @@ class RefereeUpdate(BaseModel):
     email: Optional[str] = None
     certification_year: Optional[str] = None
     description: Optional[str] = None
+    certificates: Optional[List[str]] = None
     order: Optional[int] = None
     is_active: Optional[bool] = None
 

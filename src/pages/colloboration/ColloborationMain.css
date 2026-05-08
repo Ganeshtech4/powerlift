@@ -14,10 +14,169 @@
 
 .partnership-directory__hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  grid-template-columns: 1fr;
   gap: 28px;
-  align-items: end;
   margin-bottom: 34px;
+}
+
+.partnership-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.partnership-sidebar {
+  position: sticky;
+  top: 110px;
+}
+
+.partnership-sidebar-card {
+  padding: 24px;
+  border: 1px solid var(--part-border);
+  border-radius: 28px;
+  background: var(--part-panel);
+  box-shadow: var(--part-shadow);
+}
+
+.partnership-search-box {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.partnership-search-box i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--part-accent);
+  font-size: 0.95rem;
+}
+
+.partnership-search-box input {
+  width: 100%;
+  padding: 12px 16px 12px 46px;
+  border: 1px solid var(--part-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--part-text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.partnership-search-box input:focus {
+  outline: none;
+  border-color: var(--part-accent);
+  background: white;
+}
+
+.partnership-search-box input::placeholder {
+  color: var(--part-muted);
+}
+
+.partnership-search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  color: var(--part-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.partnership-search-clear:hover {
+  color: var(--part-text);
+}
+
+.partnership-filter-section {
+  margin-bottom: 24px;
+}
+
+.partnership-filter-section h3 {
+  margin: 0 0 12px;
+  color: var(--part-text);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.partnership-filter-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.partnership-filter-buttons button {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--part-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--part-text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.partnership-filter-buttons button:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--part-accent);
+}
+
+.partnership-filter-buttons button.active {
+  background: var(--part-text);
+  color: #ffffff !important;
+  border-color: var(--part-text);
+}
+
+.partnership-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--part-border);
+}
+
+.partnership-stat {
+  text-align: center;
+}
+
+.partnership-stat strong {
+  display: block;
+  color: var(--part-text);
+  font-size: 1.8rem;
+  font-family: "Bodoni MT", "Didot", serif;
+}
+
+.partnership-stat span {
+  display: block;
+  margin-top: 4px;
+  color: var(--part-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.partnership-content {
+  min-height: 400px;
+}
+
+.partnership-directory__hero {
+  grid-template-columns: 1fr;
 }
 
 .partnership-directory__eyebrow {
@@ -149,6 +308,34 @@
   text-transform: uppercase;
 }
 
+.partnership-card__badges {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.partnership-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.partnership-badge--type {
+  background: rgba(146, 120, 81, 0.15);
+  color: var(--part-accent);
+  border: 1px solid rgba(146, 120, 81, 0.3);
+}
+
+.partnership-badge--level {
+  background: rgba(46, 40, 31, 0.08);
+  color: var(--part-text);
+  border: 1px solid var(--part-border);
+}
+
 .partnership-card__description {
   margin: 16px 0 0;
   color: var(--part-muted);
@@ -186,8 +373,13 @@
 }
 
 @media (max-width: 991px) {
-  .partnership-directory__hero {
+  .partnership-layout {
     grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .partnership-sidebar {
+    position: static;
   }
 }
 
@@ -202,6 +394,10 @@
 
   .partnership-card__body,
   .partnership-directory__stat-card {
+    padding: 20px;
+  }
+
+  .partnership-sidebar-card {
     padding: 20px;
   }
 }

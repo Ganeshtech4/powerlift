@@ -15,8 +15,9 @@ class ResultCategory(str, Enum):
 
 
 class ResultType(str, Enum):
-    ID_CARD = "id_card"
-    RESULT = "result"
+    CHAMPIONSHIP = "championship"
+    RECORDS = "records"
+    RESULTS = "results"
 
 
 class ResultBase(BaseModel):

@@ -12,7 +12,7 @@ const ResultEditor = () => {
     title: '',
     description: '',
     category: 'district',
-    type: 'result',  // 'result' or 'id_card'
+    type: 'results',
     event_date: '',
     location: '',
     thumbnail_url: ''
@@ -37,7 +37,7 @@ const ResultEditor = () => {
         title: result.title || '',
         description: result.description || '',
         category: result.category || 'district',
-        type: result.type || 'result',
+        type: result.type || 'results',
         event_date: result.event_date || '',
         location: result.location || '',
         thumbnail_url: result.thumbnail_url || ''
@@ -70,7 +70,7 @@ const ResultEditor = () => {
       }));
 
       try {
-        const folder = formData.type === 'id_card' ? 'id-cards' : `results/${formData.category}`;
+        const folder = `results/${formData.category}/${formData.type}`;
         const result = await uploadToS3(file, folder);
         const s3Url = result.url || result;
         
@@ -106,7 +106,7 @@ const ResultEditor = () => {
 
     try {
       setLoading(true);
-      const folder = formData.type === 'id_card' ? 'id-cards/thumbnails' : 'results/thumbnails';
+      const folder = `results/${formData.category}/${formData.type}/thumbnails`;
       const response = await uploadToS3(file, folder);
       const s3Url = response.url || response;
       setFormData(prev => ({ ...prev, thumbnail_url: s3Url }));
@@ -250,8 +250,9 @@ const ResultEditor = () => {
                 onChange={handleInputChange}
                 required
               >
-                <option value="result">Competition Result</option>
-                <option value="id_card">ID Card</option>
+                <option value="championship">Championship</option>
+                <option value="records">Records</option>
+                <option value="results">Results</option>
               </select>
             </div>
 
@@ -262,7 +263,7 @@ const ResultEditor = () => {
                 name="title"
                 value={formData.title}
                 onChange={handleInputChange}
-                placeholder={formData.type === 'id_card' ? 'e.g., 2025 Member ID Cards' : 'e.g., District Championship 2025'}
+                placeholder="e.g., District Championship 2025"
                 required
               />
             </div>
@@ -282,30 +283,26 @@ const ResultEditor = () => {
               </select>
             </div>
 
-            {formData.type === 'result' && (
-              <>
-                <div className="form-group">
-                  <label>Event Date</label>
-                  <input
-                    type="date"
-                    name="event_date"
-                    value={formData.event_date}
-                    onChange={handleInputChange}
-                  />
-                </div>
+            <div className="form-group">
+              <label>Event Date</label>
+              <input
+                type="date"
+                name="event_date"
+                value={formData.event_date}
+                onChange={handleInputChange}
+              />
+            </div>
 
-                <div className="form-group">
-                  <label>Location</label>
-                  <input
-                    type="text"
-                    name="location"
-                    value={formData.location}
-                    onChange={handleInputChange}
-                    placeholder="e.g., Hyderabad, Telangana"
-                  />
-                </div>
-              </>
-            )}
+            <div className="form-group">
+              <label>Location</label>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleInputChange}
+                placeholder="e.g., Hyderabad, Telangana"
+              />
+            </div>
 
             <div className="form-group">
               <label>Description</label>
@@ -323,7 +320,7 @@ const ResultEditor = () => {
           <div className="editor-section">
             <h3>
               <i className="fas fa-images"></i> 
-              {formData.type === 'id_card' ? 'ID Card Images' : 'Result Images'}
+              Result Images
             </h3>
             
             <div className="upload-area">

@@ -9,6 +9,8 @@ from pydantic import BaseModel, Field
 class PartnershipBase(BaseModel):
     gym_name: str
     owner_name: Optional[str] = None
+    type: str = "Partner"  # "Partner" or "Sponsor"
+    level: str = "District"  # "District", "State", "National", "International"
     location: Optional[str] = None
     phone: Optional[str] = None
     email: Optional[str] = None
@@ -26,6 +28,8 @@ class PartnershipCreate(PartnershipBase):
 class PartnershipUpdate(BaseModel):
     gym_name: Optional[str] = None
     owner_name: Optional[str] = None
+    type: Optional[str] = None
+    level: Optional[str] = None
     location: Optional[str] = None
     phone: Optional[str] = None
     email: Optional[str] = None

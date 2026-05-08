@@ -98,11 +98,22 @@ const MenuItems = ({ parentMenu, secondParentMenu, activeMenu }) => {
         </ul>
       </li>
 
-      <li className={parentMenu === 'Resources' ? ' current-menu-item' : ''}>
-        <Link to="/inkspire" className={activeMenu === '/inkspire' ? 'active-menu' : ''}>
-          Inkspire
+      <li className={parentMenu === 'Resources' ? 'dropdown current-menu-item' : 'dropdown'}>
+        <Link to="#" className={activeMenu === '/inkspire' || activeMenu === '/vtd' ? 'active-menu' : ''}>
+          Resources
         </Link>
-
+        <ul className="sub-menu">
+          <li>
+            <Link to="/vtd" className={activeMenu === '/vtd' ? 'active-menu' : ''}>
+              VTD
+            </Link>
+          </li>
+          <li>
+            <Link to="/inkspire" className={activeMenu === '/inkspire' ? 'active-menu' : ''}>
+              Inkspire
+            </Link>
+          </li>
+        </ul>
       </li>
 
       <li className={parentMenu === 'Register' ? 'dropdown current-menu-item' : 'dropdown'}>

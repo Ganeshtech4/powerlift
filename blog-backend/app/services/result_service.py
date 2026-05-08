@@ -27,11 +27,20 @@ def _serialize_result(item: Dict[str, Any]) -> Dict[str, Any]:
     
     item = _decimal_to_float(item)
     
+    # Normalize old type values to new enum values
+    old_type = item.get("type", "")
+    if old_type == "id_card":
+        new_type = "records"  # Map old id_card to records
+    elif old_type == "result":
+        new_type = "results"  # Map old result to results
+    else:
+        new_type = old_type  # Keep new values as is (championship, records, results)
+    
     return {
         "id": item.get("id"),
         "title": item.get("title"),
         "category": item.get("category"),
-        "type": item.get("type"),
+        "type": new_type,
         "athlete_name": item.get("athlete_name"),
         "event_name": item.get("event_name"),
         "event_date": item.get("event_date"),

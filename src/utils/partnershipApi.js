@@ -23,6 +23,8 @@ export const normalizePartnership = (partnership) => ({
   id: partnership.id,
   title: partnership.gym_name || '',
   ownerName: partnership.owner_name || '',
+  type: partnership.type || 'Partner',
+  level: partnership.level || 'District',
   location: partnership.location || '',
   phone: partnership.phone || '',
   email: partnership.email || '',

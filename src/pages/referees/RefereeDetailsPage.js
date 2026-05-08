@@ -113,6 +113,36 @@ const RefereeDetailsPage = () => {
                     ) : null}
                   </div>
 
+                  {referee.certificates && referee.certificates.length > 0 && (
+                    <div className="referee-profile__certificates">
+                      <h3 className="referee-profile__certificates-title">Certificates</h3>
+                      <div className="referee-profile__certificates-grid">
+                        {referee.certificates.map((certUrl, index) => (
+                          <a
+                            key={index}
+                            href={certUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="referee-profile__certificate-card"
+                          >
+                            {certUrl.toLowerCase().endsWith('.pdf') ? (
+                              <div className="referee-profile__certificate-pdf">
+                                <i className="fas fa-file-pdf"></i>
+                                <span>Certificate {index + 1}</span>
+                                <small>View PDF</small>
+                              </div>
+                            ) : (
+                              <img src={certUrl} alt={`Certificate ${index + 1}`} />
+                            )}
+                            <div className="referee-profile__certificate-overlay">
+                              <i className="fas fa-search-plus"></i>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   <Link to="/referees" className="referee-profile__back">Back to referees</Link>
                 </div>
               </div>

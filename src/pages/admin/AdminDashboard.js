@@ -10,6 +10,7 @@ import CommitteeMembersManager from './sections/CommitteeMembersManager';
 import RefereesManager from './sections/RefereesManager';
 import PartnershipsManager from './sections/PartnershipsManager';
 import InkspireManager from './sections/InkspireManager';
+import VtdManager from './sections/VtdManager';
 
 const MENU_ITEMS = [
   { id: 'overview', label: 'Overview', icon: 'tachometer-alt' },
@@ -21,6 +22,7 @@ const MENU_ITEMS = [
   { id: 'committee', label: 'Team Members', icon: 'users' },
   { id: 'referees', label: 'Referees', icon: 'gavel' },
   { id: 'partnerships', label: 'Partnerships', icon: 'handshake' },
+  { id: 'vtd', label: 'VTD Books', icon: 'book' },
   { id: 'inkspire', label: 'Inkspire Books', icon: 'book-open' },
 ];
 
@@ -89,6 +91,8 @@ const AdminDashboard = () => {
         return <RefereesManager />;
       case 'partnerships':
         return <PartnershipsManager />;
+      case 'vtd':
+        return <VtdManager />;
       case 'inkspire':
         return <InkspireManager />;
       default:

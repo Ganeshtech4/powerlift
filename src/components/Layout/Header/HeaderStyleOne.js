@@ -6,6 +6,7 @@ import SearchPopup from './SearchPopup';
 import Sidebar from './Sidebar';
 // Use the new WPC logo from public folder
 const navLogo = `${process.env.PUBLIC_URL}/images/logo-wpc.png`;
+const vtdLogo = `${process.env.PUBLIC_URL}/images/logos/vtd.jpeg`;
 
 const HeaderStyleOne = (props) => {
     const { parentMenu, secondParentMenu, activeMenu } = props;
@@ -68,7 +69,9 @@ const HeaderStyleOne = (props) => {
                         </ul>
                         </div>
                         <div className="main-menu__right">
-
+                        <div className="main-menu__vtd-logo">
+                            <img src={vtdLogo} alt="VTD Logo" />
+                        </div>
                         {/* <div className="main-menu__btn-box">
                             <Link to="/contact" className="main-menu__btn thm-btn">
                                 Join WPC <span className="icon-arrow-right"></span>
@@ -107,7 +110,9 @@ const HeaderStyleOne = (props) => {
                                 </ul>
                                 </div>
                                 <div className="main-menu__right">
-                               
+                                <div className="main-menu__vtd-logo">
+                                    <img src={vtdLogo} alt="VTD Logo" />
+                                </div>
                                 {/* <div className="main-menu__btn-box">
                                     <Link [to=]"/contact" className="main-menu__btn thm-btn">
                                         Join WPC <span className="icon-arrow-right"></span>

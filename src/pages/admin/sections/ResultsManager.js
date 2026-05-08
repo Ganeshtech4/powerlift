@@ -30,16 +30,8 @@ const ResultsManager = () => {
         navigate('/admin/results/new');
     };
 
-    const handleCreateIDCard = () => {
-        navigate('/admin/id-cards/new');
-    };
-
     const handleEdit = (result) => {
-        if (result.type === 'id_card') {
-            navigate(`/admin/id-cards/edit/${result.id}`);
-        } else {
-            navigate(`/admin/results/edit/${result.id}`);
-        }
+        navigate(`/admin/results/edit/${result.id}`);
     };
 
     const handleDelete = async (id) => {
@@ -57,11 +49,12 @@ const ResultsManager = () => {
 
     const filteredResults = results.filter(r => {
         const matchesCategory = selectedCategory === 'all' || r.category === selectedCategory;
-        return matchesCategory && r.type === 'result'; // Only show results, not ID cards
+        const matchesType = selectedType === 'all' || r.type === selectedType;
+        return matchesCategory && matchesType;
     });
 
     const stats = {
-        total: results.filter(r => r.type === 'result').length,
+        total: results.length,
     };
 
     return (
@@ -87,7 +80,7 @@ const ResultsManager = () => {
                     </div>
                     <div className="stat-content">
                         <h3>{stats.total}</h3>
-                        <p>Competition Results</p>
+                        <p>Total Entries</p>
                     </div>
                 </div>
             </div>
@@ -95,7 +88,7 @@ const ResultsManager = () => {
             {/* Category & Type Filters */}
             <div className="filters-container">
                 <div className="filter-group">
-                    <label>Filter by Category:</label>
+                    <label>Filter by Level:</label>
                     <div className="category-filters">
                         <button
                             className={`filter-btn ${selectedCategory === 'all' ? 'active' : ''}`}
@@ -126,6 +119,35 @@ const ResultsManager = () => {
                             onClick={() => setSelectedCategory('internationals')}
                         >
                             Internationals
+                        </button>
+                    </div>
+                </div>
+                <div className="filter-group">
+                    <label>Filter by Type:</label>
+                    <div className="category-filters">
+                        <button
+                            className={`filter-btn ${selectedType === 'all' ? 'active' : ''}`}
+                            onClick={() => setSelectedType('all')}
+                        >
+                            All
+                        </button>
+                        <button
+                            className={`filter-btn ${selectedType === 'championship' ? 'active' : ''}`}
+                            onClick={() => setSelectedType('championship')}
+                        >
+                            Championship
+                        </button>
+                        <button
+                            className={`filter-btn ${selectedType === 'records' ? 'active' : ''}`}
+                            onClick={() => setSelectedType('records')}
+                        >
+                            Records
+                        </button>
+                        <button
+                            className={`filter-btn ${selectedType === 'results' ? 'active' : ''}`}
+                            onClick={() => setSelectedType('results')}
+                        >
+                            Results
                         </button>
                     </div>
                 </div>
@@ -162,10 +184,12 @@ const ResultsManager = () => {
                                     </div>
                                 )}
                                 <span className="type-badge">
-                                    {result.type === 'id_card' ? (
-                                        <><i className="fas fa-id-card"></i> ID Card</>
+                                    {result.type === 'championship' ? (
+                                        <><i className="fas fa-award"></i> Championship</>
+                                    ) : result.type === 'records' ? (
+                                        <><i className="fas fa-certificate"></i> Records</>
                                     ) : (
-                                        <><i className="fas fa-trophy"></i> Result</>
+                                        <><i className="fas fa-file-alt"></i> Results</>
                                     )}
                                 </span>
                                 <span className="category-badge">{result.category}</span>

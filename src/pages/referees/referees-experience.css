@@ -18,10 +18,176 @@
     linear-gradient(180deg, #f7f3ed 0%, #f1ece4 100%);
 }
 
+.referee-directory .container {
+  position: relative;
+  z-index: 1;
+  max-width: 1600px !important;
+}
+
 .referee-directory__header {
   max-width: 760px;
   margin: 0 auto 48px;
   text-align: center;
+}
+
+.referee-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.referee-sidebar {
+  position: sticky;
+  top: 110px;
+}
+
+.referee-sidebar-card {
+  padding: 22px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(46, 40, 31, 0.12);
+  box-shadow: 0 20px 44px rgba(33, 28, 21, 0.08);
+}
+
+.referee-search-box {
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.referee-search-box i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9a8563;
+  font-size: 1rem;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.referee-search-box input {
+  width: 100%;
+  max-width: 100%;
+  padding: 12px 16px 12px 46px;
+  border: 1px solid rgba(46, 40, 31, 0.16);
+  border-radius: 16px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  display: block;
+}
+
+.referee-search-box input::placeholder {
+  color: #999;
+}
+
+.referee-search-box input:focus {
+  outline: none;
+  border-color: #9a8563;
+  box-shadow: 0 10px 22px rgba(154, 133, 99, 0.16);
+}
+
+.referee-filter-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.referee-filter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 13px 16px;
+  border: 1px solid rgba(46, 40, 31, 0.14);
+  border-radius: 18px;
+  background: #ffffff;
+  color: #2e281f;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.referee-filter-btn:hover {
+  transform: translateX(4px);
+  border-color: rgba(154, 133, 99, 0.34);
+  box-shadow: 0 12px 24px rgba(33, 28, 21, 0.08);
+}
+
+.referee-filter-btn.active {
+  background: linear-gradient(135deg, #2e281f 0%, #3d352a 100%);
+  border-color: #9a8563;
+  color: #fff;
+  box-shadow: 0 18px 30px rgba(33, 28, 21, 0.24);
+}
+
+.referee-filter-btn.active,
+.referee-filter-btn.active .referee-filter-label,
+.referee-filter-btn.active .referee-filter-count {
+  color: #ffffff !important;
+}
+
+.referee-filter-label {
+  text-align: left;
+}
+
+.referee-filter-count {
+  min-width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(46, 40, 31, 0.08);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.referee-filter-btn.active .referee-filter-count {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.referee-sidebar-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.referee-sidebar-stats div {
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(154, 133, 99, 0.1);
+  box-sizing: border-box;
+}
+
+.referee-sidebar-stats span {
+  display: block;
+  margin-bottom: 8px;
+  color: #6c6257;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.referee-sidebar-stats strong {
+  display: block;
+  font-size: 1.7rem;
+  color: #2e281f;
+}
+
+.referee-content {
+  min-width: 0;
 }
 
 .referee-directory__eyebrow,
@@ -293,7 +459,7 @@
 .referee-profile__portrait {
   position: relative;
   overflow: hidden;
-  min-height: 520px;
+  aspect-ratio: 4 / 4.5;
   border-radius: 26px;
   background: #ddd5c8;
 }
@@ -301,6 +467,102 @@
 .referee-profile__summary {
   margin-left: 0;
   max-width: none;
+}
+
+.referee-profile__certificates {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--ref-border);
+}
+
+.referee-profile__certificates-title {
+  margin: 0 0 18px;
+  color: var(--ref-ink);
+  font-family: "Bodoni MT", "Didot", serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.referee-profile__certificates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.referee-profile__certificate-card {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #ded6c9;
+  border: 1px solid var(--ref-border);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
+}
+
+.referee-profile__certificate-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ref-shadow);
+}
+
+.referee-profile__certificate-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: white;
+}
+
+.referee-profile__certificate-pdf {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--ref-muted);
+  background: linear-gradient(135deg, #d8d0c3, #efe7db);
+}
+
+.referee-profile__certificate-pdf i {
+  font-size: 2.5rem;
+  color: #e74c3c;
+}
+
+.referee-profile__certificate-pdf span {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ref-ink);
+}
+
+.referee-profile__certificate-pdf small {
+  font-size: 0.8rem;
+  color: var(--ref-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.referee-profile__certificate-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(46, 40, 31, 0.75);
+  color: white;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.referee-profile__certificate-card:hover .referee-profile__certificate-overlay {
+  opacity: 1;
+}
+
+.referee-profile__certificate-overlay i {
+  font-size: 2rem;
 }
 
 @media (max-width: 1199px) {
@@ -315,12 +577,21 @@
     padding: 72px 0 86px;
   }
 
+  .referee-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .referee-sidebar {
+    position: static;
+  }
+
   .referee-profile__top {
     grid-template-columns: 1fr;
   }
 
-  .referee-profile__portrait {
-    min-height: 420px;
+  .referee-profile__certificates-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -344,7 +615,15 @@
     padding-right: 18px;
   }
 
-  .referee-profile__portrait {
-    min-height: 340px;
+  .referee-sidebar-card {
+    padding: 20px;
+  }
+
+  .referee-title {
+    font-size: 2rem;
+  }
+
+  .referee-profile__certificates-grid {
+    grid-template-columns: 1fr;
   }
 }

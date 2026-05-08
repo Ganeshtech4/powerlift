@@ -17,12 +17,14 @@ import GalleryBlogDetails from "./pages/blog/BlogDetails";
 import Contact from "./pages/contact";
 import Referees from "./pages/referees";
 import Inspire from "./pages/inspire";
+import Vtd from "./pages/vtd";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import BlogEditor from "./pages/admin/sections/BlogEditor";
 import CommitteeMemberEditor from "./pages/admin/sections/CommitteeMemberEditor";
 import RefereeEditor from "./pages/admin/sections/RefereeEditor";
 import ResultEditor from "./pages/admin/sections/ResultEditor";
+import PartnershipEditor from "./pages/admin/sections/PartnershipEditor";
 import Registration from "./pages/registration";
 import ScrollToTop from "./ScrollToTop";
 import ResultsNew from "./pages/Results/Results";
@@ -71,11 +73,14 @@ export default function App() {
         <Route path="admin/referees/edit/:id" element={<RefereeEditor />} />
         <Route path="admin/results/new" element={<ResultEditor />} />
         <Route path="admin/results/edit/:id" element={<ResultEditor />} />
+        <Route path="admin/partnerships/new" element={<PartnershipEditor />} />
+        <Route path="admin/partnerships/edit/:id" element={<PartnershipEditor />} />
         <Route path="contact" element={<Contact />} />
         <Route path="registration" element={<Registration />} />
         <Route path="inkspire" element={<Inspire />} />
         <Route path="inspire" element={<Navigate to="/inkspire" replace />} />
         <Route path="inspire-details/:id" element={<Navigate to="/inkspire" replace />} />
+        <Route path="vtd" element={<Vtd />} />
         <Route path="results" element={<ResultsNew />} />
         <Route path="results/:id" element={<ResultDetailsPage />} />
         <Route path="calendar" element={<Calendar />} />

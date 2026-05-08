@@ -16,6 +16,7 @@ export const normalizeReferee = (referee) => ({
   email: referee.email || '',
   certificationYear: referee.certification_year || '',
   description: referee.description || '',
+  certificates: referee.certificates || [],
   order: Number(referee.order || 0),
   isActive: referee.is_active !== false,
   createdAt: referee.created_at,

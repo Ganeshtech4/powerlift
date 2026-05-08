@@ -1,30 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../../config/axiosConfig';
-import { uploadToS3 } from '../../../utils/s3Upload';
 import './PartnershipsManager.css';
-
-const normalizeHighlights = (highlights) => {
-  if (Array.isArray(highlights)) {
-    return highlights.filter(Boolean).join('\n');
-  }
-
-  return '';
-};
 
 const PartnershipsManager = () => {
   const [partnerships, setPartnerships] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [editingPartnership, setEditingPartnership] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [uploading, setUploading] = useState(false);
-  const [saving, setSaving] = useState(false);
-
-  const emptyForm = {
-    gym_name: '', owner_name: '', location: '', phone: '',
-    email: '', logo_url: '', description: '', highlightsText: '', order: 0, is_active: true
-  };
-  const [formData, setFormData] = useState(emptyForm);
+  const [activeTab, setActiveTab] = useState('all'); // 'all', 'Partner', 'Sponsor'
+  const navigate = useNavigate();
 
   useEffect(() => { fetchPartnerships(); }, []);
 
@@ -41,26 +25,11 @@ const PartnershipsManager = () => {
   };
 
   const handleAdd = () => {
-    setEditingPartnership(null);
-    setFormData(emptyForm);
-    setShowModal(true);
+    navigate('/admin/partnerships/new');
   };
 
   const handleEdit = (p) => {
-    setEditingPartnership(p);
-    setFormData({
-      gym_name: p.gym_name || '',
-      owner_name: p.owner_name || '',
-      location: p.location || '',
-      phone: p.phone || '',
-      email: p.email || '',
-      logo_url: p.logo_url || '',
-      description: p.description || '',
-      highlightsText: normalizeHighlights(p.highlights),
-      order: p.order ?? 0,
-      is_active: p.is_active ?? true
-    });
-    setShowModal(true);
+    navigate(`/admin/partnerships/edit/${p.id}`);
   };
 
   const handleDelete = async (id) => {
@@ -73,63 +42,51 @@ const PartnershipsManager = () => {
     }
   };
 
-  const handleLogoUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    try {
-      setUploading(true);
-      const url = await uploadToS3(file, 'partnerships');
-      setFormData(f => ({ ...f, logo_url: url }));
-    } catch (err) {
-      alert('Failed to upload logo');
-    } finally {
-      setUploading(false);
-    }
-  };
+  const filtered = partnerships.filter(p => {
+    const matchesSearch = p.gym_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (p.owner_name && p.owner_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (p.location && p.location.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesTab = activeTab === 'all' || p.type === activeTab;
+    return matchesSearch && matchesTab;
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSaving(true);
-    try {
-      const payload = {
-        ...formData,
-        highlights: formData.highlightsText
-          .split('\n')
-          .map((item) => item.trim())
-          .filter(Boolean),
-      };
-      delete payload.highlightsText;
-      if (!payload.email) delete payload.email;
-      if (editingPartnership) {
-        await axiosInstance.put(`/partnerships/${editingPartnership.id}`, payload);
-      } else {
-        await axiosInstance.post('/partnerships/', payload);
-      }
-      setShowModal(false);
-      fetchPartnerships();
-    } catch (err) {
-      console.error('Error saving partnership:', err);
-      alert('Failed to save partnership');
-    } finally {
-      setSaving(false);
-    }
+  const counts = {
+    all: partnerships.length,
+    Partner: partnerships.filter(p => p.type === 'Partner').length,
+    Sponsor: partnerships.filter(p => p.type === 'Sponsor').length,
   };
-
-  const filtered = partnerships.filter(p =>
-    p.gym_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (p.owner_name && p.owner_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (p.location && p.location.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
 
   return (
     <div className="partnerships-manager">
       <div className="manager-header">
         <div>
-          <h2><i className="fas fa-handshake"></i> Partnerships</h2>
-          <p className="subtitle">Manage partner gyms and collaborations</p>
+          <h2><i className="fas fa-handshake"></i> Partnerships & Sponsors</h2>
+          <p className="subtitle">Manage partners and sponsors across all levels</p>
         </div>
         <button className="btn-primary" onClick={handleAdd}>
-          <i className="fas fa-plus"></i> Add Partnership
+          <i className="fas fa-plus"></i> Add New
+        </button>
+      </div>
+
+      {/* Tabs */}
+      <div className="tabs-section">
+        <button
+          className={`tab-button ${activeTab === 'all' ? 'active' : ''}`}
+          onClick={() => setActiveTab('all')}
+        >
+          <i className="fas fa-list"></i> All ({counts.all})
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'Partner' ? 'active' : ''}`}
+          onClick={() => setActiveTab('Partner')}
+        >
+          <i className="fas fa-handshake"></i> Partners ({counts.Partner})
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'Sponsor' ? 'active' : ''}`}
+          onClick={() => setActiveTab('Sponsor')}
+        >
+          <i className="fas fa-award"></i> Sponsors ({counts.Sponsor})
         </button>
       </div>
 
@@ -179,6 +136,10 @@ const PartnershipsManager = () => {
               </div>
               <div className="partner-info">
                 <h3>{p.gym_name}</h3>
+                <div className="partner-badges">
+                  <span className="badge-type">{p.type || 'Partner'}</span>
+                  <span className="badge-level">{p.level || 'District'}</span>
+                </div>
                 {p.owner_name && <p><i className="fas fa-user"></i> {p.owner_name}</p>}
                 {p.location && <p><i className="fas fa-map-marker-alt"></i> {p.location}</p>}
                 {p.phone && <p><i className="fas fa-phone"></i> {p.phone}</p>}
@@ -205,96 +166,6 @@ const PartnershipsManager = () => {
               <button className="btn-primary" onClick={handleAdd}>Add First Partnership</button>
             </div>
           )}
-        </div>
-      )}
-
-      {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <div className="modal-header">
-              <h3>{editingPartnership ? 'Edit Partnership' : 'Add Partnership'}</h3>
-              <button className="modal-close" onClick={() => setShowModal(false)}>
-                <i className="fas fa-times"></i>
-              </button>
-            </div>
-            <form onSubmit={handleSubmit} className="modal-form">
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Title / Partner Name *</label>
-                  <input type="text" required value={formData.gym_name}
-                    onChange={e => setFormData(f => ({ ...f, gym_name: e.target.value }))} />
-                </div>
-                <div className="form-group">
-                  <label>Subtitle / Owner Name</label>
-                  <input type="text" value={formData.owner_name}
-                    onChange={e => setFormData(f => ({ ...f, owner_name: e.target.value }))} />
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Location</label>
-                <input type="text" placeholder="City, District" value={formData.location}
-                  onChange={e => setFormData(f => ({ ...f, location: e.target.value }))} />
-              </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Phone</label>
-                  <input type="tel" value={formData.phone}
-                    onChange={e => setFormData(f => ({ ...f, phone: e.target.value }))} />
-                </div>
-                <div className="form-group">
-                  <label>Email</label>
-                  <input type="email" value={formData.email}
-                    onChange={e => setFormData(f => ({ ...f, email: e.target.value }))} />
-                </div>
-              </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Display Order</label>
-                  <input type="number" min="0" value={formData.order}
-                    onChange={e => setFormData(f => ({ ...f, order: parseInt(e.target.value) || 0 }))} />
-                </div>
-                <div className="form-group">
-                  <label>Status</label>
-                  <select value={formData.is_active}
-                    onChange={e => setFormData(f => ({ ...f, is_active: e.target.value === 'true' }))}>
-                    <option value="true">Active</option>
-                    <option value="false">Inactive</option>
-                  </select>
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Description</label>
-                <textarea rows="3" value={formData.description}
-                  onChange={e => setFormData(f => ({ ...f, description: e.target.value }))} />
-              </div>
-              <div className="form-group">
-                <label>Highlights</label>
-                <textarea rows="5" value={formData.highlightsText}
-                  onChange={e => setFormData(f => ({ ...f, highlightsText: e.target.value }))}
-                  placeholder="One bullet per line" />
-              </div>
-              <div className="form-group">
-                <label>Logo / Image</label>
-                {formData.logo_url && (
-                  <div className="photo-preview">
-                    <img src={formData.logo_url} alt="logo preview" />
-                    <button type="button" className="btn-remove-photo"
-                      onClick={() => setFormData(f => ({ ...f, logo_url: '' }))}>
-                      <i className="fas fa-times"></i> Remove
-                    </button>
-                  </div>
-                )}
-                <input type="file" accept="image/*" onChange={handleLogoUpload} disabled={uploading} />
-                {uploading && <span className="upload-status"><i className="fas fa-spinner fa-spin"></i> Uploading...</span>}
-              </div>
-              <div className="modal-actions">
-                <button type="button" className="btn-secondary" onClick={() => setShowModal(false)}>Cancel</button>
-                <button type="submit" className="btn-primary" disabled={saving || uploading}>
-                  {saving ? <><i className="fas fa-spinner fa-spin"></i> Saving...</> : (editingPartnership ? 'Update Partnership' : 'Add Partnership')}
-                </button>
-              </div>
-            </form>
-          </div>
         </div>
       )}
     </div>

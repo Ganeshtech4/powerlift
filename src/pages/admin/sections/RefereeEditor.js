@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { axiosInstance } from '../../../config/axiosConfig';
-import { uploadToS3 } from '../../../utils/s3Upload';
+import { uploadToS3, deleteFromS3 } from '../../../utils/s3Upload';
 import './RefereeEditor.css';
 
 const LEVELS = ['International', 'National', 'State', 'District'];
@@ -14,6 +14,7 @@ const emptyForm = {
   email: '',
   certification_year: '',
   description: '',
+  certificates: [],
   order: 0,
   is_active: true,
 };
@@ -50,6 +51,7 @@ const RefereeEditor = () => {
           email: referee.email || '',
           certification_year: referee.certification_year || '',
           description: referee.description || '',
+          certificates: referee.certificates || [],
           order: Number(referee.order ?? 0),
           is_active: referee.is_active ?? true,
         });
@@ -96,6 +98,62 @@ const RefereeEditor = () => {
     }
   };
 
+  const handleCertificateUpload = async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    try {
+      setUploading(true);
+      const response = await uploadToS3(file, 'referees/certificates');
+      const certUrl = response.url || response;
+      setFormData((current) => ({
+        ...current,
+        certificates: [...(current.certificates || []), certUrl]
+      }));
+    } catch (error) {
+      console.error('Error uploading certificate:', error);
+      alert('Failed to upload certificate');
+    } finally {
+      setUploading(false);
+      event.target.value = '';
+    }
+  };
+
+  const handleRemoveCertificate = async (index) => {
+    const certUrl = formData.certificates[index];
+    
+    if (!window.confirm('Delete this certificate from S3 storage? This cannot be undone.')) {
+      return;
+    }
+
+    try {
+      // Extract S3 key from URL
+      // URL format: https://bucket.s3.region.amazonaws.com/key or https://cloudfront.net/key
+      const url = new URL(certUrl);
+      const key = url.pathname.startsWith('/') ? url.pathname.substring(1) : url.pathname;
+      
+      // Delete from S3
+      await deleteFromS3(key);
+      
+      // Remove from form state
+      setFormData((current) => ({
+        ...current,
+        certificates: current.certificates.filter((_, i) => i !== index)
+      }));
+    } catch (error) {
+      console.error('Error deleting certificate:', error);
+      alert('Failed to delete certificate from S3. You can still remove it from the list.');
+      
+      // Still remove from form state even if S3 delete fails
+      setFormData((current) => ({
+        ...current,
+        certificates: current.certificates.filter((_, i) => i !== index)
+      }));
+    }
+  };
+
   const handleSave = async () => {
     if (!formData.name.trim()) {
       alert('Name is required');
@@ -112,6 +170,7 @@ const RefereeEditor = () => {
         email: formData.email.trim() || null,
         certification_year: formData.certification_year.trim() || null,
         description: formData.description.trim() || null,
+        certificates: formData.certificates || [],
         order: Number(formData.order) || 0,
         is_active: formData.is_active,
       };
@@ -253,6 +312,50 @@ const RefereeEditor = () => {
               </button>
             ) : null}
             {uploading ? <p className="referee-editor__status">Uploading profile image...</p> : null}
+          </div>
+
+          <div className="referee-editor__asset-block">
+            <div className="referee-editor__asset-header">
+              <h2>Certificates</h2>
+              <p>Upload certification documents (images or PDFs).</p>
+            </div>
+            
+            {formData.certificates && formData.certificates.length > 0 && (
+              <div className="referee-editor__certificates-grid">
+                {formData.certificates.map((certUrl, index) => (
+                  <div key={index} className="referee-editor__certificate-item">
+                    {certUrl.toLowerCase().endsWith('.pdf') ? (
+                      <div className="referee-editor__certificate-pdf">
+                        <i className="fas fa-file-pdf"></i>
+                        <span>Certificate {index + 1}</span>
+                      </div>
+                    ) : (
+                      <img src={certUrl} alt={`Certificate ${index + 1}`} />
+                    )}
+                    <button
+                      type="button"
+                      className="referee-editor__certificate-remove"
+                      onClick={() => handleRemoveCertificate(index)}
+                      title="Remove certificate"
+                    >
+                      <i className="fas fa-times"></i>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <input 
+              type="file" 
+              accept="image/*,.pdf" 
+              onChange={handleCertificateUpload} 
+              disabled={uploading}
+              id="certificate-upload"
+            />
+            <label htmlFor="certificate-upload" className="referee-editor__upload-label">
+              <i className="fas fa-cloud-upload-alt"></i>
+              {uploading ? 'Uploading...' : 'Add Certificate'}
+            </label>
           </div>
         </aside>
       </div>
