@@ -37,12 +37,8 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          # Create temporary script for deployment
-          cat > deploy.sh << 'EOF'
-          #!/bin/bash
-          set -e
-          
           echo "📦 Deploying to production server..."
           
           # Deploy static files
@@ -75,11 +71,6 @@ jobs:
           CLEANUP
           
           echo "✅ Deployment completed successfully!"
-          EOF
-          
-          chmod +x deploy.sh
-          export SSHPASS="$SERVER_PASSWORD"
-          ./deploy.sh
 
       - name: Verify Deployment
         env:
@@ -87,6 +78,7 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
         run: |
           echo "🔍 Verifying deployment..."
           sshpass -e ssh -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" << EOF
