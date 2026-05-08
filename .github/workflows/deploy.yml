@@ -93,12 +93,59 @@ jobs:
           fi
           EOF
 
+      - name: Deploy Backend
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          echo "🐍 Deploying backend to production server..."
+          sshpass -e ssh -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" << 'BACKEND'
+          set -e
+          
+          echo "📂 Navigating to backend directory..."
+          cd /var/www/rekhapowerlift/backend
+          
+          echo "📥 Pulling latest backend code..."
+          git pull origin main
+          
+          echo "📦 Installing/updating Python dependencies..."
+          source venv/bin/activate
+          pip install -r requirements.txt --quiet
+          
+          echo "🔄 Restarting backend service..."
+          sudo systemctl restart rekhapowerlift-backend
+          
+          echo "✅ Backend deployment completed!"
+          BACKEND
+          
+          echo "⏳ Waiting for backend to start..."
+          sleep 5
+          
+          echo "🔍 Verifying backend service..."
+          sshpass -e ssh -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" << 'VERIFY'
+          if systemctl is-active --quiet rekhapowerlift-backend; then
+            echo "✅ Backend service is running"
+          else
+            echo "❌ Backend service failed to start"
+            sudo systemctl status rekhapowerlift-backend
+            exit 1
+          fi
+          VERIFY
+
       - name: Deployment Summary
         if: success()
         run: |
           echo "## 🚀 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Frontend" >> $GITHUB_STEP_SUMMARY
           echo "- **Server:** ${{ secrets.SERVER_HOST }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Path:** ${{ secrets.DEPLOY_PATH }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Build:** React production build" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Backend" >> $GITHUB_STEP_SUMMARY
+          echo "- **Server:** ${{ secrets.SERVER_HOST }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Path:** /var/www/rekhapowerlift/backend" >> $GITHUB_STEP_SUMMARY
+          echo "- **Service:** rekhapowerlift-backend (restarted)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Time:** $(date)" >> $GITHUB_STEP_SUMMARY
