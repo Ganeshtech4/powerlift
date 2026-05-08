@@ -19,9 +19,8 @@ const Footer = () => {
                                 <Link to="/" className="logo-link">
                                     <img src={footerLogo} alt="Logo" className="logo-img" />
                                     <div className="logo-text">
-                                        <span className="logo-title" style={{ color: 'red' }}>Rekha</span>
-                                        <br />
-                                        <span className="logo-subtitle" style={{ color: 'blue' }}>WPC Telangana</span>
+                                        <span className="logo-title">Rekha</span>
+                                        <span className="logo-subtitle">WPC Telangana</span>
                                     </div>
                                 </Link>
                             </div>

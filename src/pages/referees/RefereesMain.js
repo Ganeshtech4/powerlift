@@ -89,11 +89,15 @@ const RefereesMain = () => {
                 </div>
 
                 <div className="referee-directory__grid">
-                  {grouped[level].map((referee) => (
+                  {grouped[level].map((referee) => {
+                    const photoUrl = referee.photoUrl && (referee.photoUrl.startsWith('http') || referee.photoUrl.startsWith('/')) 
+                      ? decodeURIComponent(referee.photoUrl) 
+                      : null;
+                    return (
                     <article key={referee.id} className="referee-card">
                       <div className="referee-card__media">
-                        {referee.photoUrl ? (
-                          <img src={referee.photoUrl} alt={referee.name} />
+                        {photoUrl ? (
+                          <img src={photoUrl} alt={referee.name} />
                         ) : (
                           <div className="referee-card__placeholder">
                             <i className="fas fa-user"></i>
@@ -127,7 +131,7 @@ const RefereesMain = () => {
                         <Link className="referee-card__cta" to={`/referees/${referee.id}`}>View profile</Link>
                       </div>
                     </article>
-                  ))}
+                  )})}
                 </div>
               </section>
             ))}

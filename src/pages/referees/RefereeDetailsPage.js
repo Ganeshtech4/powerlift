@@ -81,8 +81,8 @@ const RefereeDetailsPage = () => {
             <div className="referee-profile__panel">
               <div className="referee-profile__top">
                 <div className="referee-profile__portrait">
-                  {referee.photoUrl ? (
-                    <img src={referee.photoUrl} alt={referee.name} />
+                  {referee.photoUrl && (referee.photoUrl.startsWith('http') || referee.photoUrl.startsWith('/')) ? (
+                    <img src={decodeURIComponent(referee.photoUrl)} alt={referee.name} />
                   ) : (
                     <div className="referee-profile__placeholder">
                       <i className="fas fa-user"></i>

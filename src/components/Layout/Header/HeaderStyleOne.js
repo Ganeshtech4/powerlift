@@ -49,7 +49,6 @@ const HeaderStyleOne = (props) => {
                                 <img src={navLogo} alt="Logo" className="logo-img" />
                                 <div className="logo-text">
                                 <span className="logo-title">Rekha</span>
-                                <br />
                                 <span className="logo-subtitle">WPC Telangana</span>
                                 </div>
                             </Link>
@@ -90,7 +89,6 @@ const HeaderStyleOne = (props) => {
     <img src={navLogo} alt="Logo" className="logo-img" />
     <div className="logo-text">
       <span className="logo-title">Rekha</span>
-      <br />
       <span className="logo-subtitle">WPC Telangana</span>
     </div>
   </Link>

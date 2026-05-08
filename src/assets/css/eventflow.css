@@ -58,32 +58,14 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  gap: 12px;
-}
-
-.logo-img {
-  height: 56px;
-  width: auto;
-  margin-right: 0;
-}
-
-.logo-text {
-  font-size: 18px;
-  font-weight: 600;
-  color: #000000 !important; /* Black text for white theme */
-}
-
-.logo-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #000000 !important; /* Ensure link doesn't inherit colors */
+  gap: 8px;
+  color: #000000 !important;
 }
 
 .logo-link:hover,
 .logo-link:visited,
 .logo-link:focus {
-  color: #000000 !important; /* Maintain black color in all states */
+  color: #000000 !important;
   text-decoration: none;
 }
 
@@ -97,6 +79,9 @@
   display: flex;
   flex-direction: column;
   line-height: 1;
+  font-size: 18px;
+  font-weight: 600;
+  color: #000000 !important;
 }
 
 .row {
