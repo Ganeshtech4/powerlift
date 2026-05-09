@@ -87,25 +87,27 @@ export default function BrandOne() {
     };
   }, []);
 
-  if (partnerships.length === 0) {
-    return null;
-  }
-
   return (
       <section className="brand-one">
         <div className="container">
           <h2 className="ourcollaborations">Our Collaborations</h2>
-          <Swiper {...swiperOptions}>
-            {partnerships.map((brand) => (
-              <SwiperSlide key={brand.id}>
-                <div className="brand-one__single">
-                  <div className="brand-one__img">
-                    <img src={brand.logoUrl} alt={brand.title} />
+          {partnerships.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '40px 0', color: '#6c757d' }}>
+              <p>No partnerships available at the moment.</p>
+            </div>
+          ) : (
+            <Swiper {...swiperOptions}>
+              {partnerships.map((brand) => (
+                <SwiperSlide key={brand.id}>
+                  <div className="brand-one__single">
+                    <div className="brand-one__img">
+                      <img src={brand.logoUrl} alt={brand.title} />
+                    </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
         </div>
       </section>
   );

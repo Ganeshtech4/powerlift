@@ -50,3 +50,22 @@ class DistrictEnquiry(BaseModel):
     email: EmailStr
     phone: str
     message: str
+
+
+class EnquiryResponse(BaseModel):
+    id: str
+    district_id: str
+    district_name: str
+    name: str
+    email: EmailStr
+    phone: str
+    message: str
+    status: str  # unread, read, replied
+    created_at: str
+
+    class Config:
+        from_attributes = True
+
+
+class EnquiryStatusUpdate(BaseModel):
+    status: str  # unread, read, replied

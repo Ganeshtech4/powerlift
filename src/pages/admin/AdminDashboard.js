@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import './AdminDashboard.css';
 import GalleryManager from './sections/GalleryManager';
 import DistrictsManager from './sections/DistrictsManager';
+import DistrictEnquiriesManager from './sections/DistrictEnquiriesManager';
 import ResultsManager from './sections/ResultsManager';
 import CalendarManager from './sections/CalendarManager';
 import IDCardsManager from './sections/IDCardsManager';
@@ -11,14 +12,17 @@ import RefereesManager from './sections/RefereesManager';
 import PartnershipsManager from './sections/PartnershipsManager';
 import InkspireManager from './sections/InkspireManager';
 import VtdManager from './sections/VtdManager';
+import FormsManager from './sections/FormsManager';
 
 const MENU_ITEMS = [
   { id: 'overview', label: 'Overview', icon: 'tachometer-alt' },
   { id: 'gallery', label: 'Gallery Posts', icon: 'images' },
   { id: 'districts', label: 'Districts', icon: 'map-marked-alt' },
+  { id: 'enquiries', label: 'District Enquiries', icon: 'envelope' },
   { id: 'results', label: 'Results', icon: 'trophy' },
   { id: 'idcards', label: 'ID Cards', icon: 'id-card' },
   { id: 'calendar', label: 'Events Calendar', icon: 'calendar' },
+  { id: 'forms', label: 'Registration Forms', icon: 'file-pdf' },
   { id: 'committee', label: 'Team Members', icon: 'users' },
   { id: 'referees', label: 'Referees', icon: 'gavel' },
   { id: 'partnerships', label: 'Partnerships', icon: 'handshake' },
@@ -79,12 +83,16 @@ const AdminDashboard = () => {
         return <GalleryManager />;
       case 'districts':
         return <DistrictsManager />;
+      case 'enquiries':
+        return <DistrictEnquiriesManager />;
       case 'results':
         return <ResultsManager />;
       case 'idcards':
         return <IDCardsManager />;
       case 'calendar':
         return <CalendarManager />;
+      case 'forms':
+        return <FormsManager />;
       case 'committee':
         return <CommitteeMembersManager />;
       case 'referees':
