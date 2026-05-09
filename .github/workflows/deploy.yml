@@ -45,6 +45,10 @@ jobs:
           echo "📤 Uploading static files..."
           sshpass -e scp -o StrictHostKeyChecking=no -r build/static "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/"
           
+          # Deploy images folder
+          echo "📤 Uploading images..."
+          sshpass -e scp -o StrictHostKeyChecking=no -r build/images "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/"
+          
           # Deploy root files (index.html, manifest, etc.)
           echo "📤 Uploading root files..."
           sshpass -e scp -o StrictHostKeyChecking=no build/index.html build/asset-manifest.json build/manifest.json build/robots.txt "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/" 2>/dev/null || true
