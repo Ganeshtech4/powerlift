@@ -25,6 +25,8 @@ import CommitteeMemberEditor from "./pages/admin/sections/CommitteeMemberEditor"
 import RefereeEditor from "./pages/admin/sections/RefereeEditor";
 import ResultEditor from "./pages/admin/sections/ResultEditor";
 import PartnershipEditor from "./pages/admin/sections/PartnershipEditor";
+import VtdBookEditor from "./pages/admin/sections/VtdBookEditor";
+import InkspireBookEditor from "./pages/admin/sections/InkspireBookEditor";
 import Registration from "./pages/registration";
 import ScrollToTop from "./ScrollToTop";
 import ResultsNew from "./pages/Results/Results";
@@ -75,6 +77,10 @@ export default function App() {
         <Route path="admin/results/edit/:id" element={<ResultEditor />} />
         <Route path="admin/partnerships/new" element={<PartnershipEditor />} />
         <Route path="admin/partnerships/edit/:id" element={<PartnershipEditor />} />
+        <Route path="admin/vtd-books/new" element={<VtdBookEditor />} />
+        <Route path="admin/vtd-books/edit/:id" element={<VtdBookEditor />} />
+        <Route path="admin/inkspire-books/new" element={<InkspireBookEditor />} />
+        <Route path="admin/inkspire-books/edit/:id" element={<InkspireBookEditor />} />
         <Route path="contact" element={<Contact />} />
         <Route path="registration" element={<Registration />} />
         <Route path="inkspire" element={<Inspire />} />
