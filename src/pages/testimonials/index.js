@@ -10,7 +10,7 @@ import CtaTwo from '../../components/Common/CtaSection/CtaTwo';
 import TestimonialsMain from './TestimonialsMain';
 
 const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
-const bannerbg1 = `${process.env.PUBLIC_URL}/images/backgrounds/Testimonialspage-header-bg.jpg`;
+const bannerbg1 = `${process.env.PUBLIC_URL}/images/backgrounds/coverpagepic.jpg`;
 
 
 // Breadcrumbs Background Image

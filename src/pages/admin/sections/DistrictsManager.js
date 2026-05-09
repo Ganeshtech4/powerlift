@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { axiosInstance, API_URL } from '../../../config/axiosConfig';
+import { axiosInstance } from '../../../config/axiosConfig';
 import { uploadToS3 } from '../../../utils/s3Upload';
 import './DistrictsManager.css';
 
@@ -17,9 +17,12 @@ const DistrictsManager = () => {
         president_email: '',
         president_photo_url: '',
         description: '',
+        certificate_url: '',
+        display_order: 999,
         is_available: true
     });
     const [uploading, setUploading] = useState(false);
+    const [uploadingCert, setUploadingCert] = useState(false);
 
     useEffect(() => {
         fetchDistricts();
@@ -46,6 +49,8 @@ const DistrictsManager = () => {
             president_email: district.president_email || '',
             president_photo_url: district.president_photo_url || '',
             description: district.description || '',
+            certificate_url: district.certificate_url || '',
+            display_order: district.display_order ?? 999,
             is_available: district.is_available
         });
         setShowModal(true);
@@ -72,6 +77,52 @@ const DistrictsManager = () => {
         setFormData({ ...formData, president_photo_url: '' });
     };
 
+    const handleCertificateUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        try {
+            setUploadingCert(true);
+            const certUrl = await uploadToS3(file, 'districts/certificates');
+            setFormData({ ...formData, certificate_url: certUrl });
+            alert('Certificate uploaded successfully!');
+        } catch (error) {
+            console.error('Error uploading certificate:', error);
+            alert('Failed to upload certificate');
+        } finally {
+            setUploadingCert(false);
+        }
+    };
+
+    const handleRemoveCertificate = () => {
+        setFormData({ ...formData, certificate_url: '' });
+    };
+
+    const handleClearPresident = async () => {
+        if (!window.confirm('Are you sure you want to clear this president assignment? This will make the district available again.')) {
+            return;
+        }
+        try {
+            const updateData = {
+                president_name: null,
+                president_phone: null,
+                president_email: null,
+                president_photo_url: null,
+                description: null,
+                is_available: true
+            };
+            await axiosInstance.put(`/districts/${editingDistrict.id}`, updateData);
+            setShowModal(false);
+            setEditingDistrict(null);
+            fetchDistricts();
+            resetForm();
+            alert('President assignment cleared successfully!');
+        } catch (error) {
+            console.error('Error clearing president:', error);
+            alert('Failed to clear president details');
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -84,6 +135,8 @@ const DistrictsManager = () => {
                 if (formData.president_email) updateData.president_email = formData.president_email;
                 if (formData.president_photo_url) updateData.president_photo_url = formData.president_photo_url;
                 if (formData.description) updateData.description = formData.description;
+                if (formData.certificate_url) updateData.certificate_url = formData.certificate_url;
+                updateData.display_order = Number(formData.display_order ?? 999);
                 updateData.is_available = formData.is_available;
                 
                 await axiosInstance.put(`/districts/${editingDistrict.id}`, updateData);
@@ -106,6 +159,8 @@ const DistrictsManager = () => {
             president_email: '',
             president_photo_url: '',
             description: '',
+            certificate_url: '',
+            display_order: 999,
             is_available: true
         });
     };
@@ -215,15 +270,27 @@ const DistrictsManager = () => {
                             )}
                             <div className="district-header">
                                 <h3>{district.name}</h3>
-                                {district.president_name ? (
-                                    <span className="status-badge assigned">
-                                        <i className="fas fa-check-circle"></i> Assigned
-                                    </span>
-                                ) : (
-                                    <span className="status-badge available">
-                                        <i className="fas fa-clock"></i> Available
-                                    </span>
-                                )}
+                                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                                    {district.president_name ? (
+                                        <span className="status-badge assigned">
+                                            <i className="fas fa-check-circle"></i> Assigned
+                                        </span>
+                                    ) : (
+                                        <span className="status-badge available">
+                                            <i className="fas fa-clock"></i> Available
+                                        </span>
+                                    )}
+                                    {district.certificate_url && (
+                                        <span className="status-badge" style={{ background: '#7c3aed', border: 'none' }}>
+                                            <i className="fas fa-certificate"></i> Certificate
+                                        </span>
+                                    )}
+                                    {district.display_order !== undefined && district.display_order !== 999 && (
+                                        <span className="status-badge" style={{ background: '#f59e0b', border: 'none' }}>
+                                            <i className="fas fa-sort-numeric-down"></i> Order: {district.display_order}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                             <div className="district-info">
                                 {district.president_name ? (
@@ -267,17 +334,23 @@ const DistrictsManager = () => {
             {/* Edit Modal */}
             {showModal && (
                 <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-header">
-                            <h3>
-                                <i className="fas fa-edit"></i>
-                                Edit District: {formData.name}
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '650px', background: '#fff', borderRadius: '16px', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
+                        <button className="modal-close" onClick={() => setShowModal(false)} style={{ background: '#f3f4f6', border: 'none', color: '#6b7280' }}>
+                            <i className="fas fa-times"></i>
+                        </button>
+
+                        <div style={{ marginBottom: '2rem', paddingRight: '2rem' }}>
+                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', background: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)', padding: '0.75rem 1.25rem', borderRadius: '12px', marginBottom: '1rem' }}>
+                                <i className="fas fa-map-marker-alt" style={{ fontSize: '1.25rem', color: '#3b82f6' }}></i>
+                                <span style={{ fontWeight: '600', color: '#1e40af', fontSize: '0.9rem' }}>{formData.name}</span>
+                            </div>
+                            <h3 style={{ fontSize: '1.875rem', margin: '0 0 0.5rem', color: '#111827', fontWeight: '700', letterSpacing: '-0.025em' }}>
+                                {editingDistrict?.president_name ? 'Edit District President' : 'Assign District President'}
                             </h3>
-                            <button className="modal-close" onClick={() => setShowModal(false)}>
-                                <i className="fas fa-times"></i>
-                            </button>
+                            <p style={{ margin: 0, color: '#6b7280', fontSize: '0.95rem' }}>Manage president details and district information</p>
                         </div>
-                        <form onSubmit={handleSubmit} className="district-form">
+
+                        <form onSubmit={handleSubmit} className="district-form" style={{ display: 'grid', gap: '1.25rem' }}>
                             <div className="form-group">
                                 <label>District Name</label>
                                 <input
@@ -355,8 +428,60 @@ const DistrictsManager = () => {
                                         </label>
                                     </div>
                                 )}
+                            </div>                            <div className="form-group">
+                                <label>District Certificate (PDF)</label>
+                                {formData.certificate_url ? (
+                                    <div className="image-preview">
+                                        <div style={{ padding: '1rem', background: '#f5f5f5', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                            <i className="fas fa-file-pdf" style={{ fontSize: '2rem', color: '#d32f2f' }}></i>
+                                            <div style={{ flex: 1 }}>
+                                                <a href={formData.certificate_url} target="_blank" rel="noopener noreferrer" style={{ color: '#1976d2', textDecoration: 'none' }}>
+                                                    View Certificate <i className="fas fa-external-link-alt"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn-remove-image"
+                                            onClick={handleRemoveCertificate}
+                                            style={{ marginTop: '0.5rem' }}
+                                        >
+                                            <i className="fas fa-times"></i> Remove Certificate
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="upload-area-small">
+                                        <input
+                                            type="file"
+                                            accept="application/pdf"
+                                            onChange={handleCertificateUpload}
+                                            id="district-cert-upload"
+                                            style={{ display: 'none' }}
+                                            disabled={uploadingCert}
+                                        />
+                                        <label htmlFor="district-cert-upload" className="btn-upload-small">
+                                            {uploadingCert ? (
+                                                <><i className="fas fa-spinner fa-spin"></i> Uploading...</>
+                                            ) : (
+                                                <><i className="fas fa-upload"></i> Upload Certificate</>
+                                            )}
+                                        </label>
+                                    </div>
+                                )}
                             </div>
-                            <div className="form-group checkbox-group">
+                            <div className="form-group">
+                                <label>Display Order</label>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    value={formData.display_order}
+                                    onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) || 999 })}
+                                    placeholder="Lower number = appears first (default: 999)"
+                                />
+                                <small style={{ color: '#666', fontSize: '0.85rem', marginTop: '0.25rem', display: 'block' }}>
+                                    Lower numbers appear first. Districts with same order are sorted alphabetically.
+                                </small>
+                            </div>                            <div className="form-group checkbox-group">
                                 <label>
                                     <input
                                         type="checkbox"
@@ -366,11 +491,21 @@ const DistrictsManager = () => {
                                     <span>District is available</span>
                                 </label>
                             </div>
-                            <div className="form-actions">
-                                <button type="button" className="btn-cancel" onClick={() => setShowModal(false)}>
+                            <div className="form-actions" style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e5e7eb' }}>
+                                <button type="button" className="btn-cancel" onClick={() => setShowModal(false)} style={{ flex: 1, padding: '0.75rem 1.5rem', background: '#f3f4f6', color: '#374151', border: 'none', borderRadius: '8px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }}>
                                     Cancel
                                 </button>
-                                <button type="submit" className="btn-submit">
+                                {editingDistrict?.president_name && (
+                                    <button 
+                                        type="button" 
+                                        onClick={handleClearPresident}
+                                        style={{ flex: 1, padding: '0.75rem 1.5rem', background: 'linear-gradient(135deg, #fca5a5 0%, #ef4444 100%)', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                                    >
+                                        <i className="fas fa-user-times"></i>
+                                        Clear Assignment
+                                    </button>
+                                )}
+                                <button type="submit" className="btn-submit" style={{ flex: 1, padding: '0.75rem 1.5rem', background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                                     <i className="fas fa-save"></i>
                                     Save Changes
                                 </button>

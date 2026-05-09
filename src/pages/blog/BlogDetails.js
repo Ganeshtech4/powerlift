@@ -8,7 +8,7 @@ import CtaTwo from '../../components/Common/CtaSection/CtaTwo';
 import './BlogDetails.css';
 
 const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
-const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/page-header-bg.jpg`;
+const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/coverpagepic.jpg`;
 const SERVER_URL = process.env.REACT_APP_SERVER_URL || '';
 
 const BlogDetails = () => {

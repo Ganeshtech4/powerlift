@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Link } from 'react-router-dom';
-import ticketImg from '../../assets/images/resources/schedule-one-1-1.jpg';
+
+const ticketImg = `${process.env.PUBLIC_URL}/images/backgrounds/coverpagepic2.jpg`;
 
 export default function BuyTicket() {
   // State for dynamic content

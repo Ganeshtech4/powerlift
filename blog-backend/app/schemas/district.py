@@ -14,6 +14,8 @@ class DistrictBase(BaseModel):
     president_phone: Optional[str] = None
     president_photo_url: Optional[str] = None
     description: Optional[str] = None
+    certificate_url: Optional[str] = None
+    display_order: Optional[int] = 999
 
 
 class DistrictCreate(DistrictBase):
@@ -28,6 +30,8 @@ class DistrictUpdate(BaseModel):
     president_phone: Optional[str] = None
     president_photo_url: Optional[str] = None
     description: Optional[str] = None
+    certificate_url: Optional[str] = None
+    display_order: Optional[int] = None
 
 
 class DistrictResponse(DistrictBase):

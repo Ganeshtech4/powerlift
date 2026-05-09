@@ -5,7 +5,8 @@ const SiteBreadcrumb = (props) => {
     const { pageTitle, parentCategory, pageCategory, pageName, breadcrumbsImg } = props;
 
     const breadcrumbsImgStyle = {
-        backgroundImage: `url(${breadcrumbsImg})`
+        backgroundImage: `url(${breadcrumbsImg})`,
+        backgroundPosition: 'center center'
     }
 
     return (

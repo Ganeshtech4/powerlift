@@ -7,7 +7,7 @@ import CtaTwo from '../../components/Common/CtaSection/CtaTwo';
 import ContactMain from './ContactMain';
 
 const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
-const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/page1-header-bg.jpg`;
+const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/coverpagepic.jpg`;
 
 // Breadcrumbs Background Image
 

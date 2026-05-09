@@ -518,14 +518,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(20, 18, 14, 0.7);
+  background: rgba(0, 0, 0, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 99999;
   padding: 1.5rem;
-  animation: fadeIn 0.3s ease;
-  backdrop-filter: blur(8px);
+  animation: fadeIn 0.25s ease;
+  backdrop-filter: blur(12px);
 }
 
 @keyframes fadeIn {
@@ -539,13 +539,16 @@
 }
 
 .modal-content {
-  max-width: 600px;
+  max-width: 540px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  padding: 2.4rem;
+  padding: 3rem;
   position: relative;
-  animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  background: #ffffff;
+  border: none;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 @keyframes slideUp {
@@ -564,113 +567,125 @@
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
-  background: rgba(255, 255, 255, 0.84);
-  color: var(--district-text);
-  border: 1px solid var(--district-border);
-  width: 45px;
-  height: 45px;
+  background: #f3f4f6;
+  color: #6b7280;
+  border: none;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  font-size: 1.2rem;
+  transition: all 0.2s ease;
+  font-size: 1.1rem;
   z-index: 10;
 }
 
 .modal-close:hover {
-  background: var(--district-text);
-  color: #fff;
-  transform: rotate(90deg) scale(1.05);
+  background: #e5e7eb;
+  color: #111827;
+  transform: scale(1.05);
 }
 
 .modal-title {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
+  font-size: 1.875rem;
+  margin-bottom: 0.5rem;
   padding-right: 3rem;
-  line-height: 1.3;
-  border-bottom: 1px solid var(--district-border);
-  padding-bottom: 16px;
+  line-height: 1.25;
+  color: #111827;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
 .modal-subtitle {
-  margin: 0 0 24px;
+  margin: 0 0 2rem;
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .enquiry-form .form-group {
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.5rem;
 }
 
 .enquiry-form label {
   display: block;
-  font-weight: 700;
-  color: var(--district-text);
-  margin-bottom: 0.7rem;
-  font-size: 0.82rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  letter-spacing: 0;
 }
 
 .enquiry-form .form-control {
   width: 100%;
-  padding: 1rem 1.1rem;
-  border: 1px solid var(--district-border);
-  border-radius: 16px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  transition: all 0.2s ease;
   font-family: inherit;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.72);
+  background: #ffffff;
+  color: #111827;
+}
+
+.enquiry-form .form-control::placeholder {
+  color: #9ca3af;
 }
 
 .enquiry-form .form-control:focus {
   outline: none;
-  border-color: var(--district-border-strong);
-  background: #fff;
-  box-shadow: 0 0 0 4px rgba(141, 119, 88, 0.08);
+  border-color: #3b82f6;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .enquiry-form textarea.form-control {
   resize: vertical;
   min-height: 120px;
+  line-height: 1.6;
 }
 
 .btn-submit {
   width: 100%;
-  padding: 1.05rem 1.6rem;
-  background: var(--district-text);
-  color: #fff;
-  border: 1px solid var(--district-text);
-  border-radius: 999px;
-  font-size: 0.92rem;
-  font-weight: 700;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.7rem;
-  margin-top: 1rem;
-  box-shadow: 0 16px 30px rgba(28, 24, 18, 0.12);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3), 0 2px 4px -1px rgba(59, 130, 246, 0.2);
+  letter-spacing: 0;
 }
 
 .btn-submit:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 20px 34px rgba(28, 24, 18, 0.18);
-  background: var(--district-accent);
-  border-color: var(--district-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -2px rgba(59, 130, 246, 0.2);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.btn-submit:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .btn-submit:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
 .btn-submit i {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 /* Responsive Design */
@@ -690,6 +705,31 @@
 }
 
 @media (max-width: 768px) {
+  .modal-content {
+    padding: 2rem 1.5rem;
+    max-height: 95vh;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+    padding-right: 2.5rem;
+  }
+
+  .modal-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .modal-close {
+    top: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+  }
+
+  .enquiry-form .form-control {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
   .districts-grid {
     grid-template-columns: 1fr;
     gap: 25px;

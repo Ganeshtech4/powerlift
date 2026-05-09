@@ -1,28 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../../config/axiosConfig';
-import { uploadToS3 } from '../../../utils/s3Upload';
 import './InkspireManager.css';
 
-const emptyForm = {
-  title: '',
-  subtitle: '',
-  quote: '',
-  pdf_url: '',
-  cover_image_url: '',
-  order: 0,
-  is_active: true,
-};
-
 const VtdManager = () => {
+  const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [editingBook, setEditingBook] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [uploadingCover, setUploadingCover] = useState(false);
-  const [uploadingPdf, setUploadingPdf] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [formData, setFormData] = useState(emptyForm);
 
   useEffect(() => {
     fetchBooks();
@@ -41,23 +26,11 @@ const VtdManager = () => {
   };
 
   const handleAdd = () => {
-    setEditingBook(null);
-    setFormData(emptyForm);
-    setShowModal(true);
+    navigate('/admin/vtd-books/new');
   };
 
   const handleEdit = (book) => {
-    setEditingBook(book);
-    setFormData({
-      title: book.title || '',
-      subtitle: book.subtitle || '',
-      quote: book.quote || '',
-      pdf_url: book.pdf_url || '',
-      cover_image_url: book.cover_image_url || '',
-      order: book.order ?? 0,
-      is_active: book.is_active ?? true,
-    });
-    setShowModal(true);
+    navigate(`/admin/vtd-books/edit/${book.id}`);
   };
 
   const handleDelete = async (id) => {
@@ -67,61 +40,6 @@ const VtdManager = () => {
       fetchBooks();
     } catch (err) {
       alert('Failed to delete VTD book');
-    }
-  };
-
-  const handleCoverUpload = async (event) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    try {
-      setUploadingCover(true);
-      const response = await uploadToS3(file, 'images/VTD');
-      setFormData((current) => ({ ...current, cover_image_url: response.url }));
-    } catch (err) {
-      alert('Failed to upload cover image');
-    } finally {
-      setUploadingCover(false);
-    }
-  };
-
-  const handlePdfUpload = async (event) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    try {
-      setUploadingPdf(true);
-      const response = await uploadToS3(file, 'pdfs/vtd');
-      setFormData((current) => ({ ...current, pdf_url: response.url }));
-    } catch (err) {
-      alert('Failed to upload PDF');
-    } finally {
-      setUploadingPdf(false);
-    }
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      setSaving(true);
-      const payload = {
-        ...formData,
-        order: Number(formData.order || 0),
-      };
-
-      if (editingBook) {
-        await axiosInstance.put(`/vtd-books/${editingBook.id}`, payload);
-      } else {
-        await axiosInstance.post('/vtd-books/', payload);
-      }
-
-      setShowModal(false);
-      fetchBooks();
-    } catch (err) {
-      console.error('Error saving VTD book:', err);
-      alert('Failed to save VTD book');
-    } finally {
-      setSaving(false);
     }
   };
 
@@ -209,77 +127,6 @@ const VtdManager = () => {
               <button className="btn-primary" onClick={handleAdd}>Add First Book</button>
             </div>
           )}
-        </div>
-      )}
-
-      {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={(event) => event.stopPropagation()}>
-            <div className="modal-header">
-              <h3>{editingBook ? 'Edit VTD Book' : 'Add VTD Book'}</h3>
-              <button className="modal-close" onClick={() => setShowModal(false)}>
-                <i className="fas fa-times"></i>
-              </button>
-            </div>
-
-            <form onSubmit={handleSubmit} className="modal-form">
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Title *</label>
-                  <input type="text" required value={formData.title} onChange={(event) => setFormData((current) => ({ ...current, title: event.target.value }))} />
-                </div>
-                <div className="form-group">
-                  <label>Subtitle</label>
-                  <input type="text" value={formData.subtitle} onChange={(event) => setFormData((current) => ({ ...current, subtitle: event.target.value }))} />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>Description</label>
-                <textarea rows="4" value={formData.quote} onChange={(event) => setFormData((current) => ({ ...current, quote: event.target.value }))} />
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Display Order</label>
-                  <input type="number" min="0" value={formData.order} onChange={(event) => setFormData((current) => ({ ...current, order: parseInt(event.target.value, 10) || 0 }))} />
-                </div>
-                <div className="form-group">
-                  <label>Status</label>
-                  <select value={formData.is_active} onChange={(event) => setFormData((current) => ({ ...current, is_active: event.target.value === 'true' }))}>
-                    <option value="true">Active</option>
-                    <option value="false">Inactive</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>PDF URL</label>
-                <input type="url" value={formData.pdf_url} onChange={(event) => setFormData((current) => ({ ...current, pdf_url: event.target.value }))} placeholder="https://..." />
-                <input type="file" accept="application/pdf" onChange={handlePdfUpload} disabled={uploadingPdf} />
-                {uploadingPdf && <span className="upload-status"><i className="fas fa-spinner fa-spin"></i> Uploading PDF...</span>}
-              </div>
-
-              <div className="form-group">
-                <label>Cover Image URL</label>
-                <input type="url" value={formData.cover_image_url} onChange={(event) => setFormData((current) => ({ ...current, cover_image_url: event.target.value }))} placeholder="https://..." />
-                {formData.cover_image_url && (
-                  <div className="photo-preview">
-                    <img src={formData.cover_image_url} alt="cover preview" />
-                  </div>
-                )}
-                <input type="file" accept="image/*" onChange={handleCoverUpload} disabled={uploadingCover} />
-                {uploadingCover && <span className="upload-status"><i className="fas fa-spinner fa-spin"></i> Uploading cover...</span>}
-              </div>
-
-              <div className="modal-actions">
-                <button type="button" className="btn-secondary" onClick={() => setShowModal(false)}>Cancel</button>
-                <button type="submit" className="btn-primary" disabled={saving || uploadingCover || uploadingPdf}>
-                  {saving ? <><i className="fas fa-spinner fa-spin"></i> Saving...</> : (editingBook ? 'Update Book' : 'Add Book')}
-                </button>
-              </div>
-            </form>
-          </div>
         </div>
       )}
     </div>

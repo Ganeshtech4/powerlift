@@ -8,7 +8,7 @@ import CtaTwo from '../../components/Common/CtaSection/CtaTwo';
 import './Districts.css';
 
 const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
-const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/page-header-bg.jpg`;
+const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/coverpagepic.jpg`;
 const API_URL = process.env.REACT_APP_API_URL || '/api/v1';
 
 const Districts = () => {
@@ -82,7 +82,19 @@ const Districts = () => {
         }
     };
 
-    const sortedDistricts = [...districts].sort((left, right) => left.name.localeCompare(right.name));
+    const sortedDistricts = [...districts].sort((a, b) => {
+        // First sort by display_order (lower numbers first)
+        const orderA = a.display_order ?? 999;
+        const orderB = b.display_order ?? 999;
+        if (orderA !== orderB) return orderA - orderB;
+        
+        // Then prioritize assigned districts (is_available = false)
+        if (!a.is_available && b.is_available) return -1;
+        if (a.is_available && !b.is_available) return 1;
+        
+        // Finally sort alphabetically by name
+        return a.name.localeCompare(b.name);
+    });
     const assignedDistricts = sortedDistricts.filter((district) => !district.is_available).length;
     const availableDistricts = sortedDistricts.filter((district) => district.is_available).length;
 
@@ -216,6 +228,42 @@ const Districts = () => {
                                                 <h4 className="president-name">{district.president_name}</h4>
                                                 <p className="president-label">District president</p>
 
+                                                {district.certificate_url && (
+                                                    <div style={{ margin: '1rem 0' }}>
+                                                        <a 
+                                                            href={district.certificate_url} 
+                                                            target="_blank" 
+                                                            rel="noopener noreferrer"
+                                                            className="certificate-link"
+                                                            style={{
+                                                                display: 'inline-flex',
+                                                                alignItems: 'center',
+                                                                gap: '0.5rem',
+                                                                padding: '0.5rem 1rem',
+                                                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                                                color: '#fff',
+                                                                borderRadius: '8px',
+                                                                textDecoration: 'none',
+                                                                fontSize: '0.9rem',
+                                                                fontWeight: '600',
+                                                                transition: 'all 0.3s ease',
+                                                                boxShadow: '0 2px 8px rgba(102, 126, 234, 0.3)'
+                                                            }}
+                                                            onMouseOver={(e) => {
+                                                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.4)';
+                                                            }}
+                                                            onMouseOut={(e) => {
+                                                                e.currentTarget.style.transform = 'translateY(0)';
+                                                                e.currentTarget.style.boxShadow = '0 2px 8px rgba(102, 126, 234, 0.3)';
+                                                            }}
+                                                        >
+                                                            <i className="fas fa-certificate"></i>
+                                                            View Certificate
+                                                        </a>
+                                                    </div>
+                                                )}
+
                                                 {district.description && (
                                                     <p className="president-description">{district.description}</p>
                                                 )}
@@ -262,8 +310,22 @@ const Districts = () => {
                             <i className="fas fa-times"></i>
                         </button>
 
-                        <h3 className="modal-title">Send Enquiry - {selectedDistrict?.name}</h3>
-                        <p className="modal-subtitle">Share your details and the federation will get back to you regarding this district.</p>
+                        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+                            <div style={{ 
+                                width: '60px', 
+                                height: '60px', 
+                                background: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)', 
+                                borderRadius: '50%', 
+                                display: 'inline-flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'center',
+                                marginBottom: '1rem'
+                            }}>
+                                <i className="fas fa-paper-plane" style={{ fontSize: '1.5rem', color: '#3b82f6' }}></i>
+                            </div>
+                            <h3 className="modal-title">Send Enquiry</h3>
+                            <p className="modal-subtitle">{selectedDistrict?.name} District - We'll get back to you shortly</p>
+                        </div>
 
                         <form onSubmit={handleSubmitEnquiry} className="enquiry-form">
                             <div className="form-group">
@@ -273,43 +335,43 @@ const Districts = () => {
                                     required
                                     value={enquiryForm.name}
                                     onChange={(e) => setEnquiryForm({ ...enquiryForm, name: e.target.value })}
-                                    placeholder="Enter your name"
+                                    placeholder="John Doe"
                                     className="form-control"
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label>Email *</label>
+                                <label>Email Address *</label>
                                 <input
                                     type="email"
                                     required
                                     value={enquiryForm.email}
                                     onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
-                                    placeholder="your.email@example.com"
+                                    placeholder="john@example.com"
                                     className="form-control"
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label>Phone *</label>
+                                <label>Phone Number *</label>
                                 <input
                                     type="tel"
                                     required
                                     value={enquiryForm.phone}
                                     onChange={(e) => setEnquiryForm({ ...enquiryForm, phone: e.target.value })}
-                                    placeholder="+91 9876543210"
+                                    placeholder="+91 98765 43210"
                                     className="form-control"
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label>Message *</label>
+                                <label>Your Message *</label>
                                 <textarea
                                     required
                                     rows="5"
                                     value={enquiryForm.message}
                                     onChange={(e) => setEnquiryForm({ ...enquiryForm, message: e.target.value })}
-                                    placeholder="Write your message here..."
+                                    placeholder="Tell us about your interest in this district..."
                                     className="form-control"
                                 ></textarea>
                             </div>

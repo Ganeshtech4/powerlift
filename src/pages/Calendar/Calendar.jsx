@@ -3,12 +3,10 @@ import axios from 'axios';
 import BackToTop from '../../components/elements/BackToTop';
 import Header from '../../components/Layout/Header';
 import Footer from '../../components/Layout/Footer';
-import SiteBreadcrumb from '../../components/Common/Breadcumb';
 import CtaTwo from '../../components/Common/CtaSection/CtaTwo';
 import './Calendar.css';
 
 const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
-const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/page-header-bg.jpg`;
 const API_URL = process.env.REACT_APP_API_URL || '/api/v1';
 
 const Calendar = () => {
@@ -16,6 +14,7 @@ const Calendar = () => {
     const [filteredEvents, setFilteredEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeFilter, setActiveFilter] = useState('all');
+    const [searchTerm, setSearchTerm] = useState('');
     const [isVisible, setIsVisible] = useState(false);
 
     const categories = [
@@ -40,7 +39,7 @@ const Calendar = () => {
     useEffect(() => {
         filterEvents();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeFilter, events]);
+    }, [activeFilter, searchTerm, events]);
 
     const fetchEvents = async () => {
         try {
@@ -55,11 +54,25 @@ const Calendar = () => {
     };
 
     const filterEvents = () => {
-        if (activeFilter === 'all') {
-            setFilteredEvents(events.filter(e => e.is_active));
-        } else {
-            setFilteredEvents(events.filter(e => e.category === activeFilter && e.is_active));
+        let filtered = events.filter(e => e.is_active);
+        
+        // Apply category filter
+        if (activeFilter !== 'all') {
+            filtered = filtered.filter(e => e.category === activeFilter);
         }
+        
+        // Apply search filter
+        if (searchTerm.trim()) {
+            const search = searchTerm.toLowerCase();
+            filtered = filtered.filter(e => 
+                (e.title && e.title.toLowerCase().includes(search)) ||
+                (e.location && e.location.toLowerCase().includes(search)) ||
+                (e.description && e.description.toLowerCase().includes(search)) ||
+                (e.category && e.category.toLowerCase().includes(search))
+            );
+        }
+        
+        setFilteredEvents(filtered);
     };
 
     const formatDate = (dateString) => {
@@ -99,12 +112,6 @@ const Calendar = () => {
         <React.Fragment>
             <Header navImg={navImg1} parentMenu='Register' activeMenu="/calendar" />
 
-            <SiteBreadcrumb
-                pageTitle="Events Calendar"
-                pageName="Calendar"
-                breadcrumbsImg={bannerbg}
-            />
-
             <div className="calendar-section section-padding">
                 <div className="container">
                     <div className="section-title text-center mb-60">
@@ -114,23 +121,45 @@ const Calendar = () => {
                         </p>
                     </div>
 
-                    {/* Category Filters */}
-                    <div className="calendar-filters">
-                        {categories.map(cat => (
-                            <button
-                                key={cat.id}
-                                className={`filter-button ${activeFilter === cat.id ? 'active' : ''}`}
-                                onClick={() => setActiveFilter(cat.id)}
-                            >
-                                <i className={`fas fa-${cat.icon}`}></i>
-                                <span>{cat.label}</span>
-                                {cat.id !== 'all' && (
-                                    <span className="count">
-                                        {events.filter(e => e.category === cat.id && e.is_active).length}
-                                    </span>
-                                )}
-                            </button>
-                        ))}
+                    {/* Search and Filters */}
+                    <div className="calendar-search" style={{ display: 'flex', gap: '1rem', alignItems: 'center', background: '#fff', padding: '1.2rem 1.5rem', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0, 0, 0, 0.06)', marginBottom: '2.5rem' }}>
+                        <div className="search-input-wrapper">
+                            <i className="fas fa-search search-icon"></i>
+                            <input
+                                type="text"
+                                className="search-input"
+                                placeholder="Search events..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                            {searchTerm && (
+                                <button 
+                                    className="clear-search"
+                                    onClick={() => setSearchTerm('')}
+                                    aria-label="Clear search"
+                                >
+                                    <i className="fas fa-times"></i>
+                                </button>
+                            )}
+                        </div>
+                        
+                        <div className="calendar-filters">
+                            {categories.map(cat => (
+                                <button
+                                    key={cat.id}
+                                    className={`filter-button ${activeFilter === cat.id ? 'active' : ''}`}
+                                    onClick={() => setActiveFilter(cat.id)}
+                                >
+                                    <i className={`fas fa-${cat.icon}`}></i>
+                                    <span>{cat.label}</span>
+                                    {cat.id !== 'all' && (
+                                        <span className="count">
+                                            {events.filter(e => e.category === cat.id && e.is_active).length}
+                                        </span>
+                                    )}
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
                     {/* Upcoming Events */}

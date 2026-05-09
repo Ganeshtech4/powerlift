@@ -207,42 +207,171 @@ const VtdMain = () => {
           </h3>
           <p
             style={{
-              color: "#e6f0ff",
+              color: "rgba(255, 255, 255, 0.9)",
               fontSize: isMobile ? "14px" : "16px",
-              marginBottom: "25px",
-              maxWidth: "600px",
-              margin: "0 auto 25px auto",
+              marginBottom: "20px",
             }}
           >
             Access comprehensive VTD training resources, educational materials, and guidelines curated by WPC Telangana.
           </p>
-          <Link
-            to="/contact"
-            style={{
-              display: "inline-block",
-              padding: isMobile ? "12px 24px" : "15px 40px",
-              background: "#fff",
-              color: "#667eea",
-              borderRadius: "50px",
-              fontWeight: "600",
-              fontSize: isMobile ? "14px" : "16px",
-              textDecoration: "none",
-              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
-              transition: "transform 0.3s ease, box-shadow 0.3s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = "translateY(-3px)";
-              e.target.style.boxShadow = "0 15px 40px rgba(0, 0, 0, 0.3)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = "translateY(0)";
-              e.target.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.2)";
-            }}
-          >
-            Get in Touch
+          <Link to="/contact" style={{ textDecoration: "none" }}>
+            <button
+              type="button"
+              className="inspire-cta-btn"
+              style={{
+                padding: isMobile ? "12px 24px" : "15px 40px",
+                background: "#fff",
+                color: "#667eea",
+                border: "none",
+                borderRadius: "50px",
+                fontSize: isMobile ? "14px" : "16px",
+                fontWeight: "700",
+                cursor: "pointer",
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+                transition: "all 0.3s ease",
+              }}
+            >
+              Get in Touch
+            </button>
           </Link>
         </div>
       </div>
+
+      <style>{`
+        .inspire-card {
+          background: #ffffff;
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+          transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          animation: slideUp 0.6s ease-out forwards;
+          opacity: 0;
+        }
+
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .inspire-card:hover {
+          transform: translateY(-12px);
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .loading-state,
+        .empty-state {
+          background: rgba(255, 255, 255, 0.92);
+          border-radius: 18px;
+          padding: 32px;
+          text-align: center;
+          color: #4a5568;
+          margin-bottom: 30px;
+        }
+
+        .inspire-card__img {
+          position: relative;
+          height: 280px;
+          overflow: hidden;
+        }
+
+        .inspire-card__img img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.4s ease;
+        }
+
+        .inspire-card:hover .inspire-card__img img {
+          transform: scale(1.1);
+        }
+
+        .inspire-card__badge {
+          position: absolute;
+          top: 15px;
+          left: 15px;
+          z-index: 2;
+        }
+
+        .inspire-card__content {
+          padding: 25px;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .inspire-card__name {
+          color: #2d3748;
+          font-weight: 700;
+          margin-bottom: 12px;
+          line-height: 1.3;
+        }
+
+        .inspire-card__quote {
+          color: #718096;
+          font-size: 14px;
+          line-height: 1.6;
+          margin-bottom: 20px;
+          flex: 1;
+          font-style: italic;
+        }
+
+        .inspire-card__btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 24px;
+          color: #fff;
+          border-radius: 50px;
+          font-weight: 600;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          border: none;
+          cursor: pointer;
+        }
+
+        .inspire-card__btn:hover {
+          gap: 12px;
+          box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+          transform: translateY(-2px);
+          color: #fff;
+        }
+
+        .inspire-card__btn--pdf:hover {
+          box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+        }
+
+        .inspire-cta-btn:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3) !important;
+          background: #f7fafc !important;
+        }
+
+        @media (max-width: 767px) {
+          .loading-state,
+          .empty-state {
+            padding: 24px;
+          }
+
+          .inspire-card__img {
+            height: 220px;
+          }
+
+          .inspire-card__content {
+            padding: 20px;
+          }
+        }
+      `}</style>
     </section>
   );
 };
