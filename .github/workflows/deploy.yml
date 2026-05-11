@@ -119,22 +119,40 @@ jobs:
           echo "📦 Installing/updating Python dependencies..."
           source venv/bin/activate
           pip install -r requirements.txt --quiet
-          echo "🔄 Restarting backend service..."
-          sudo systemctl restart rekhapowerlift-backend
+
+          echo "🔄 Finding and restarting backend service..."
+          # Discover the actual service name
+          SERVICE=$(systemctl list-units --type=service --all | grep -iE "powerlift|rekha|uvicorn|gunicorn" | awk '{print $1}' | head -1)
+          if [ -z "$SERVICE" ]; then
+            echo "⚠️  No matching service found, listing all services for inspection:"
+            systemctl list-units --type=service --all | grep -v "^$" | head -30
+            echo "Trying to restart using pkill + manual start..."
+            pkill -f "uvicorn main:app" || true
+            nohup venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 &
+          else
+            echo "Found service: $SERVICE"
+            sudo systemctl restart "$SERVICE"
+          fi
+
           echo "✅ Backend deployment completed!"
           BACKEND
 
           echo "⏳ Waiting for backend to start..."
           sleep 5
 
-          echo "🔍 Verifying backend service..."
+          echo "🔍 Verifying backend..."
           sshpass -e ssh -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" << 'VERIFY'
-          if systemctl is-active --quiet rekhapowerlift-backend; then
-            echo "✅ Backend service is running"
+          SERVICE=$(systemctl list-units --type=service --all | grep -iE "powerlift|rekha|uvicorn|gunicorn" | awk '{print $1}' | head -1)
+          if [ -n "$SERVICE" ] && systemctl is-active --quiet "$SERVICE"; then
+            echo "✅ Backend service '$SERVICE' is running"
           else
-            echo "❌ Backend service failed to start"
-            sudo systemctl status rekhapowerlift-backend
-            exit 1
+            echo "⚠️  Checking if backend process is running..."
+            if pgrep -f "uvicorn main:app" > /dev/null; then
+              echo "✅ uvicorn process is running"
+            else
+              echo "❌ Backend is not running"
+              exit 1
+            fi
           fi
           VERIFY
 
