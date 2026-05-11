@@ -18,6 +18,8 @@ class ResultType(str, Enum):
     CHAMPIONSHIP = "championship"
     RECORDS = "records"
     RESULTS = "results"
+    ID_CARD = "id_card"   # Used by IDCardsManager
+    RESULT = "result"     # Legacy alias
 
 
 class ResultBase(BaseModel):
