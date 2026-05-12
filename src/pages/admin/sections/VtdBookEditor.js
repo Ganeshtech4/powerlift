@@ -8,6 +8,7 @@ const emptyForm = {
   title: '',
   subtitle: '',
   quote: '',
+  category: '',
   pdf_url: '',
   cover_image_url: '',
   order: 0,
@@ -36,6 +37,7 @@ const VtdBookEditor = () => {
           title: book.title || '',
           subtitle: book.subtitle || '',
           quote: book.quote || '',
+          category: book.category || '',
           pdf_url: book.pdf_url || '',
           cover_image_url: book.cover_image_url || '',
           order: Number(book.order ?? 0),
@@ -138,6 +140,19 @@ const VtdBookEditor = () => {
               <label>Title *</label>
               <input type="text" name="title" required value={formData.title} onChange={handleInputChange} placeholder="Enter book title" />
             </div>
+            <div className="form-group">
+              <label>Category</label>
+              <select name="category" value={formData.category} onChange={handleInputChange}>
+                <option value="">-- Select Category --</option>
+                <option value="international">International</option>
+                <option value="national">National</option>
+                <option value="state">State</option>
+                <option value="district">District</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="form-row">
             <div className="form-group">
               <label>Subtitle</label>
               <input type="text" name="subtitle" value={formData.subtitle} onChange={handleInputChange} placeholder="e.g., Training Guide, Reference Material" />

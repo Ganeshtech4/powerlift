@@ -10,6 +10,7 @@ class VtdBookBase(BaseModel):
     title: str
     subtitle: Optional[str] = None
     quote: Optional[str] = None
+    category: Optional[str] = None
     pdf_url: Optional[str] = None
     cover_image_url: Optional[str] = None
     order: int = 0
@@ -24,6 +25,7 @@ class VtdBookUpdate(BaseModel):
     title: Optional[str] = None
     subtitle: Optional[str] = None
     quote: Optional[str] = None
+    category: Optional[str] = None
     pdf_url: Optional[str] = None
     cover_image_url: Optional[str] = None
     order: Optional[int] = None

@@ -10,6 +10,7 @@ const VtdMain = () => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
   const [isMobile, setIsMobile] = React.useState(false);
+  const [activeCategory, setActiveCategory] = React.useState("all");
 
   React.useEffect(() => {
     let isMounted = true;
@@ -122,66 +123,125 @@ const VtdMain = () => {
             <p>No VTD books have been published yet.</p>
           </div>
         ) : (
-          <div className="row">
-            {books.map((book, index) => (
-              <div key={book.id} className="col-xl-3 col-lg-4 col-md-6 mb-4">
-                <div className="inspire-card" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <div className="inspire-card__img">
-                    <img
-                      src={book.coverImageUrl || fallbackCardImage(book.title)}
-                      alt={book.title}
-                      onError={(event) => {
-                        event.target.src = fallbackCardImage(book.title);
-                      }}
-                    />
-                    <div className="inspire-card__badge">
-                      <span
-                        style={{
-                          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                          color: "#fff",
-                          padding: "4px 12px",
-                          borderRadius: "20px",
-                          fontSize: isMobile ? "10px" : "12px",
-                          fontWeight: "600",
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        {book.subtitle || "VTD Book"}
-                      </span>
-                    </div>
-                  </div>
+          <div style={{ display: "flex", gap: "30px", alignItems: "flex-start" }}>
+            {/* Filter Sidebar */}
+            <div style={{
+              minWidth: isMobile ? "100%" : "200px",
+              width: isMobile ? "100%" : "200px",
+              background: "#fff",
+              borderRadius: "16px",
+              padding: "24px 16px",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+              flexShrink: 0,
+            }}>
+              <h4 style={{ fontSize: "14px", fontWeight: "700", color: "#2d3748", marginBottom: "16px", textTransform: "uppercase", letterSpacing: "1px" }}>
+                <i className="fas fa-filter" style={{ marginRight: "8px", color: "#667eea" }}></i>
+                Filter by Level
+              </h4>
+              {[
+                { id: "all", label: "All Books", icon: "books" },
+                { id: "international", label: "International", icon: "globe" },
+                { id: "national", label: "National", icon: "flag" },
+                { id: "state", label: "State", icon: "map-marker-alt" },
+                { id: "district", label: "District", icon: "city" },
+              ].map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    width: "100%",
+                    padding: "10px 14px",
+                    marginBottom: "8px",
+                    background: activeCategory === cat.id
+                      ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                      : "transparent",
+                    color: activeCategory === cat.id ? "#fff" : "#4a5568",
+                    border: activeCategory === cat.id ? "none" : "2px solid #e2e8f0",
+                    borderRadius: "10px",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    textAlign: "left",
+                  }}
+                >
+                  <i className={`fas fa-${cat.icon}`} style={{ width: "16px" }}></i>
+                  {cat.label}
+                </button>
+              ))}
+            </div>
 
-                  <div className="inspire-card__content">
-                    <h3
-                      className="inspire-card__name"
-                      style={{ fontSize: isMobile ? "18px" : "20px" }}
-                    >
-                      {book.title}
-                    </h3>
-                    <p
-                      className="inspire-card__quote"
-                      style={{ fontSize: isMobile ? "13px" : "14px" }}
-                    >
-                      {book.quote ? `"${book.quote}"` : "Open the book PDF to read more."}
-                    </p>
-                    <a
-                      href={book.pdfUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inspire-card__btn inspire-card__btn--pdf"
-                      style={{
-                        background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-                        width: "100%",
-                        justifyContent: "center",
-                        marginTop: "auto",
-                      }}
-                    >
-                      <span>Read PDF</span>
-                    </a>
+            {/* Books Grid */}
+            <div style={{ flex: 1 }}>
+              {(() => {
+                const filtered = activeCategory === "all"
+                  ? books
+                  : books.filter((b) => (b.category || "").toLowerCase() === activeCategory);
+                if (filtered.length === 0) {
+                  return (
+                    <div className="empty-state">
+                      <i className="fas fa-book-open" style={{ fontSize: "48px", color: "#cbd5e0", marginBottom: "16px" }}></i>
+                      <p>No {activeCategory} books available yet.</p>
+                    </div>
+                  );
+                }
+                return (
+                  <div className="row">
+                    {filtered.map((book, index) => (
+                      <div key={book.id} className="col-xl-4 col-lg-4 col-md-6 mb-4">
+                        <div className="inspire-card" style={{ animationDelay: `${index * 0.1}s` }}>
+                          <div className="inspire-card__img">
+                            <img
+                              src={book.coverImageUrl || fallbackCardImage(book.title)}
+                              alt={book.title}
+                              onError={(event) => { event.target.src = fallbackCardImage(book.title); }}
+                            />
+                            <div className="inspire-card__badge">
+                              <span style={{
+                                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                                color: "#fff",
+                                padding: "4px 12px",
+                                borderRadius: "20px",
+                                fontSize: isMobile ? "10px" : "12px",
+                                fontWeight: "600",
+                                letterSpacing: "0.5px",
+                              }}>
+                                {book.subtitle || "VTD Book"}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="inspire-card__content">
+                            <h3 className="inspire-card__name" style={{ fontSize: isMobile ? "18px" : "20px" }}>
+                              {book.title}
+                            </h3>
+                            <p className="inspire-card__quote" style={{ fontSize: isMobile ? "13px" : "14px" }}>
+                              {book.quote ? `"${book.quote}"` : "Open the book PDF to read more."}
+                            </p>
+                            <a
+                              href={book.pdfUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inspire-card__btn inspire-card__btn--pdf"
+                              style={{
+                                background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                                width: "100%",
+                                justifyContent: "center",
+                                marginTop: "auto",
+                              }}
+                            >
+                              <span>Read PDF</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              </div>
-            ))}
+                );
+              })()}
+            </div>
           </div>
         )}
 
