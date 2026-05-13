@@ -7566,7 +7566,7 @@ ul {
 .page-header {
   position: relative;
   display: block;
-  padding: 250px 0 120px;
+  padding: 310px 0 100px;
   overflow: hidden;
   z-index: 1;
 }
@@ -7599,14 +7599,13 @@ ul {
 
 .page-header__bg {
   position: absolute;
-  top: 120px;
-  padding-bottom: 50px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background-size: 120%;
+  background-position: center center;
   z-index: -1;
 }
 

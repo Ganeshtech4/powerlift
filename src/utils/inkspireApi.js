@@ -5,6 +5,7 @@ export const normalizeInkspireBook = (book) => ({
   title: book.title || '',
   subtitle: book.subtitle || '',
   quote: book.quote || '',
+  category: (book.category || '').toLowerCase(),
   pdfUrl: book.pdf_url || '',
   coverImageUrl: book.cover_image_url || '',
   order: Number(book.order || 0),
