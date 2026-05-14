@@ -17,7 +17,7 @@ const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/coverpagepic.jpg`
 const teamPlaceholder = (name) =>
   `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="960" viewBox="0 0 800 960"%3E%3Crect width="800" height="960" fill="%23efe5d8"/%3E%3Ccircle cx="400" cy="300" r="120" fill="%23c4b29d"/%3E%3Cpath d="M220 720c34-140 116-210 180-210s146 70 180 210" fill="%23c4b29d"/%3E%3Ctext x="50%25" y="862" text-anchor="middle" fill="%235b4636" font-family="Georgia, serif" font-size="34" letter-spacing="2"%3E${encodeURIComponent(name || 'Profile')}%3C/text%3E%3C/svg%3E`;
 
-const getSafePhotoUrl = (url, name) => (url ? encodeURI(url) : teamPlaceholder(name));
+const getSafePhotoUrl = (url, name) => (url || teamPlaceholder(name));
 
 const handleTeamImageError = (event, name) => {
   if (event.currentTarget.dataset.fallbackApplied === 'true') {
