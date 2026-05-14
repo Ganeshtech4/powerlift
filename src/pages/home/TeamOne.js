@@ -9,7 +9,7 @@ import '../team/team-experience.css';
 const teamPlaceholder = (name) =>
   `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="640" height="720" viewBox="0 0 640 720"%3E%3Crect width="640" height="720" fill="%23efe5d8"/%3E%3Ccircle cx="320" cy="240" r="92" fill="%23c4b29d"/%3E%3Cpath d="M176 560c20-104 92-156 144-156s124 52 144 156" fill="%23c4b29d"/%3E%3Ctext x="50%25" y="655" text-anchor="middle" fill="%235b4636" font-family="Georgia, serif" font-size="28" letter-spacing="2"%3E${encodeURIComponent(name || 'Team Member')}%3C/text%3E%3C/svg%3E`;
 
-const getSafePhotoUrl = (url, name) => (url ? encodeURI(url) : teamPlaceholder(name));
+const getSafePhotoUrl = (url, name) => (url || teamPlaceholder(name));
 
 const handleTeamImageError = (event, name) => {
   if (event.currentTarget.dataset.fallbackApplied === 'true') {
