@@ -323,12 +323,21 @@ const CommitteeMemberEditor = () => {
             </div>
             <div className="committee-editor__profile-preview">
               {formData.photo_url ? (
-                <img src={formData.photo_url} alt={formData.name || 'Profile preview'} />
-              ) : (
-                <div className="committee-editor__profile-placeholder">
-                  <i className="fas fa-user"></i>
-                </div>
-              )}
+                <img
+                  src={formData.photo_url}
+                  alt={formData.name || 'Profile preview'}
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+              ) : null}
+              <div
+                className="committee-editor__profile-placeholder"
+                style={{ display: formData.photo_url ? 'none' : 'flex' }}
+              >
+                <i className="fas fa-user"></i>
+              </div>
             </div>
             <input type="file" accept="image/*" onChange={handleProfileUpload} disabled={profileUploading} />
             {formData.photo_url && (

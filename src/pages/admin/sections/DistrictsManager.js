@@ -62,7 +62,8 @@ const DistrictsManager = () => {
 
         try {
             setUploading(true);
-            const imageUrl = await uploadToS3(file, 'districts');
+            const result = await uploadToS3(file, 'districts');
+            const imageUrl = result.url || result;
             setFormData({ ...formData, president_photo_url: imageUrl });
             alert('Image uploaded successfully!');
         } catch (error) {
@@ -83,7 +84,8 @@ const DistrictsManager = () => {
 
         try {
             setUploadingCert(true);
-            const certUrl = await uploadToS3(file, 'districts/certificates');
+            const result = await uploadToS3(file, 'districts/certificates');
+            const certUrl = result.url || result;
             setFormData({ ...formData, certificate_url: certUrl });
             alert('Certificate uploaded successfully!');
         } catch (error) {

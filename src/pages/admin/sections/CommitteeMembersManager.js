@@ -101,9 +101,10 @@ const CommitteeMembersManager = () => {
             <div key={member.id} className={`member-card ${!member.is_active ? 'inactive' : ''}`}>
               <div className="member-photo">
                 {member.photo_url
-                  ? <img src={member.photo_url} alt={member.name} />
-                  : <div className="photo-placeholder"><i className="fas fa-user"></i></div>
+                  ? <img src={member.photo_url} alt={member.name} onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
+                  : null
                 }
+                <div className="photo-placeholder" style={{ display: member.photo_url ? 'none' : 'flex' }}><i className="fas fa-user"></i></div>
                 <span className={`status-badge ${member.is_active ? 'active' : 'inactive'}`}>
                   {member.is_active ? 'Active' : 'Inactive'}
                 </span>
