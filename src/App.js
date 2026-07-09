@@ -25,7 +25,7 @@ import CommitteeMemberEditor from "./pages/admin/sections/CommitteeMemberEditor"
 import RefereeEditor from "./pages/admin/sections/RefereeEditor";
 import ResultEditor from "./pages/admin/sections/ResultEditor";
 import PartnershipEditor from "./pages/admin/sections/PartnershipEditor";
-import VtdBookEditor from "./pages/admin/sections/VtdBookEditor";
+import VtdEditor from "./pages/admin/sections/VtdEditor";
 import InkspireBookEditor from "./pages/admin/sections/InkspireBookEditor";
 import NewsForm from "./pages/admin/NewsForm";
 import Registration from "./pages/registration";
@@ -82,8 +82,8 @@ export default function App() {
         <Route path="admin/results/edit/:id" element={<ResultEditor />} />
         <Route path="admin/partnerships/new" element={<PartnershipEditor />} />
         <Route path="admin/partnerships/edit/:id" element={<PartnershipEditor />} />
-        <Route path="admin/vtd-books/new" element={<VtdBookEditor />} />
-        <Route path="admin/vtd-books/edit/:id" element={<VtdBookEditor />} />
+        <Route path="admin/vtd-books/new" element={<VtdEditor />} />
+        <Route path="admin/vtd-books/edit/:id" element={<VtdEditor />} />
         <Route path="admin/inkspire-books/new" element={<InkspireBookEditor />} />
         <Route path="admin/inkspire-books/edit/:id" element={<InkspireBookEditor />} />
         <Route path="admin/news/new" element={<NewsForm />} />

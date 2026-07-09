@@ -30,8 +30,6 @@ const VtdBookEditor = () => {
   const [newCategory, setNewCategory] = useState('');
   const [selectedImages, setSelectedImages] = useState([]);
 
-  const [selectedImages, setSelectedImages] = useState([]);
-
   useEffect(() => {
     fetchExistingCategories();
   }, []);
