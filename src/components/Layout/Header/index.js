@@ -4,7 +4,7 @@ import MenuItems from './MenuItems';
 import MobileMenu from './MobileMenu';
 import SearchPopup from './SearchPopup';
 import Sidebar from './Sidebar';
-const defaultLogo = `${process.env.PUBLIC_URL}/images/logo-wpc.png`;
+const defaultLogo = `${process.env.PUBLIC_URL}/logowhitebg.png`;
 const vtdLogo = `${process.env.PUBLIC_URL}/images/logos/vtd.jpeg`;
 
 const getSafeImageUrl = (url) => encodeURI(url || defaultLogo);

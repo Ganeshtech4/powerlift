@@ -4,6 +4,8 @@ import { axiosInstance } from '../../../config/axiosConfig';
 import { uploadToS3 } from '../../../utils/s3Upload';
 import './BlogEditor.css';
 
+const DEFAULT_CATEGORIES = ['district', 'state', 'nationals', 'internationals'];
+
 const BlogEditor = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -25,6 +27,27 @@ const BlogEditor = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [thumbnailPreview, setThumbnailPreview] = useState('');
   const [uploadProgress, setUploadProgress] = useState({});
+  const [customCategories, setCustomCategories] = useState([]);
+  const [showCustomCategory, setShowCustomCategory] = useState(false);
+  const [newCategory, setNewCategory] = useState('');
+  const [selectedImages, setSelectedImages] = useState([]);
+
+  useEffect(() => {
+    fetchExistingCategories();
+  }, []);
+
+  const fetchExistingCategories = async () => {
+    try {
+      const res = await axiosInstance.get('/blogs/');
+      const allCategories = res.data
+        .map(item => item.category)
+        .filter(Boolean)
+        .filter(cat => !DEFAULT_CATEGORIES.includes(cat.toLowerCase()));
+      setCustomCategories([...new Set(allCategories)]);
+    } catch (err) {
+      console.error('Failed to fetch categories:', err);
+    }
+  };
 
   useEffect(() => {
     const loadPost = async () => {
@@ -131,6 +154,59 @@ const BlogEditor = () => {
   const removeImage = (index) => {
     if (window.confirm('Remove this image?')) {
       setUploadedImages(prev => prev.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleAddCustomCategory = () => {
+    if (!newCategory.trim()) {
+      alert('Please enter a category name.');
+      return;
+    }
+    const trimmedCategory = newCategory.trim().toLowerCase();
+    if (DEFAULT_CATEGORIES.includes(trimmedCategory) || customCategories.includes(trimmedCategory)) {
+      alert('This category already exists.');
+      return;
+    }
+    setCustomCategories([...customCategories, trimmedCategory]);
+    setFormData(prev => ({ ...prev, category: trimmedCategory }));
+    setNewCategory('');
+    setShowCustomCategory(false);
+  };
+
+  const handleRemoveCustomCategory = (categoryToRemove) => {
+    if (!window.confirm(`Remove "${categoryToRemove}" from the list? This won't affect existing posts using this category.`)) {
+      return;
+    }
+    setCustomCategories(customCategories.filter(c => c !== categoryToRemove));
+    if (formData.category === categoryToRemove) {
+      setFormData(prev => ({ ...prev, category: 'district' }));
+    }
+  };
+
+  const toggleImageSelection = (index) => {
+    setSelectedImages(prev => 
+      prev.includes(index) 
+        ? prev.filter(i => i !== index)
+        : [...prev, index]
+    );
+  };
+
+  const selectAllImages = () => {
+    if (selectedImages.length === uploadedImages.length) {
+      setSelectedImages([]);
+    } else {
+      setSelectedImages(uploadedImages.map((_, idx) => idx));
+    }
+  };
+
+  const deleteSelectedImages = () => {
+    if (selectedImages.length === 0) {
+      alert('No images selected');
+      return;
+    }
+    if (window.confirm(`Delete ${selectedImages.length} selected image(s)?`)) {
+      setUploadedImages(prev => prev.filter((_, idx) => !selectedImages.includes(idx)));
+      setSelectedImages([]);
     }
   };
 
@@ -344,6 +420,48 @@ const BlogEditor = () => {
 
             <div className="form-group">
               <label>Gallery Images ({uploadedImages.length})</label>
+              {uploadedImages.length > 0 && (
+                <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+                  <button
+                    type="button"
+                    className="btn-select-all"
+                    onClick={selectAllImages}
+                    style={{
+                      padding: '8px 16px',
+                      background: '#3b82f6',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                      fontWeight: '600'
+                    }}
+                  >
+                    <i className={`fas fa-${selectedImages.length === uploadedImages.length ? 'times' : 'check-square'}`}></i>
+                    {' '}
+                    {selectedImages.length === uploadedImages.length ? 'Deselect All' : 'Select All'}
+                  </button>
+                  {selectedImages.length > 0 && (
+                    <button
+                      type="button"
+                      className="btn-delete-selected"
+                      onClick={deleteSelectedImages}
+                      style={{
+                        padding: '8px 16px',
+                        background: '#ef4444',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: '600'
+                      }}
+                    >
+                      <i className="fas fa-trash"></i> Delete Selected ({selectedImages.length})
+                    </button>
+                  )}
+                </div>
+              )}
               <div className="image-upload-area">
                 <input
                   type="file"
@@ -374,9 +492,32 @@ const BlogEditor = () => {
               {uploadedImages.length > 0 && (
                 <div className="uploaded-images-grid">
                   {uploadedImages.map((img, idx) => (
-                    <div key={idx} className="image-item">
+                    <div 
+                      key={idx} 
+                      className={`image-item ${selectedImages.includes(idx) ? 'selected' : ''}`}
+                      onClick={() => toggleImageSelection(idx)}
+                      style={{ cursor: 'pointer', position: 'relative' }}
+                    >
                       <img src={img} alt={`Upload ${idx + 1}`} />
-                      <div className="image-actions">
+                      <div className="image-checkbox" style={{
+                        position: 'absolute',
+                        top: '8px',
+                        left: '8px',
+                        width: '24px',
+                        height: '24px',
+                        background: selectedImages.includes(idx) ? '#3b82f6' : 'rgba(255,255,255,0.9)',
+                        border: '2px solid #fff',
+                        borderRadius: '4px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                      }}>
+                        {selectedImages.includes(idx) && (
+                          <i className="fas fa-check" style={{ color: '#fff', fontSize: '14px' }}></i>
+                        )}
+                      </div>
+                      <div className="image-actions" onClick={(e) => e.stopPropagation()}>
                         <button
                           className="btn-set-featured"
                           onClick={() => setAsThumbnail(img)}
@@ -450,18 +591,132 @@ const BlogEditor = () => {
             </div>
 
             <div className="sidebar-section">
-              <h3>Category</h3>
+              <h3>Category
+                <button
+                  type="button"
+                  onClick={() => setShowCustomCategory(!showCustomCategory)}
+                  style={{
+                    marginLeft: '8px',
+                    padding: '4px 10px',
+                    borderRadius: 6,
+                    border: '1px solid #e2e8f0',
+                    background: '#f8fafc',
+                    cursor: 'pointer',
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: '#64748b'
+                  }}
+                >
+                  <i className="fas fa-plus"></i> Add Custom
+                </button>
+              </h3>
               <select
                 name="category"
                 value={formData.category}
                 onChange={handleInputChange}
                 className="category-select"
               >
-                <option value="district">District</option>
-                <option value="state">State</option>
-                <option value="nationals">Nationals</option>
-                <option value="internationals">Internationals</option>
+                <optgroup label="Default Categories">
+                  <option value="district">District</option>
+                  <option value="state">State</option>
+                  <option value="nationals">Nationals</option>
+                  <option value="internationals">Internationals</option>
+                </optgroup>
+                {customCategories.length > 0 && (
+                  <optgroup label="Custom Categories">
+                    {customCategories.map(c => <option key={c} value={c}>{c}</option>)}
+                  </optgroup>
+                )}
               </select>
+              
+              {/* Show custom category input */}
+              {showCustomCategory && (
+                <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <input
+                    type="text"
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    placeholder="Enter new category name"
+                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddCustomCategory())}
+                    style={{
+                      padding: '10px 14px',
+                      borderRadius: 8,
+                      border: '1px solid #e2e8f0',
+                      fontSize: 13
+                    }}
+                  />
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button
+                      type="button"
+                      onClick={handleAddCustomCategory}
+                      style={{
+                        flex: 1,
+                        padding: '8px 12px',
+                        borderRadius: 8,
+                        border: 'none',
+                        background: '#10b981',
+                        color: '#fff',
+                        cursor: 'pointer',
+                        fontSize: 13,
+                        fontWeight: 600
+                      }}
+                    >
+                      Add
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setShowCustomCategory(false); setNewCategory(''); }}
+                      style={{
+                        flex: 1,
+                        padding: '8px 12px',
+                        borderRadius: 8,
+                        border: '1px solid #e2e8f0',
+                        background: '#fff',
+                        color: '#64748b',
+                        cursor: 'pointer',
+                        fontSize: 13
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+              
+              {/* Show custom categories with delete option */}
+              {customCategories.length > 0 && (
+                <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {customCategories.map(cat => (
+                    <span key={cat} style={{
+                      padding: '4px 10px',
+                      background: '#f1f5f9',
+                      borderRadius: 999,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: '#475569',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6
+                    }}>
+                      {cat}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveCustomCategory(cat)}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          color: '#94a3b8',
+                          padding: 0,
+                          fontSize: 10
+                        }}
+                      >
+                        <i className="fas fa-times"></i>
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="sidebar-section">

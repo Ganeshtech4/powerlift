@@ -186,6 +186,47 @@ class S3Service:
         except ClientError as e:
             raise Exception(f"Failed to delete file: {str(e)}")
 
+    def delete_result_images(self, image_urls: List[str]) -> int:
+        """Delete result images by their URLs"""
+        deleted_count = 0
+        
+        if not image_urls:
+            return 0
+        
+        try:
+            objects_to_delete = []
+            
+            for url in image_urls:
+                # Extract key from URL
+                # URL format: https://bucket.s3.region.amazonaws.com/key
+                # or https://cloudfront.net/key
+                if url:
+                    # Try to extract the key from the URL
+                    if '/results/' in url or '/blog-images/' in url or '/images/' in url:
+                        # Find the part after the domain
+                        parts = url.split('.com/')
+                        if len(parts) > 1:
+                            key = parts[1]
+                            objects_to_delete.append({'Key': key})
+                        else:
+                            # Try other URL patterns
+                            parts = url.split('.net/')
+                            if len(parts) > 1:
+                                key = parts[1]
+                                objects_to_delete.append({'Key': key})
+            
+            if objects_to_delete:
+                delete_response = self.s3_client.delete_objects(
+                    Bucket=self.bucket,
+                    Delete={'Objects': objects_to_delete}
+                )
+                deleted_count = len(delete_response.get('Deleted', []))
+            
+            return deleted_count
+        except ClientError as e:
+            print(f"Error deleting result images: {str(e)}")
+            return deleted_count
+
     def file_exists(self, key: str) -> bool:
         """Check if file exists"""
         try:

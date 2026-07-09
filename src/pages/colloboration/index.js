@@ -5,7 +5,7 @@ import Footer from '../../components/Layout/Footer';
 import CtaTwo from '../../components/Common/CtaSection/CtaTwo';
 import ColloborationMain from './ColloborationMain'; // Make sure this file exists and is spelled correctly
 
-const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const navImg1 = `${process.env.PUBLIC_URL}/logowhitebg.png`;
 
 const Collaboration = () => {
     const [isVisible, setIsVisible] = useState(false);

@@ -24,7 +24,7 @@ class ResultType(str, Enum):
 
 class ResultBase(BaseModel):
     title: str
-    category: ResultCategory
+    category: Optional[str] = "district"  # Allow any custom category
     type: ResultType
     athlete_name: Optional[str] = None
     event_name: Optional[str] = None
@@ -42,7 +42,7 @@ class ResultCreate(ResultBase):
 
 class ResultUpdate(BaseModel):
     title: Optional[str] = None
-    category: Optional[ResultCategory] = None
+    category: Optional[str] = None  # Allow any custom category
     type: Optional[ResultType] = None
     athlete_name: Optional[str] = None
     event_name: Optional[str] = None

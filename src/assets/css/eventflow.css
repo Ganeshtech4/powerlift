@@ -38,17 +38,17 @@
   --eventflow-font-two: "Inter", sans-serif;
   --eventflow-gray: #7C7B7B;
   --eventflow-gray-rgb: 124, 123, 123;
-  --eventflow-white:black;
+  --eventflow-white: #ffffff;
   --eventflow-white-rgb: 255, 255, 255;
-  --eventflow-base: black;
+  --eventflow-base: #b20d5d;
   --eventflow-base-rgb: 178, 13, 93;
 
   --eventflow-black-rgb: 4, 0, 10;
   --eventflow-primary: #4A0AB4;
   --eventflow-primary-rgb: 74, 10, 180;
-  --eventflow-extra: black;
+  --eventflow-extra: #f8f8f8;
   --eventflow-extra-rgb: 248, 248, 248;
-  --eventflow-bdr-color: black;
+  --eventflow-bdr-color: #cccccc;
   --eventflow-bdr-color-rgb: 204, 204, 204;
   background: white;
   
@@ -949,17 +949,46 @@ ul {
 }
 
 .main-menu {
- position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+  /* Multi-layer: dark overlay on top of the background image — full navbar width */
+  background:
+    linear-gradient(rgba(8, 12, 22, 0.50), rgba(8, 12, 22, 0.50)),
+    url('../images/powerlift-panel.png') center center / cover no-repeat;
+  border-bottom: none;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.55);
   transition: all 0.3s ease-in-out;
+}
+
+/* Top accent: red → purple → blue gradient stripe */
+.main-menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #c0392b, #a93226, #7d3c98, #1a5276, #1e3a7a);
+  opacity: 0.9;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Bottom accent: reversed blue → red gradient stripe */
+.main-menu::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #1e3a7a, #1a5276, #7d3c98, #a93226, #c0392b);
+  opacity: 0.65;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .main-menu__wrapper {
@@ -968,6 +997,7 @@ ul {
   z-index: 1;
   max-width: 1280px;
   margin: 0 auto;
+  /* no pseudo-element overlay needed — overlay is baked into .main-menu background */
 }
 
 .main-menu__wrapper-inner {
@@ -1005,17 +1035,17 @@ ul {
   z-index: 1;
 }
 
-/* Logo Text Styling - Ensure black color in all states */
+/* Logo Text Styling - White on dark background */
 .main-menu__logo .logo-text,
 .stricky-header .logo-text,
 .fixed-header .logo-text {
-  color: #000000 !important;
+  color: #ffffff !important;
 }
 
 .main-menu__logo .logo-title,
 .stricky-header .logo-title,
 .fixed-header .logo-title {
-  color: #000000;
+  color: #ffffff;
 }
 
 .logo-title {
@@ -1024,25 +1054,38 @@ ul {
   text-transform: uppercase;
   text-align: left;
   font-family: 'Latin', Times, serif;
-  color: red !important;
+  color: #e63946 !important;
   letter-spacing: 0.04em;
   line-height: 1;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.75), 0 0 20px rgba(192,57,43,0.35);
 }
 
 .main-menu__logo .logo-subtitle,
 .stricky-header .logo-subtitle,
 .fixed-header .logo-subtitle {
-  color: #000000;
+  color: #b0c4e8;
+}
+
+/* Footer logo subtitle: black on white background */
+.site-footer .logo-subtitle {
+  color: #333333 !important;
+  text-shadow: none;
+}
+
+/* Footer logo title: keep red */
+.site-footer .logo-title {
+  text-shadow: none;
 }
 
 .logo-subtitle {
   font-size: 11px;
-  color: blue !important;
+  color: #c8d8f8 !important;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.18em;
   margin-top: 4px;
   line-height: 1.1;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.75), 0 0 16px rgba(26,82,118,0.4);
 }
 
 .main-menu__main-menu-box {
@@ -1076,7 +1119,11 @@ ul {
   width: auto;
   object-fit: contain;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  border-radius: 4px;
+  border-radius: 6px;
+  /* Subtle glow ring so VTD logo pops against the dark background */
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.3)) drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+  background: rgba(255,255,255,0.06);
+  padding: 3px;
 }
 
 .main-menu__vtd-logo img:hover {
@@ -1149,22 +1196,22 @@ ul {
 
 
 .stricky-header.main-menu {
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+  background:
+    linear-gradient(rgba(8, 12, 22, 0.50), rgba(8, 12, 22, 0.50)),
+    url('../images/powerlift-panel.png') center center / cover no-repeat;
+  border-bottom: none;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
 }
 
 .main-menu:hover {
-  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55);
 }
 
 .main-header.fixed-header .main-menu {
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12);
+  background:
+    linear-gradient(rgba(8, 12, 22, 0.52), rgba(8, 12, 22, 0.52)),
+    url('../images/powerlift-panel.png') center center / cover no-repeat;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
 }
 
 /* Remove all hover highlights */
@@ -1172,17 +1219,19 @@ ul {
   /* All hover effects removed */
 }
 
-/* Mobile white glass adjustments */
+/* Mobile — keep the dark image background, tighten spacing */
 @media (max-width: 991px) {
   .main-menu {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    background: rgba(255, 255, 255, 0.94);
+    background:
+      linear-gradient(rgba(8, 12, 22, 0.52), rgba(8, 12, 22, 0.52)),
+      url('../images/powerlift-panel.png') center center / cover no-repeat;
     z-index: 999;
   }
   
   .stricky-header.main-menu {
-    background: rgba(255, 255, 255, 0.97);
+    background:
+      linear-gradient(rgba(8, 12, 22, 0.54), rgba(8, 12, 22, 0.54)),
+      url('../images/powerlift-panel.png') center center / cover no-repeat;
   }
   
   .main-menu__wrapper-inner {
@@ -1272,63 +1321,98 @@ ul {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: #1a1a1a;
+  color: #ffffff !important;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   position: relative;
-  -webkit-transition: all 500ms ease;
-  transition: all 500ms ease;
+  -webkit-transition: color 0.3s ease, text-shadow 0.3s ease;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
   line-height: 1;
+  text-shadow: 0 1px 3px rgba(0,0,0,.8);
+  padding-bottom: 3px;
+}
+
+.main-menu .main-menu__list>li>a::after,
+.stricky-header .main-menu__list>li>a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #c0392b, #1a5276);
+  transition: right 300ms ease;
 }
 
 .main-menu .main-menu__list>li.dropdown>a {
   padding-right: 16px;
 }
 
-.main-menu .main-menu__list>li.dropdown>a:after {
+/* Override the slide underline for dropdown items — use caret instead */
+.main-menu .main-menu__list>li.dropdown>a::after,
+.stricky-header .main-menu__list>li.dropdown>a::after {
   position: absolute;
   top: 50%;
   right: 0;
+  bottom: auto;
+  left: auto;
+  width: auto;
+  height: auto;
   font-family: "Font Awesome 5 Free";
   content: "\f067";
   font-size: 9px;
-  color: #1a1a1a;
+  color: #ffffff !important;
+  background: none;
+  border-radius: 0;
   transform: translateY(-50%);
   font-weight: 700;
-  -webkit-transition: all 500ms ease;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
   z-index: 1;
 }
 
-.main-menu .main-menu__list>li.current>a::after,
+/* Hover: slide the underline in from left */
 .main-menu .main-menu__list>li:hover>a::after,
-.stricky-header .main-menu__list>li.current>a::after,
 .stricky-header .main-menu__list>li:hover>a::after {
-  color: var(--eventflow-base);
+  right: 0;
 }
 
-.main-menu .main-menu__list>li.current>a,
+/* Hover: golden yellow, smooth 0.3s */
 .main-menu .main-menu__list>li:hover>a,
-.stricky-header .main-menu__list>li.current>a,
 .stricky-header .main-menu__list>li:hover>a {
-  color: #1a1a1a; /* Keep consistent black color, no hover highlight */
+  color: #FFD54A !important;
+  text-shadow: 0 1px 3px rgba(0,0,0,.8);
 }
 
+/* Active/current: white text + solid blue 3px underline + glow */
+.main-menu .main-menu__list>li.current>a,
+.stricky-header .main-menu__list>li.current>a {
+  color: #ffffff !important;
+  text-shadow: 0 0 14px rgba(37,99,235,0.55), 0 1px 3px rgba(0,0,0,.8);
+}
+
+.main-menu .main-menu__list>li.current>a::after,
+.stricky-header .main-menu__list>li.current>a::after {
+  right: 0;
+  background: #2563eb;
+  height: 3px;
+  opacity: 1;
+}
+
+/* active-menu class (JS-driven active link) */
 .main-menu .main-menu__list>li>a.active-menu,
 .stricky-header .main-menu__list>li>a.active-menu {
-  color: #9f1239;
+  color: #ffffff !important;
+  text-shadow: 0 0 14px rgba(37,99,235,0.55), 0 1px 3px rgba(0,0,0,.8);
 }
 
-.main-menu .main-menu__list>li>a.active-menu::before,
-.stricky-header .main-menu__list>li>a.active-menu::before {
-  content: "";
-  position: absolute;
-  left: 0;
+.main-menu .main-menu__list>li>a.active-menu::after,
+.stricky-header .main-menu__list>li>a.active-menu::after {
   right: 0;
-  bottom: -10px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #9f1239 0%, #2563eb 100%);
+  background: #2563eb;
+  height: 3px;
 }
 
 .main-menu .main-menu__list>li>ul,
@@ -1360,13 +1444,14 @@ ul {
   transition: opacity 500ms ease, visibility 500ms ease, transform 700ms ease;
   transition: opacity 500ms ease, visibility 500ms ease, transform 700ms ease, -webkit-transform 700ms ease;
   z-index: 99;
-  /* White Glassmorphism effect for dropdowns */
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 14px;
-  box-shadow: 0px 18px 36px rgba(15, 23, 42, 0.12);
+  /* Dark glassmorphism dropdowns — readable over image bg */
+  background: rgba(6, 10, 28, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 2px solid rgba(192, 57, 43, 0.6);
+  border-radius: 10px;
+  box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.5);
 }
 
 .main-menu .mobile-nav__toggler {
@@ -1377,19 +1462,23 @@ ul {
   width: 44px;
   height: 44px;
   padding: 0;
-  border: 1px solid rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 12px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
   font-size: 18px;
-  color: #111827;
+  color: #ffffff !important;
   cursor: pointer;
   transition: all 300ms ease;
 }
 
+.main-menu .mobile-nav__toggler i {
+  color: #ffffff !important;
+}
+
 .main-menu .mobile-nav__toggler:hover {
-  color: #ffffff;
-  background: #111827;
-  border-color: #111827;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .main-menu .main-menu__list>li>ul>li>ul>li>ul,
@@ -1439,29 +1528,30 @@ ul {
 .stricky-header .main-menu__list>li>ul>li>a,
 .stricky-header .main-menu__list>li>ul>li>ul>li>a {
   position: relative;
-  font-size: 18px;
+  font-size: 13px;
   line-height: 30px;
-  color: #1a1a1a;
+  color: #ffffff !important;
   font-weight: 600;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   padding: 10px 20px 10px;
-  -webkit-transition: 500ms;
-  transition: 500ms;
+  -webkit-transition: 300ms;
+  transition: 300ms;
   border-radius: 8px;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 
 .main-menu .main-menu__list>li>ul>li:hover>a,
 .main-menu .main-menu__list>li>ul>li>ul>li:hover>a,
 .stricky-header .main-menu__list>li>ul>li:hover>a,
 .stricky-header .main-menu__list>li>ul>li>ul>li:hover>a {
-  background: rgba(255, 255, 255, 0.4);
-  color: #1a1a1a;
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  background: rgba(192, 57, 43, 0.25);
+  color: #ffffff;
+  border-left: 2px solid rgba(192, 57, 43, 0.8);
+  padding-left: 18px;
   border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(31, 38, 135, 0.15);
 }
 
 .main-menu .main-menu__list>li>ul>li>ul,
@@ -1596,7 +1686,10 @@ ul {
 .mobile-nav__content {
   width: 320px;
   max-width: 85vw;
-  background-color: #ffffff;
+  /* same image + dark overlay as the navbar */
+  background:
+    linear-gradient(rgba(8, 12, 22, 0.52), rgba(8, 12, 22, 0.52)),
+    url('../images/powerlift-panel.png') center center / cover no-repeat;
   backdrop-filter: none;
   z-index: 10000;
   position: relative;
@@ -1611,25 +1704,20 @@ ul {
   visibility: hidden;
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
-  -webkit-transition: opacity 500ms ease 0ms, visibility 500ms ease 0ms, -webkit-transform 500ms ease 0ms;
-  transition: opacity 500ms ease 0ms, visibility 500ms ease 0ms, -webkit-transform 500ms ease 0ms;
-  transition: opacity 500ms ease 0ms, visibility 500ms ease 0ms, transform 500ms ease 0ms;
-  transition: opacity 500ms ease 0ms, visibility 500ms ease 0ms, transform 500ms ease 0ms, -webkit-transform 500ms ease 0ms;
-  box-shadow: 14px 0 34px rgba(15, 23, 42, 0.14);
+  -webkit-transition: opacity 300ms ease, visibility 300ms ease, -webkit-transform 300ms ease;
+  transition: opacity 300ms ease, visibility 300ms ease, transform 300ms ease;
+  box-shadow: 14px 0 40px rgba(0, 0, 0, 0.55);
 }
 
 .mobile-menu-visible .mobile-nav__wrapper .mobile-nav__content {
   opacity: 1;
   visibility: visible;
-  background-color: #ffffff;
-  backdrop-filter: none;
   -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   -webkit-transform: translateX(0);
   transform: translateX(0);
-  -webkit-transition: opacity 500ms ease 500ms, visibility 500ms ease 500ms, -webkit-transform 500ms ease 500ms;
-  transition: opacity 500ms ease 500ms, visibility 500ms ease 500ms, -webkit-transform 500ms ease 500ms;
-  transition: opacity 500ms ease 500ms, visibility 500ms ease 500ms, transform 500ms ease 500ms;
-  transition: opacity 500ms ease 500ms, visibility 500ms ease 500ms, transform 500ms ease 500ms, -webkit-transform 500ms ease 500ms;
+  -webkit-transition: opacity 300ms ease, visibility 300ms ease, -webkit-transform 300ms ease;
+  transition: opacity 300ms ease, visibility 300ms ease, transform 300ms ease;
 }
 
 .mobile-nav__content .logo-box {
@@ -1656,7 +1744,7 @@ ul {
   top: 16px;
   right: 16px;
   font-size: 18px;
-  color: #000000;
+  color: #ffffff;
   cursor: pointer;
   z-index: 10002;
   width: 38px;
@@ -1664,15 +1752,15 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f8fafc;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  background-color: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   transition: all 0.3s ease;
 }
 
 .mobile-nav__close:hover {
-  background-color: #111827;
-  color: #ffffff;
+  background-color: rgba(255,255,255,0.2);
+  color: #FFD54A;
   transform: none;
 }
 
@@ -1687,14 +1775,14 @@ ul {
 .mobile-nav__content .main-menu__list>li>ul,
 .mobile-nav__content .main-menu__list>li>ul>li>ul {
   display: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-left: 0.5em;
 }
 
 .mobile-nav__content .main-menu__list>li:not(:last-child),
 .mobile-nav__content .main-menu__list>li>ul>li:not(:last-child),
 .mobile-nav__content .main-menu__list>li>ul>li>ul>li:not(:last-child) {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mobile-nav__content .main-menu__list>li>a>.main-menu-border {
@@ -1711,7 +1799,7 @@ ul {
   -ms-flex-pack: justify;
   justify-content: space-between;
   line-height: 24px;
-  color: #1a1a1a;
+  color: #ffffff !important;
   font-size: 14px;
   font-family: var(--eventflow-font);
   font-weight: 600;
@@ -1723,20 +1811,21 @@ ul {
   -webkit-transition: 300ms;
   transition: 300ms;
   text-decoration: none;
+  text-shadow: 0 1px 3px rgba(0,0,0,.8);
 }
 
 .mobile-nav__content .main-menu__list>li>a:hover,
 .mobile-nav__content .main-menu__list>li>ul>li>a:hover {
-  color: var(--eventflow-base);
+  color: #FFD54A !important;
   padding-left: 5px;
 }
 
 .mobile-nav__content .main-menu__list>li>a.expanded .mobile-nav__content .main-menu__list>li>ul>li>a.expanded .mobile-nav__content .main-menu__list>li>ul>li>ul>li>a.expanded {
-  color: var(--eventflow-base);
+  color: #FFD54A !important;
 }
 
 .mobile-nav__content .main-menu__list li a.expanded {
-  color: var(--eventflow-base);
+  color: #FFD54A !important;
 }
 
 .mobile-nav__content .main-menu__list>li> .dropdown-btn,
@@ -1836,8 +1925,8 @@ ul {
 }
 
 .mobile-nav__container {
-  border-top: 1px solid rgba(15, 23, 42, 0.08);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .mobile-nav__social {
@@ -1851,9 +1940,9 @@ ul {
 
 .mobile-nav__social a {
   font-size: 16px;
-  color: #111827;
-  -webkit-transition: 500ms;
-  transition: 500ms;
+  color: rgba(255, 255, 255, 0.8) !important;
+  -webkit-transition: 300ms;
+  transition: 300ms;
 }
 
 .mobile-nav__social a+a {
@@ -1861,7 +1950,12 @@ ul {
 }
 
 .mobile-nav__social a:hover {
-  color: var(--eventflow-base);
+  color: #FFD54A !important;
+}
+
+.mobile-nav__social a i {
+  color: inherit !important;
+  font-size: 18px;
 }
 
 .mobile-nav__contact {
@@ -4347,7 +4441,7 @@ ul {
   font-size: 60px;
   font-weight: 700;
   line-height: 75px;
-  color: var(--eventflow-white);
+  color: #ffffff !important;
   text-transform: capitalize;
   margin-bottom: 29px;
 }
@@ -4408,15 +4502,12 @@ ul {
 .site-footer {
   position: relative;
   display: block;
-  padding: 98px 0px 0px;
+  padding: 0;
   z-index: 1;
 }
 
 .site-footer__shape-1 {
-  position: absolute;
-  bottom: 25px;
-  right: 0;
-  z-index: -1;
+  display: none;
 }
 
 .site-footer__shape-1 img {
@@ -4431,7 +4522,7 @@ ul {
   justify-content: space-between;
   flex-wrap: wrap;
   border-bottom: 1px solid rgba(var(--eventflow-bdr-color-rgb), .20);
-  padding: 22px 0;
+  padding: 16px 0;
   z-index: 1;
 }
 
@@ -4466,7 +4557,7 @@ ul {
 .site-footer__middle {
   position: relative;
   display: block;
-  padding: 98px 0px 112px;
+  padding: 48px 0px 56px;
 }
 
 .site-footer__middle-inner {

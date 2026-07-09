@@ -1,7 +1,7 @@
 """
 VTD book schemas
 """
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
 
@@ -13,6 +13,7 @@ class VtdBookBase(BaseModel):
     category: Optional[str] = None
     pdf_url: Optional[str] = None
     cover_image_url: Optional[str] = None
+    images: Optional[List[str]] = []
     order: int = 0
     is_active: bool = True
 
@@ -28,6 +29,7 @@ class VtdBookUpdate(BaseModel):
     category: Optional[str] = None
     pdf_url: Optional[str] = None
     cover_image_url: Optional[str] = None
+    images: Optional[List[str]] = None
     order: Optional[int] = None
     is_active: Optional[bool] = None
 

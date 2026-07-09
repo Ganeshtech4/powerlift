@@ -4,6 +4,8 @@ import { axiosInstance } from '../../../config/axiosConfig';
 import { uploadToS3 } from '../../../utils/s3Upload';
 import './ResultEditor.css';
 
+const DEFAULT_CATEGORIES = ['district', 'state', 'nationals', 'internationals'];
+
 const ResultEditor = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -20,12 +22,58 @@ const ResultEditor = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [thumbnailPreview, setThumbnailPreview] = useState('');
   const [uploadProgress, setUploadProgress] = useState({});
+  const [customCategories, setCustomCategories] = useState([]);
+  const [showCustomCategory, setShowCustomCategory] = useState(false);
+  const [newCategory, setNewCategory] = useState('');
+
+  useEffect(() => {
+    fetchExistingCategories();
+  }, []);
 
   useEffect(() => {
     if (id) {
       loadResult();
     }
   }, [id]);
+
+  const fetchExistingCategories = async () => {
+    try {
+      const res = await axiosInstance.get('/results/');
+      const allCategories = res.data
+        .map(item => item.category)
+        .filter(Boolean)
+        .filter(cat => !DEFAULT_CATEGORIES.includes(cat.toLowerCase()));
+      setCustomCategories([...new Set(allCategories)]);
+    } catch (err) {
+      console.error('Failed to fetch categories:', err);
+    }
+  };
+
+  const handleAddCustomCategory = () => {
+    if (!newCategory.trim()) {
+      alert('Please enter a category name.');
+      return;
+    }
+    const trimmedCategory = newCategory.trim().toLowerCase();
+    if (DEFAULT_CATEGORIES.includes(trimmedCategory) || customCategories.includes(trimmedCategory)) {
+      alert('This category already exists.');
+      return;
+    }
+    setCustomCategories([...customCategories, trimmedCategory]);
+    setFormData(prev => ({ ...prev, category: trimmedCategory }));
+    setNewCategory('');
+    setShowCustomCategory(false);
+  };
+
+  const handleRemoveCustomCategory = (categoryToRemove) => {
+    if (!window.confirm(`Remove "${categoryToRemove}" from the list? This won't affect existing results using this category.`)) {
+      return;
+    }
+    setCustomCategories(customCategories.filter(c => c !== categoryToRemove));
+    if (formData.category === categoryToRemove) {
+      setFormData(prev => ({ ...prev, category: 'district' }));
+    }
+  };
 
   const loadResult = async () => {
     try {
@@ -269,18 +317,130 @@ const ResultEditor = () => {
             </div>
 
             <div className="form-group">
-              <label>Category *</label>
+              <label>Category *
+                <button
+                  type="button"
+                  onClick={() => setShowCustomCategory(!showCustomCategory)}
+                  style={{
+                    marginLeft: '8px',
+                    padding: '4px 10px',
+                    borderRadius: 6,
+                    border: '1px solid #e2e8f0',
+                    background: '#f8fafc',
+                    cursor: 'pointer',
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: '#64748b'
+                  }}
+                >
+                  <i className="fas fa-plus"></i> Add Custom
+                </button>
+              </label>
               <select
                 name="category"
                 value={formData.category}
                 onChange={handleInputChange}
                 required
               >
-                <option value="district">District</option>
-                <option value="state">State</option>
-                <option value="nationals">Nationals</option>
-                <option value="internationals">Internationals</option>
+                <optgroup label="Default Categories">
+                  <option value="district">District</option>
+                  <option value="state">State</option>
+                  <option value="nationals">Nationals</option>
+                  <option value="internationals">Internationals</option>
+                </optgroup>
+                {customCategories.length > 0 && (
+                  <optgroup label="Custom Categories">
+                    {customCategories.map(c => <option key={c} value={c}>{c}</option>)}
+                  </optgroup>
+                )}
               </select>
+              
+              {showCustomCategory && (
+                <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <input
+                    type="text"
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    placeholder="Enter new category name"
+                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddCustomCategory())}
+                    style={{
+                      padding: '10px 14px',
+                      borderRadius: 8,
+                      border: '1px solid #e2e8f0',
+                      fontSize: 13
+                    }}
+                  />
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button
+                      type="button"
+                      onClick={handleAddCustomCategory}
+                      style={{
+                        flex: 1,
+                        padding: '8px 12px',
+                        borderRadius: 8,
+                        border: 'none',
+                        background: '#10b981',
+                        color: '#fff',
+                        cursor: 'pointer',
+                        fontSize: 13,
+                        fontWeight: 600
+                      }}
+                    >
+                      Add
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setShowCustomCategory(false); setNewCategory(''); }}
+                      style={{
+                        flex: 1,
+                        padding: '8px 12px',
+                        borderRadius: 8,
+                        border: '1px solid #e2e8f0',
+                        background: '#fff',
+                        color: '#64748b',
+                        cursor: 'pointer',
+                        fontSize: 13
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+              
+              {customCategories.length > 0 && (
+                <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {customCategories.map(cat => (
+                    <span key={cat} style={{
+                      padding: '4px 10px',
+                      background: '#f1f5f9',
+                      borderRadius: 999,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: '#475569',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6
+                    }}>
+                      {cat}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveCustomCategory(cat)}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          color: '#94a3b8',
+                          padding: 0,
+                          fontSize: 10
+                        }}
+                      >
+                        <i className="fas fa-times"></i>
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="form-group">

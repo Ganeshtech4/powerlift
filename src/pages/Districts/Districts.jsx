@@ -7,7 +7,7 @@ import SiteBreadcrumb from '../../components/Common/Breadcumb';
 import CtaTwo from '../../components/Common/CtaSection/CtaTwo';
 import './Districts.css';
 
-const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const navImg1 = `${process.env.PUBLIC_URL}/logowhitebg.png`;
 const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/coverpagepic.jpg`;
 const API_URL = process.env.REACT_APP_API_URL || '/api/v1';
 

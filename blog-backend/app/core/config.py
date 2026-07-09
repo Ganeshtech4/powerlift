@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     DYNAMODB_PARTNERSHIPS_TABLE: str = "rekha_partnerships"
     DYNAMODB_INKSPIRE_TABLE: str = "rekha_inkspire_books"
     DYNAMODB_VTD_TABLE: str = "rekha_vtd_books"
+    DYNAMODB_NEWS_TABLE: str = "rekha_news"
     
     # AWS S3
     AWS_ACCESS_KEY_ID: str

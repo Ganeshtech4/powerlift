@@ -9,7 +9,7 @@ import SiteBreadcrumb from '../../components/Common/Breadcumb';
 import CtaTwo from '../../components/Common/CtaSection/CtaTwo';
 import GalleryDetailsMain from './GalleryDetailsMain';
 
-const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const navImg1 = `${process.env.PUBLIC_URL}/logowhitebg.png`;
 const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/coverpagepic.jpg`;
 
 

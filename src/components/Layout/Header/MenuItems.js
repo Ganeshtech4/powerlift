@@ -84,6 +84,11 @@ const MenuItems = ({ parentMenu, secondParentMenu, activeMenu }) => {
           Gallery
         </Link>
       </li>
+      <li className={parentMenu === 'News' ? 'current-menu-item' : ''}>
+        <Link to="/news" className={activeMenu === '/news' ? 'active-menu' : ''}>
+          News
+        </Link>
+      </li>
       <li className={parentMenu === 'Results' ? ' current-menu-item' : ''}>
         <Link to="/results" className={activeMenu === '/results' ? 'active-menu' : ''}>
           Results

@@ -13,6 +13,7 @@ import PartnershipsManager from './sections/PartnershipsManager';
 import InkspireManager from './sections/InkspireManager';
 import VtdManager from './sections/VtdManager';
 import FormsManager from './sections/FormsManager';
+import NewsManager from './sections/NewsManager';
 
 const MENU_ITEMS = [
   { id: 'overview', label: 'Overview', icon: 'tachometer-alt' },
@@ -28,6 +29,7 @@ const MENU_ITEMS = [
   { id: 'partnerships', label: 'Partnerships', icon: 'handshake' },
   { id: 'vtd', label: 'VTD Books', icon: 'book' },
   { id: 'inkspire', label: 'Inkspire Books', icon: 'book-open' },
+  { id: 'news', label: 'News & Media', icon: 'newspaper' },
 ];
 
 const DEFAULT_SECTION = 'overview';
@@ -103,6 +105,8 @@ const AdminDashboard = () => {
         return <VtdManager />;
       case 'inkspire':
         return <InkspireManager />;
+      case 'news':
+        return <NewsManager />;
       default:
         return <OverviewSection />;
     }

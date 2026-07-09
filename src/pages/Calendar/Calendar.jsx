@@ -6,7 +6,7 @@ import Footer from '../../components/Layout/Footer';
 import CtaTwo from '../../components/Common/CtaSection/CtaTwo';
 import './Calendar.css';
 
-const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const navImg1 = `${process.env.PUBLIC_URL}/logowhitebg.png`;
 const API_URL = process.env.REACT_APP_API_URL || '/api/v1';
 
 const Calendar = () => {

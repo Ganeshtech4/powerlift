@@ -4,7 +4,7 @@ API Router - combines all endpoint routers
 from fastapi import APIRouter
 from app.api.v1.endpoints import (
     auth, blogs, images, s3_handler, email_handler,
-    districts, results, events, committee, referees, partnerships, inkspire, vtd, forms
+    districts, results, events, committee, referees, partnerships, inkspire, vtd, forms, news
 )
 
 api_router = APIRouter()
@@ -23,3 +23,4 @@ api_router.include_router(partnerships.router, prefix="/partnerships", tags=["Pa
 api_router.include_router(inkspire.router, prefix="/inkspire-books", tags=["Inkspire Books"])
 api_router.include_router(vtd.router, prefix="/vtd-books", tags=["VTD Books"])
 api_router.include_router(forms.router, prefix="/forms", tags=["Registration Forms"])
+api_router.include_router(news.router, prefix="/news", tags=["News"])

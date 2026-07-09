@@ -8,7 +8,7 @@ import Footer from "../../components/Layout/Footer";
 import CtaTwo from "../../components/Common/CtaSection/CtaTwo";
 import VtdMain from "./VtdMain";
 
-const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const navImg1 = `${process.env.PUBLIC_URL}/logowhitebg.png`;
 
 const Vtd = () => {
   const [isVisible, setIsVisible] = useState(false);

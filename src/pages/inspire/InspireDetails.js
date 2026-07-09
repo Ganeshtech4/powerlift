@@ -6,7 +6,7 @@ import Footer from "../../components/Layout/Footer";
 import SiteBreadcrumb from "../../components/Common/Breadcumb";
 import CtaTwo from "../../components/Common/CtaSection/CtaTwo";
 
-const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const navImg1 = `${process.env.PUBLIC_URL}/logowhitebg.png`;
 const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/coverpagepic.jpg`;
 const inspireimg1 = `${process.env.PUBLIC_URL}/images/team/Adobe Express - file.jpg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");
 const inspireimg2 = `${process.env.PUBLIC_URL}/images/team/team-1-3.jpg`.replace("../assets/images", "images").replace("../../assets/images", "images").replace("../../../assets/images", "images");

@@ -29,8 +29,10 @@ def _serialize(item: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "title": item.get("title"),
         "subtitle": item.get("subtitle"),
         "quote": item.get("quote"),
+        "category": item.get("category"),
         "pdf_url": item.get("pdf_url"),
         "cover_image_url": item.get("cover_image_url"),
+        "images": item.get("images", []),
         "order": item.get("order", 0),
         "is_active": item.get("is_active", True),
         "created_at": item.get("created_at"),
@@ -49,8 +51,10 @@ class VtdBookService:
             "title": data.title,
             "subtitle": data.subtitle,
             "quote": data.quote,
+            "category": data.category,
             "pdf_url": data.pdf_url,
             "cover_image_url": data.cover_image_url,
+            "images": data.images or [],
             "order": data.order,
             "is_active": data.is_active,
             "created_at": now,
@@ -106,9 +110,26 @@ class VtdBookService:
 
     @staticmethod
     def delete(table, item_id: str) -> bool:
+        """Delete VTD book and its S3 images"""
         existing = table.get_item(Key={'id': item_id}).get('Item')
         if not existing:
             return False
+        
+        # Delete S3 images
+        try:
+            from app.services.s3_service import s3_service
+            images = existing.get('images', [])
+            if existing.get('cover_image_url'):
+                images.append(existing.get('cover_image_url'))
+            if existing.get('pdf_url'):
+                images.append(existing.get('pdf_url'))
+            
+            if images:
+                deleted_count = s3_service.delete_result_images(images)
+                print(f"Deleted {deleted_count} VTD files from S3")
+        except Exception as e:
+            print(f"Error deleting S3 files: {e}")
+        
         table.delete_item(Key={'id': item_id})
         return True
 

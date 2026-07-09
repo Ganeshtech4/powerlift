@@ -27,6 +27,7 @@ import ResultEditor from "./pages/admin/sections/ResultEditor";
 import PartnershipEditor from "./pages/admin/sections/PartnershipEditor";
 import VtdBookEditor from "./pages/admin/sections/VtdBookEditor";
 import InkspireBookEditor from "./pages/admin/sections/InkspireBookEditor";
+import NewsForm from "./pages/admin/NewsForm";
 import Registration from "./pages/registration";
 import ScrollToTop from "./ScrollToTop";
 import ResultsNew from "./pages/Results/Results";
@@ -34,6 +35,8 @@ import ResultDetailsPage from "./pages/Results/ResultDetailsPage";
 import Districts from "./pages/Districts/Districts";
 import Calendar from "./pages/Calendar/Calendar";
 import RefereeDetailsPage from "./pages/referees/RefereeDetailsPage";
+import NewsPage from "./pages/news";
+import WhatsAppFloat from "./components/Common/WhatsAppFloat";
 
 // Redirect component for old blog routes
 const BlogRedirect = () => {
@@ -45,6 +48,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <WhatsAppFloat />
       <Routes>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
@@ -66,6 +70,7 @@ export default function App() {
         <Route path="blog" element={<Navigate to="/gallery-blog" replace />} />
         <Route path="blog-details/:id" element={<BlogRedirect />} />
         <Route path="admin" element={<AdminLogin />} />
+        <Route path="admin/login" element={<AdminLogin />} />
         <Route path="admin/dashboard" element={<AdminDashboard />} />
         <Route path="admin/blog-editor" element={<BlogEditor />} />
         <Route path="admin/blog-editor/:id" element={<BlogEditor />} />
@@ -81,6 +86,8 @@ export default function App() {
         <Route path="admin/vtd-books/edit/:id" element={<VtdBookEditor />} />
         <Route path="admin/inkspire-books/new" element={<InkspireBookEditor />} />
         <Route path="admin/inkspire-books/edit/:id" element={<InkspireBookEditor />} />
+        <Route path="admin/news/new" element={<NewsForm />} />
+        <Route path="admin/news/edit/:id" element={<NewsForm />} />
         <Route path="contact" element={<Contact />} />
         <Route path="registration" element={<Registration />} />
         <Route path="inkspire" element={<Inspire />} />
@@ -90,6 +97,7 @@ export default function App() {
         <Route path="results" element={<ResultsNew />} />
         <Route path="results/:id" element={<ResultDetailsPage />} />
         <Route path="calendar" element={<Calendar />} />
+        <Route path="news" element={<NewsPage />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>

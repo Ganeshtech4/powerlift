@@ -19,8 +19,9 @@ const Results = () => {
     const [activeTab, setActiveTab] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
     const [isVisible, setIsVisible] = useState(false);
+    const [dynamicTabs, setDynamicTabs] = useState([]);
 
-    const tabs = [
+    const defaultTabs = [
         { id: 'all', label: 'All Results', icon: 'trophy' },
         { id: 'district-championship', label: 'District Championship', icon: 'award', level: 'district', type: 'championship' },
         { id: 'district-records', label: 'District Records', icon: 'certificate', level: 'district', type: 'records' },
@@ -52,6 +53,55 @@ const Results = () => {
     }, []);
 
     useEffect(() => {
+        // Generate dynamic tabs from results data
+        if (results.length > 0) {
+            const customCategoriesSet = new Set();
+            const defaultCategories = ['district', 'state', 'nationals', 'internationals'];
+            
+            // Find all unique category + type combinations
+            const uniqueCombinations = new Map();
+            results.forEach(result => {
+                const key = `${result.category}-${result.type}`;
+                if (!uniqueCombinations.has(key)) {
+                    uniqueCombinations.set(key, { category: result.category, type: result.type });
+                    
+                    // Track custom categories
+                    if (!defaultCategories.includes(result.category?.toLowerCase())) {
+                        customCategoriesSet.add(result.category);
+                    }
+                }
+            });
+
+            // Generate tabs for custom categories
+            const customTabs = [];
+            customCategoriesSet.forEach(category => {
+                const types = ['championship', 'records', 'results'];
+                types.forEach(type => {
+                    const count = results.filter(r => r.category === category && r.type === type).length;
+                    if (count > 0) {
+                        const icon = type === 'championship' ? 'award' : type === 'records' ? 'certificate' : 'file-alt';
+                        const categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
+                        const typeLabel = type.charAt(0).toUpperCase() + type.slice(1);
+                        
+                        customTabs.push({
+                            id: `${category}-${type}`,
+                            label: `${categoryLabel} ${typeLabel}`,
+                            icon: icon,
+                            level: category,
+                            type: type
+                        });
+                    }
+                });
+            });
+
+            // Combine default and custom tabs
+            setDynamicTabs([...defaultTabs, ...customTabs]);
+        } else {
+            setDynamicTabs(defaultTabs);
+        }
+    }, [results]);
+
+    useEffect(() => {
         filterResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeTab, results, searchQuery]);
@@ -73,7 +123,7 @@ const Results = () => {
         let nextResults = results;
 
         if (activeTab !== 'all') {
-            const selectedTab = tabs.find(tab => tab.id === activeTab);
+            const selectedTab = dynamicTabs.find(tab => tab.id === activeTab);
             if (selectedTab && selectedTab.level && selectedTab.type) {
                 nextResults = nextResults.filter((result) => 
                     result.category === selectedTab.level && result.type === selectedTab.type
@@ -151,7 +201,7 @@ const Results = () => {
                                 </div>
 
                                 <div className="results-filter-list">
-                                    {tabs.map(tab => {
+                                    {dynamicTabs.map(tab => {
                                         const count = tab.id === 'all'
                                             ? results.length
                                             : results.filter((result) => 

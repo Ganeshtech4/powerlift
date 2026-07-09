@@ -65,8 +65,8 @@ class ResultService:
         item = {
             "id": result_id,
             "title": result_data.title,
-            "category": result_data.category.value,
-            "type": result_data.type.value,
+            "category": result_data.category if isinstance(result_data.category, str) else result_data.category,
+            "type": result_data.type.value if hasattr(result_data.type, 'value') else result_data.type,
             "athlete_name": result_data.athlete_name,
             "event_name": result_data.event_name,
             "event_date": result_data.event_date,
@@ -171,7 +171,7 @@ class ResultService:
 
     @staticmethod
     def delete_result(table, result_id: str) -> bool:
-        """Delete result"""
+        """Delete result and its S3 images"""
         try:
             response = table.get_item(Key={'id': result_id})
             item = response.get('Item')
@@ -179,6 +179,22 @@ class ResultService:
             if not item:
                 return False
             
+            # Delete S3 images
+            try:
+                from app.services.s3_service import s3_service
+                images = item.get('images', [])
+                if item.get('thumbnail_url'):
+                    images.append(item.get('thumbnail_url'))
+                if item.get('image_url'):
+                    images.append(item.get('image_url'))
+                
+                if images:
+                    deleted_count = s3_service.delete_result_images(images)
+                    print(f"Deleted {deleted_count} images from S3")
+            except Exception as e:
+                print(f"Error deleting S3 images: {e}")
+            
+            # Delete from DynamoDB
             table.delete_item(Key={'id': result_id})
             return True
         except Exception as e:

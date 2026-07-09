@@ -8,7 +8,7 @@ import CtaTwo from '../../components/Common/CtaSection/CtaTwo';
 import { fetchReferee } from '../../utils/refereeApi';
 import './referees-experience.css';
 
-const navImg1 = `${process.env.PUBLIC_URL}/images/logo wpc.png`;
+const navImg1 = `${process.env.PUBLIC_URL}/logowhitebg.png`;
 const bannerbg = `${process.env.PUBLIC_URL}/images/backgrounds/coverpagepic.jpg`;
 
 const RefereeDetailsPage = () => {
