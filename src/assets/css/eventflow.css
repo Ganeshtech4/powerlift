@@ -957,7 +957,7 @@ ul {
   /* Multi-layer: dark overlay on top of the background image — full navbar width */
   background:
     linear-gradient(rgba(8, 12, 22, 0.50), rgba(8, 12, 22, 0.50)),
-    url('../images/powerlift-panel.png') center center / cover no-repeat;
+    url('../images/powerlift panel1.png') center center / cover no-repeat;
   border-bottom: none;
   box-shadow: 0 6px 32px rgba(0, 0, 0, 0.55);
   transition: all 0.3s ease-in-out;
@@ -1198,7 +1198,7 @@ ul {
 .stricky-header.main-menu {
   background:
     linear-gradient(rgba(8, 12, 22, 0.50), rgba(8, 12, 22, 0.50)),
-    url('../images/powerlift-panel.png') center center / cover no-repeat;
+    url('../images/powerlift panel1.png') center center / cover no-repeat;
   border-bottom: none;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
 }
@@ -1210,7 +1210,7 @@ ul {
 .main-header.fixed-header .main-menu {
   background:
     linear-gradient(rgba(8, 12, 22, 0.52), rgba(8, 12, 22, 0.52)),
-    url('../images/powerlift-panel.png') center center / cover no-repeat;
+    url('../images/powerlift panel1.png') center center / cover no-repeat;
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
 }
 
@@ -1224,14 +1224,14 @@ ul {
   .main-menu {
     background:
       linear-gradient(rgba(8, 12, 22, 0.52), rgba(8, 12, 22, 0.52)),
-      url('../images/powerlift-panel.png') center center / cover no-repeat;
+      url('../images/powerlift panel1.png') center center / cover no-repeat;
     z-index: 999;
   }
   
   .stricky-header.main-menu {
     background:
       linear-gradient(rgba(8, 12, 22, 0.54), rgba(8, 12, 22, 0.54)),
-      url('../images/powerlift-panel.png') center center / cover no-repeat;
+      url('../images/powerlift panel1.png') center center / cover no-repeat;
   }
   
   .main-menu__wrapper-inner {
@@ -1596,6 +1596,7 @@ ul {
   -webkit-transform: translateY(0);
   transform: translateY(0);
   visibility: visible;
+  z-index: 10001 !important;
 }
 
 .mobile-nav__buttons {
@@ -1689,7 +1690,7 @@ ul {
   /* same image + dark overlay as the navbar */
   background:
     linear-gradient(rgba(8, 12, 22, 0.52), rgba(8, 12, 22, 0.52)),
-    url('../images/powerlift-panel.png') center center / cover no-repeat;
+    url('../images/powerlift panel1.png') center center / cover no-repeat;
   backdrop-filter: none;
   z-index: 100000;
   position: relative;
