@@ -16,15 +16,15 @@ const formatCategory = (category) => {
 };
 
 const getVtdExcerpt = (item) => {
-  if (item.quote) {
-    return item.quote;
+  if (item.excerpt) {
+    return item.excerpt;
   }
 
-  if (item.subtitle) {
-    return item.subtitle;
+  if (!item.content) {
+    return 'No description available for this VTD resource yet.';
   }
 
-  return 'No description available for this resource.';
+  return item.content.length > 120 ? `${item.content.substring(0, 120)}...` : item.content;
 };
 
 export default function VtdMain() {
@@ -34,18 +34,17 @@ export default function VtdMain() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const resolveItemImage = (item) => item.cover_image_url || (Array.isArray(item.images) ? item.images.find(Boolean) : '') || '';
+  const resolveItemImage = (item) => item.thumbnail_url || (Array.isArray(item.images) ? item.images.find(Boolean) : '') || '';
 
   useEffect(() => {
     const loadItems = async () => {
       try {
         setLoading(true);
         const API_URL = process.env.REACT_APP_API_URL || '/api/v1';
-        const response = await fetch(`${API_URL}/vtd-books/`);
+        const response = await fetch(`${API_URL}/vtd-books/?published_only=true`);
         if (response.ok) {
           const itemsData = await response.json();
-          const activeItems = Array.isArray(itemsData) ? itemsData.filter(item => item.is_active) : [];
-          setItems(activeItems);
+          setItems(Array.isArray(itemsData) ? itemsData : []);
           setError('');
         } else {
           console.error('Failed to fetch VTD items:', response.status);
@@ -71,8 +70,7 @@ export default function VtdMain() {
   const filteredItems = items.filter(item => {
     const matchesCategory = activeFilter === 'all' || item.category === activeFilter;
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (item.subtitle && item.subtitle.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                         (item.quote && item.quote.toLowerCase().includes(searchTerm.toLowerCase()));
+                         (item.content && item.content.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
@@ -85,7 +83,7 @@ export default function VtdMain() {
               <div className="gallery-sidebar-copy">
                 <span className="gallery-kicker">Discover</span>
                 <h2 className="gallery-title">VTD Resources</h2>
-                <p>Educational materials, training PDFs, and reference resources from the WPC Telangana federation.</p>
+                <p>Educational materials, training resources, and reference content from the WPC Telangana federation.</p>
               </div>
 
               <div className="search-box">
@@ -135,7 +133,7 @@ export default function VtdMain() {
               <div className="gallery-overview">
                 <span className="gallery-overview-kicker">Archive View</span>
                 <h3>Educational resources and training materials</h3>
-                <p>Explore the latest VTD resources with search and category browsing.</p>
+                <p>Explore the latest VTD resources in a cleaner archive layout with search and category browsing kept within reach.</p>
               </div>
 
               <div className="gallery-summary-cards">
@@ -172,13 +170,11 @@ export default function VtdMain() {
                       {resolveItemImage(item) ? (
                         <div className="card-image">
                           <img src={resolveItemImage(item)} alt={item.title} />
-                          {item.pdf_url && (
-                            <div className="image-overlay">
-                              <a href={item.pdf_url} target="_blank" rel="noopener noreferrer" className="overlay-link">
-                                <i className="fas fa-file-pdf"></i>
-                              </a>
-                            </div>
-                          )}
+                          <div className="image-overlay">
+                            <Link to={`/vtd-details/${item.id}`} className="overlay-link">
+                              <i className="fas fa-expand"></i>
+                            </Link>
+                          </div>
                           {item.images && item.images.length > 0 && (
                             <div className="image-count-badge">
                               <i className="fas fa-images"></i>
@@ -188,7 +184,7 @@ export default function VtdMain() {
                         </div>
                       ) : (
                         <div className="card-image card-image--empty">
-                          <i className="fas fa-file-pdf"></i>
+                          <i className="fas fa-images"></i>
                         </div>
                       )}
 
@@ -197,21 +193,38 @@ export default function VtdMain() {
                           {item.category && (
                             <span className="category-badge">{formatCategory(item.category)}</span>
                           )}
+                          <span className="date-badge">
+                            <i className="far fa-calendar"></i>
+                            {new Date(item.created_at).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                              year: 'numeric'
+                            })}
+                          </span>
                         </div>
 
-                        <h3 className="card-title">{item.title}</h3>
+                        <h3 className="card-title">
+                          <Link to={`/vtd-details/${item.id}`}>
+                            {item.title}
+                          </Link>
+                        </h3>
 
-                        {item.subtitle && (
-                          <p className="card-subtitle">{item.subtitle}</p>
-                        )}
+                        <p className="card-excerpt">
+                          {getVtdExcerpt(item)}
+                        </p>
 
-                        <p className="card-excerpt">{getVtdExcerpt(item)}</p>
-
-                        {item.pdf_url && (
-                          <a href={item.pdf_url} target="_blank" rel="noopener noreferrer" className="card-link">
-                            <i className="fas fa-file-pdf"></i> Read PDF
-                          </a>
-                        )}
+                        <div className="card-footer">
+                          <Link to={`/vtd-details/${item.id}`} className="read-more-btn">
+                            View Resource
+                            <i className="fas fa-arrow-right"></i>
+                          </Link>
+                          {item.author && (
+                            <div className="author-info">
+                              <i className="fas fa-user-circle"></i>
+                              <span>{item.author}</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -220,8 +233,8 @@ export default function VtdMain() {
             ) : (
               <div className="no-results">
                 <i className="fas fa-search"></i>
-                <h3>No resources found</h3>
-                <p>Try adjusting your search or filter to find what you're looking for.</p>
+                <h3>{items.length === 0 ? 'No VTD resources published' : 'No resources found'}</h3>
+                <p>{items.length === 0 ? 'Publish VTD resources from the admin panel to show them here.' : 'Try adjusting your search or filter criteria.'}</p>
               </div>
             )}
           </div>

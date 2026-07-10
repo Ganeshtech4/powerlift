@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { axiosInstance } from '../../../config/axiosConfig';
 import { uploadToS3 } from '../../../utils/s3Upload';
-import './BlogEditor.css';
+import './VtdEditor.css';
 
 const DEFAULT_CATEGORIES = ['district', 'state', 'nationals', 'internationals'];
 
@@ -13,17 +13,19 @@ const VtdEditor = () => {
   const [previewMode, setPreviewMode] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
-    subtitle: '',
-    quote: '',
+    excerpt: '',
+    content: '',
     category: 'district',
-    pdf_url: '',
-    cover_image_url: '',
+    tags: '',
+    author: 'Admin',
+    is_published: false,
+    thumbnail_url: '',
     images: [],
-    order: 0,
-    is_active: true,
+    location: 'Hyderabad, Telangana, India',
+    event_date: new Date().toISOString().slice(0, 10)
   });
   const [uploadedImages, setUploadedImages] = useState([]);
-  const [coverPreview, setCoverPreview] = useState('');
+  const [thumbnailPreview, setThumbnailPreview] = useState('');
   const [uploadProgress, setUploadProgress] = useState({});
   const [customCategories, setCustomCategories] = useState([]);
   const [showCustomCategory, setShowCustomCategory] = useState(false);
@@ -48,27 +50,42 @@ const VtdEditor = () => {
   };
 
   useEffect(() => {
-    const loadItem = async () => {
+    const loaditem = async () => {
       try {
         setLoading(true);
         const response = await axiosInstance.get(`/vtd-books/${id}`);
         const item = response.data;
         
+        // Load images if they exist in item
         let itemImages = item.images || [];
+        
+        // If no images in item but slug exists, try to fetch from images endpoint
+        if ((!itemImages || itemImages.length === 0) && item.slug) {
+          try {
+            const imagesResponse = await axiosInstance.get(`/images/${id}/list`);
+            if (imagesResponse.data && imagesResponse.data.images) {
+              itemImages = imagesResponse.data.images;
+            }
+          } catch (imgError) {
+            console.log('No images found or error loading images:', imgError);
+          }
+        }
         
         setFormData({
           title: item.title || '',
-          subtitle: item.subtitle || '',
-          quote: item.quote || '',
+          excerpt: item.excerpt || '',
+          content: item.content || '',
           category: item.category || 'district',
-          pdf_url: item.pdf_url || '',
-          cover_image_url: item.cover_image_url || '',
+          tags: item.tags || '',
+          author: item.author || 'Admin',
+          is_published: item.is_published || false,
+          thumbnail_url: item.thumbnail_url || '',
           images: itemImages,
-          order: item.order || 0,
-          is_active: item.is_active !== false,
+          location: item.location || 'Hyderabad, Telangana, India',
+          event_date: item.event_date || new Date().toISOString().slice(0, 10)
         });
         setUploadedImages(itemImages);
-        setCoverPreview(item.cover_image_url || '');
+        setThumbnailPreview(item.thumbnail_url || '');
       } catch (error) {
         console.error('Error loading item:', error);
         alert('Failed to load item: ' + (error.response?.data?.detail || error.message));
@@ -78,7 +95,7 @@ const VtdEditor = () => {
     };
 
     if (id) {
-      loadItem();
+      loaditem();
     }
   }, [id]);
 
@@ -114,7 +131,7 @@ const VtdEditor = () => {
     }
   };
 
-  const handleCoverUpload = async (e) => {
+  const handleThumbnailUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -122,31 +139,21 @@ const VtdEditor = () => {
       setLoading(true);
       const response = await uploadToS3(file, 'images/VTD');
       const s3Url = response.url || response;
-      setFormData(prev => ({ ...prev, cover_image_url: s3Url }));
-      setCoverPreview(s3Url);
+      setFormData(prev => ({ ...prev, thumbnail_url: s3Url }));
+      setThumbnailPreview(s3Url);
     } catch (error) {
-      console.error('Error uploading cover:', error);
-      alert('Failed to upload cover image');
+      console.error('Error uploading thumbnail:', error);
+      alert('Failed to upload featured image');
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePdfUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
 
-    try {
-      setLoading(true);
-      const response = await uploadToS3(file, 'pdfs/vtd');
-      const s3Url = response.url || response;
-      setFormData(prev => ({ ...prev, pdf_url: s3Url }));
-      alert('PDF uploaded successfully');
-    } catch (error) {
-      console.error('Error uploading PDF:', error);
-      alert('Failed to upload PDF');
-    } finally {
-      setLoading(false);
+
+  const removeImage = (index) => {
+    if (window.confirm('Remove this image?')) {
+      setUploadedImages(prev => prev.filter((_, i) => i !== index));
     }
   };
 
@@ -203,46 +210,67 @@ const VtdEditor = () => {
     }
   };
 
-  const setAsCover = (imageUrl) => {
-    setFormData(prev => ({ ...prev, cover_image_url: imageUrl }));
-    setCoverPreview(imageUrl);
+  const setAsThumbnail = (imageUrl) => {
+    setFormData(prev => ({ ...prev, thumbnail_url: imageUrl }));
+    setThumbnailPreview(imageUrl);
   };
 
   const handleSaveDraft = async () => {
-    await saveItem(false);
+    await saveitem(false);
   };
 
   const handlePublish = async () => {
-    await saveItem(true);
+    await saveitem(true);
   };
 
-  const saveItem = async (publish = true) => {
+  const saveitem = async (publish = false) => {
     if (!formData.title.trim()) {
       alert('Please enter a title');
+      return;
+    }
+
+    if (!formData.content.trim() || formData.content.trim().length < 10) {
+      alert('Please enter content (at least 10 characters)');
       return;
     }
 
     try {
       setLoading(true);
       
+      // Only include non-empty fields for update
       const itemData = {
         title: formData.title.trim(),
-        subtitle: formData.subtitle?.trim() || '',
-        quote: formData.quote?.trim() || '',
-        category: formData.category.toLowerCase(),
-        pdf_url: formData.pdf_url?.trim() || '',
-        cover_image_url: formData.cover_image_url?.trim() || '',
+        content: formData.content.trim(),
+        is_published: publish,
         images: uploadedImages,
-        order: parseInt(formData.order) || 0,
-        is_active: publish,
+        category: formData.category.toLowerCase(),
+        location: formData.location.trim() || null,
+        event_date: formData.event_date || null
       };
+
+      // Only add optional fields if they have values
+      if (formData.excerpt && formData.excerpt.trim()) {
+        itemData.excerpt = formData.excerpt.trim();
+      }
+      
+      if (formData.tags && formData.tags.trim()) {
+        itemData.tags = formData.tags.trim();
+      }
+      
+      if (formData.thumbnail_url && formData.thumbnail_url.trim()) {
+        itemData.thumbnail_url = formData.thumbnail_url.trim();
+      }
+      
+      if (formData.author && formData.author.trim()) {
+        itemData.author = formData.author.trim();
+      }
 
       if (id) {
         await axiosInstance.put(`/vtd-books/${id}`, itemData);
-        alert(publish ? 'Item published successfully!' : 'Draft saved successfully!');
+        alert(publish ? 'item published successfully!' : 'Draft saved successfully!');
       } else {
-        await axiosInstance.post('/vtd-books/', itemData);
-        alert(publish ? 'Item published successfully!' : 'Draft saved successfully!');
+        await axiosInstance.item('/vtd-books/', itemData);
+        alert(publish ? 'item published successfully!' : 'Draft saved successfully!');
       }
       navigate('/admin/dashboard?section=vtd');
     } catch (error) {
@@ -274,7 +302,7 @@ const VtdEditor = () => {
 
   if (loading && !formData.title) {
     return (
-      <div className="blog-editor-loading">
+      <div className="vtd-editor-loading">
         <i className="fas fa-spinner fa-spin fa-3x"></i>
         <p>Loading...</p>
       </div>
@@ -282,13 +310,13 @@ const VtdEditor = () => {
   }
 
   return (
-    <div className="blog-editor-container">
-      <div className="blog-editor-header">
+    <div className="vtd-editor-container">
+      <div className="vtd-editor-header">
         <div className="header-left">
           <button className="btn-back" onClick={handleCancel}>
             <i className="fas fa-arrow-left"></i> Back to Dashboard
           </button>
-          <h1>{id ? 'Edit VTD Item' : 'Create New VTD Item'}</h1>
+          <h1>{id ? 'Edit item' : 'Create New item'}</h1>
         </div>
         <div className="header-actions">
           <button 
@@ -319,39 +347,41 @@ const VtdEditor = () => {
         <div className="blog-preview">
           <div className="preview-container">
             <div className="preview-header">
-              {formData.cover_image_url && (
-                <img src={formData.cover_image_url} alt={formData.title} className="preview-featured-image" />
+              {formData.thumbnail_url && (
+                <img src={formData.thumbnail_url} alt={formData.title} className="preview-featured-image" />
               )}
               <span className="preview-category">{formData.category}</span>
-              <h1 className="preview-title">{formData.title || 'Untitled Resource'}</h1>
-              {formData.subtitle && (
-                <h2 className="preview-subtitle">{formData.subtitle}</h2>
-              )}
-            </div>
-            {formData.quote && (
-              <div className="preview-excerpt">{formData.quote}</div>
-            )}
-            {formData.pdf_url && (
-              <div className="preview-pdf">
-                <a href={formData.pdf_url} target="_blank" rel="noopener noreferrer" className="pdf-link">
-                  <i className="fas fa-file-pdf"></i> View PDF Document
-                </a>
+              <h1 className="preview-title">{formData.title || 'Untitled item'}</h1>
+              <div className="preview-meta">
+                <span><i className="fas fa-user"></i> {formData.author}</span>
+                <span><i className="fas fa-calendar"></i> {new Date().toLocaleDateString()}</span>
               </div>
+            </div>
+            {formData.excerpt && (
+              <div className="preview-excerpt">{formData.excerpt}</div>
             )}
+            <div className="preview-content">{formData.content}</div>
             {uploadedImages.length > 0 && (
-              <div className="preview-gallery">
-                <h3>Gallery Images ({uploadedImages.length})</h3>
+              <div className="preview-VTD">
+                <h3>VTD Images ({uploadedImages.length})</h3>
                 <div className="preview-images-grid">
                   {uploadedImages.map((img, idx) => (
-                    <img key={idx} src={img} alt={`Gallery ${idx + 1}`} />
+                    <img key={idx} src={img} alt={`VTD ${idx + 1}`} />
                   ))}
                 </div>
+              </div>
+            )}
+            {formData.tags && (
+              <div className="preview-tags">
+                {formData.tags.split(',').map((tag, idx) => (
+                  <span key={idx} className="tag">{tag.trim()}</span>
+                ))}
               </div>
             )}
           </div>
         </div>
       ) : (
-        <div className="blog-editor-content">
+        <div className="vtd-editor-content">
           <div className="editor-main">
             <div className="form-group">
               <input
@@ -359,196 +389,380 @@ const VtdEditor = () => {
                 name="title"
                 value={formData.title}
                 onChange={handleInputChange}
-                placeholder="Enter resource title..."
+                placeholder="Enter item title..."
                 className="title-input"
               />
             </div>
 
             <div className="form-group">
-              <label>Subtitle</label>
-              <input
-                type="text"
-                name="subtitle"
-                value={formData.subtitle}
-                onChange={handleInputChange}
-                placeholder="Optional subtitle..."
-                className="subtitle-input"
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Description / Quote</label>
+              <label>Excerpt (Short Description)</label>
               <textarea
-                name="quote"
-                value={formData.quote}
+                name="excerpt"
+                value={formData.excerpt}
                 onChange={handleInputChange}
-                placeholder="Brief description or motivational quote..."
-                rows="4"
+                placeholder="Brief description of your item..."
+                rows="3"
+                className="excerpt-input"
               />
             </div>
 
             <div className="form-group">
-              <label>Cover Image</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleCoverUpload}
-                className="file-input"
+              <label>Content</label>
+              <textarea
+                name="content"
+                value={formData.content}
+                onChange={handleInputChange}
+                placeholder="Write your item content here..."
+                rows="15"
+                className="content-input"
               />
-              {coverPreview && (
-                <div className="image-preview">
-                  <img src={coverPreview} alt="Cover preview" />
+            </div>
+
+            <div className="form-group">
+              <label>VTD Images ({uploadedImages.length})</label>
+              {uploadedImages.length > 0 && (
+                <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+                  <button
+                    type="button"
+                    className="btn-select-all"
+                    onClick={selectAllImages}
+                    style={{
+                      padding: '8px 16px',
+                      background: '#3b82f6',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                      fontWeight: '600'
+                    }}
+                  >
+                    <i className={`fas fa-${selectedImages.length === uploadedImages.length ? 'times' : 'check-square'}`}></i>
+                    {' '}
+                    {selectedImages.length === uploadedImages.length ? 'Deselect All' : 'Select All'}
+                  </button>
+                  {selectedImages.length > 0 && (
+                    <button
+                      type="button"
+                      className="btn-delete-selected"
+                      onClick={deleteSelectedImages}
+                      style={{
+                        padding: '8px 16px',
+                        background: '#ef4444',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: '600'
+                      }}
+                    >
+                      <i className="fas fa-trash"></i> Delete Selected ({selectedImages.length})
+                    </button>
+                  )}
+                </div>
+              )}
+              <div className="image-upload-area">
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  id="VTD-images"
+                  className="file-input"
+                />
+                <label htmlFor="VTD-images" className="upload-label">
+                  <i className="fas fa-cloud-upload-alt"></i>
+                  <span>Click to upload images (or drag and drop)</span>
+                  <small>Upload as many images as needed</small>
+                </label>
+              </div>
+
+              {Object.keys(uploadProgress).length > 0 && (
+                <div className="upload-progress">
+                  {Object.entries(uploadProgress).map(([id, progress]) => (
+                    <div key={id} className="progress-bar">
+                      <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+                      <span>{progress}%</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {uploadedImages.length > 0 && (
+                <div className="uploaded-images-grid">
+                  {uploadedImages.map((img, idx) => (
+                    <div 
+                      key={idx} 
+                      className={`image-item ${selectedImages.includes(idx) ? 'selected' : ''}`}
+                      onClick={() => toggleImageSelection(idx)}
+                      style={{ cursor: 'pointer', position: 'relative' }}
+                    >
+                      <img src={img} alt={`Upload ${idx + 1}`} />
+                      <div className="image-checkbox" style={{
+                        position: 'absolute',
+                        top: '8px',
+                        left: '8px',
+                        width: '24px',
+                        height: '24px',
+                        background: selectedImages.includes(idx) ? '#3b82f6' : 'rgba(255,255,255,0.9)',
+                        border: '2px solid #fff',
+                        borderRadius: '4px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                      }}>
+                        {selectedImages.includes(idx) && (
+                          <i className="fas fa-check" style={{ color: '#fff', fontSize: '14px' }}></i>
+                        )}
+                      </div>
+                      <div className="image-actions" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          className="btn-set-featured"
+                          onClick={() => setAsThumbnail(img)}
+                          title="Set as featured image"
+                        >
+                          <i className="fas fa-star"></i>
+                        </button>
+                        <button
+                          className="btn-remove-image"
+                          onClick={() => removeImage(idx)}
+                          title="Remove image"
+                        >
+                          <i className="fas fa-trash"></i>
+                        </button>
+                      </div>
+                      {formData.thumbnail_url === img && (
+                        <span className="featured-badge">Featured</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="editor-sidebar">
+            <div className="sidebar-section">
+              <h3>Publish Settings</h3>
+              <div className="form-group">
+                <label>Status</label>
+                <p className="status-text">
+                  {formData.is_published ? (
+                    <><i className="fas fa-check-circle"></i> Published</>
+                  ) : (
+                    <><i className="fas fa-clock"></i> Draft</>
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div className="sidebar-section">
+              <h3>Featured Image</h3>
+              {thumbnailPreview ? (
+                <div className="thumbnail-preview">
+                  <img src={thumbnailPreview} alt="Featured" />
+                  <button 
+                    className="btn-remove-thumbnail"
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, thumbnail_url: '' }));
+                      setThumbnailPreview('');
+                    }}
+                  >
+                    <i className="fas fa-times"></i> Remove
+                  </button>
+                </div>
+              ) : (
+                <div className="thumbnail-upload">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleThumbnailUpload}
+                    id="thumbnail-upload"
+                    className="file-input"
+                  />
+                  <label htmlFor="thumbnail-upload" className="upload-label-small">
+                    <i className="fas fa-image"></i>
+                    <span>Upload Featured Image</span>
+                  </label>
                 </div>
               )}
             </div>
 
-            <div className="form-group">
-              <label>PDF Document</label>
-              <input
-                type="file"
-                accept=".pdf"
-                onChange={handlePdfUpload}
-                className="file-input"
-              />
-              {formData.pdf_url && (
-                <a href={formData.pdf_url} target="_blank" rel="noopener noreferrer" className="pdf-preview-link">
-                  <i className="fas fa-file-pdf"></i> View uploaded PDF
-                </a>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label>Category</label>
-              <select name="category" value={formData.category} onChange={handleInputChange}>
+            <div className="sidebar-section">
+              <h3>Category
+                <button
+                  type="button"
+                  onClick={() => setShowCustomCategory(!showCustomCategory)}
+                  style={{
+                    marginLeft: '8px',
+                    padding: '4px 10px',
+                    borderRadius: 6,
+                    border: '1px solid #e2e8f0',
+                    background: '#f8fafc',
+                    cursor: 'pointer',
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: '#64748b'
+                  }}
+                >
+                  <i className="fas fa-plus"></i> Add Custom
+                </button>
+              </h3>
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+                className="category-select"
+              >
                 <optgroup label="Default Categories">
-                  {DEFAULT_CATEGORIES.map(cat => (
-                    <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
-                  ))}
+                  <option value="district">District</option>
+                  <option value="state">State</option>
+                  <option value="nationals">Nationals</option>
+                  <option value="internationals">Internationals</option>
                 </optgroup>
                 {customCategories.length > 0 && (
                   <optgroup label="Custom Categories">
-                    {customCategories.map(cat => (
-                      <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
-                    ))}
+                    {customCategories.map(c => <option key={c} value={c}>{c}</option>)}
                   </optgroup>
                 )}
               </select>
               
-              <div className="custom-category-actions">
-                <button
-                  type="button"
-                  className="btn-add-category"
-                  onClick={() => setShowCustomCategory(!showCustomCategory)}
-                >
-                  <i className="fas fa-plus"></i> Add Custom Category
-                </button>
-                
-                {customCategories.length > 0 && (
-                  <div className="category-list">
-                    {customCategories.map(cat => (
-                      <span key={cat} className="category-tag">
-                        {cat}
-                        <button onClick={() => handleRemoveCustomCategory(cat)} className="remove-btn">
-                          <i className="fas fa-times"></i>
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-
+              {/* Show custom category input */}
               {showCustomCategory && (
-                <div className="custom-category-form">
+                <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 8 }}>
                   <input
                     type="text"
                     value={newCategory}
                     onChange={(e) => setNewCategory(e.target.value)}
-                    placeholder="Enter custom category name"
+                    placeholder="Enter new category name"
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddCustomCategory())}
+                    style={{
+                      padding: '10px 14px',
+                      borderRadius: 8,
+                      border: '1px solid #e2e8f0',
+                      fontSize: 13
+                    }}
                   />
-                  <button type="button" onClick={handleAddCustomCategory} className="btn-add">
-                    Add
-                  </button>
-                  <button type="button" onClick={() => setShowCustomCategory(false)} className="btn-cancel">
-                    Cancel
-                  </button>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button
+                      type="button"
+                      onClick={handleAddCustomCategory}
+                      style={{
+                        flex: 1,
+                        padding: '8px 12px',
+                        borderRadius: 8,
+                        border: 'none',
+                        background: '#10b981',
+                        color: '#fff',
+                        cursor: 'pointer',
+                        fontSize: 13,
+                        fontWeight: 600
+                      }}
+                    >
+                      Add
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setShowCustomCategory(false); setNewCategory(''); }}
+                      style={{
+                        flex: 1,
+                        padding: '8px 12px',
+                        borderRadius: 8,
+                        border: '1px solid #e2e8f0',
+                        background: '#fff',
+                        color: '#64748b',
+                        cursor: 'pointer',
+                        fontSize: 13
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+              
+              {/* Show custom categories with delete option */}
+              {customCategories.length > 0 && (
+                <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {customCategories.map(cat => (
+                    <span key={cat} style={{
+                      padding: '4px 10px',
+                      background: '#f1f5f9',
+                      borderRadius: 999,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: '#475569',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6
+                    }}>
+                      {cat}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveCustomCategory(cat)}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          color: '#94a3b8',
+                          padding: 0,
+                          fontSize: 10
+                        }}
+                      >
+                        <i className="fas fa-times"></i>
+                      </button>
+                    </span>
+                  ))}
                 </div>
               )}
             </div>
 
-            <div className="form-group">
-              <label>Gallery Images</label>
+            <div className="sidebar-section">
+              <h3>Tags</h3>
               <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleImageUpload}
-                className="file-input"
-              />
-              
-              {uploadedImages.length > 0 && (
-                <>
-                  <div className="image-actions">
-                    <button type="button" onClick={selectAllImages} className="btn-select-all">
-                      {selectedImages.length === uploadedImages.length ? 'Deselect All' : 'Select All'}
-                    </button>
-                    {selectedImages.length > 0 && (
-                      <button type="button" onClick={deleteSelectedImages} className="btn-delete-selected">
-                        Delete Selected ({selectedImages.length})
-                      </button>
-                    )}
-                  </div>
-                  
-                  <div className="images-grid">
-                    {uploadedImages.map((img, idx) => (
-                      <div
-                        key={idx}
-                        className={`image-item ${selectedImages.includes(idx) ? 'selected' : ''}`}
-                        onClick={() => toggleImageSelection(idx)}
-                      >
-                        <img src={img} alt={`Upload ${idx + 1}`} />
-                        {selectedImages.includes(idx) && (
-                          <div className="selection-overlay">
-                            <i className="fas fa-check-circle"></i>
-                          </div>
-                        )}
-                        <button
-                          type="button"
-                          className="btn-set-cover"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setAsCover(img);
-                          }}
-                        >
-                          Set as Cover
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label>
-                <input
-                  type="checkbox"
-                  name="is_active"
-                  checked={formData.is_active}
-                  onChange={handleInputChange}
-                />
-                <span>Active (visible on frontend)</span>
-              </label>
-            </div>
-
-            <div className="form-group">
-              <label>Display Order</label>
-              <input
-                type="number"
-                name="order"
-                value={formData.order}
+                type="text"
+                name="tags"
+                value={formData.tags}
                 onChange={handleInputChange}
-                placeholder="0"
+                placeholder="Comma separated tags"
+                className="tags-input"
+              />
+              <small>Separate tags with commas</small>
+            </div>
+
+            <div className="sidebar-section">
+              <h3>Author</h3>
+              <input
+                type="text"
+                name="author"
+                value={formData.author}
+                onChange={handleInputChange}
+                className="author-input"
+              />
+            </div>
+
+            <div className="sidebar-section">
+              <h3>Location</h3>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleInputChange}
+                placeholder="e.g., Hyderabad, Telangana, India"
+                className="author-input"
+              />
+            </div>
+
+            <div className="sidebar-section">
+              <h3>Event Date</h3>
+              <input
+                type="date"
+                name="event_date"
+                value={formData.event_date}
+                onChange={handleInputChange}
+                className="author-input"
               />
             </div>
           </div>
