@@ -168,19 +168,6 @@ const ResultDetailsPage = () => {
                                         </div>
                                     )}
                                 </div>
-
-                                {result.images.length > 0 && (
-                                    <div className="result-details-inline-gallery">
-                                        <h3>Published Images</h3>
-                                        <div className="result-details-inline-grid">
-                                            {result.images.map((image, index) => (
-                                                <div key={`${result.id}-inline-${index}`} className="result-details-inline-card">
-                                                    <img src={image} alt={`${result.title} view ${index + 1}`} />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>

@@ -267,10 +267,10 @@ const VtdEditor = () => {
 
       if (id) {
         await axiosInstance.put(`/vtd-books/${id}`, itemData);
-        alert(publish ? 'item published successfully!' : 'Draft saved successfully!');
+        alert(publish ? 'Item published successfully!' : 'Draft saved successfully!');
       } else {
-        await axiosInstance.item('/vtd-books/', itemData);
-        alert(publish ? 'item published successfully!' : 'Draft saved successfully!');
+        await axiosInstance.post('/vtd-books/', itemData);
+        alert(publish ? 'Item published successfully!' : 'Draft saved successfully!');
       }
       navigate('/admin/dashboard?section=vtd');
     } catch (error) {
