@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { axiosInstance } from '../../../config/axiosConfig';
 import { uploadToS3 } from '../../../utils/s3Upload';
-import './VtdEditor.css';
+import './BlogEditor.css';
 
 const DEFAULT_CATEGORIES = ['district', 'state', 'nationals', 'internationals'];
 
