@@ -302,7 +302,7 @@ const VtdEditor = () => {
 
   if (loading && !formData.title) {
     return (
-      <div className="vtd-editor-loading">
+      <div className="blog-editor-loading">
         <i className="fas fa-spinner fa-spin fa-3x"></i>
         <p>Loading...</p>
       </div>
@@ -310,8 +310,8 @@ const VtdEditor = () => {
   }
 
   return (
-    <div className="vtd-editor-container">
-      <div className="vtd-editor-header">
+    <div className="blog-editor-container">
+      <div className="blog-editor-header">
         <div className="header-left">
           <button className="btn-back" onClick={handleCancel}>
             <i className="fas fa-arrow-left"></i> Back to Dashboard
@@ -381,7 +381,7 @@ const VtdEditor = () => {
           </div>
         </div>
       ) : (
-        <div className="vtd-editor-content">
+        <div className="blog-editor-content">
           <div className="editor-main">
             <div className="form-group">
               <input

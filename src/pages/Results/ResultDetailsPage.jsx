@@ -104,30 +104,7 @@ const ResultDetailsPage = () => {
                             </Link>
                         </div>
 
-                        <div className="result-details-layout">
-                            <div className="result-details-media">
-                                {result.primaryImage ? (
-                                    <div className="result-details-main-image">
-                                        <img src={result.primaryImage} alt={result.title} />
-                                    </div>
-                                ) : (
-                                    <div className="result-image__placeholder result-details-placeholder">
-                                        <i className="fas fa-image"></i>
-                                        <p>No preview image available for this result.</p>
-                                    </div>
-                                )}
-
-                                {result.images.length > 1 && (
-                                    <div className="result-details-gallery">
-                                        {result.images.map((image, index) => (
-                                            <div key={`${result.id}-${index}`} className="result-details-thumb">
-                                                <img src={image} alt={`${result.title} ${index + 1}`} />
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-
+                        <div className="result-details-layout-single">
                             <div className="result-details-content">
                                 <div className="result-details-heading">
                                     <div className="result-badges result-details-badges">
@@ -165,6 +142,29 @@ const ResultDetailsPage = () => {
                                         <div className="result-details-meta-card">
                                             <span>Location</span>
                                             <strong>{result.location}</strong>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="result-details-media-section">
+                                    {result.primaryImage ? (
+                                        <div className="result-details-main-image">
+                                            <img src={result.primaryImage} alt={result.title} />
+                                        </div>
+                                    ) : (
+                                        <div className="result-image__placeholder result-details-placeholder">
+                                            <i className="fas fa-image"></i>
+                                            <p>No preview image available for this result.</p>
+                                        </div>
+                                    )}
+
+                                    {result.images.length > 1 && (
+                                        <div className="result-details-gallery">
+                                            {result.images.map((image, index) => (
+                                                <div key={`${result.id}-${index}`} className="result-details-thumb">
+                                                    <img src={image} alt={`${result.title} ${index + 1}`} />
+                                                </div>
+                                            ))}
                                         </div>
                                     )}
                                 </div>

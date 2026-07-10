@@ -539,6 +539,14 @@
     align-items: start;
 }
 
+.result-details-layout-single {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .result-details-media,
 .result-details-content {
     min-width: 0;
@@ -602,6 +610,14 @@
     background: rgba(255, 255, 255, 0.96);
     border: 1px solid rgba(84, 90, 104, 0.08);
     box-shadow: 0 18px 34px rgba(28, 33, 38, 0.1);
+}
+
+.result-details-layout-single .result-details-content {
+    width: 100%;
+}
+
+.result-details-media-section {
+    width: 100%;
 }
 
 .result-details-heading h1 {
