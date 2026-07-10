@@ -577,8 +577,8 @@
 .result-details-gallery,
 .result-details-inline-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
 }
 
 .result-details-gallery {
@@ -714,7 +714,8 @@
 @media (max-width: 575px) {
     .result-details-gallery,
     .result-details-inline-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
     }
 }
 
