@@ -2,7 +2,7 @@
 
 import { Link } from 'react-router-dom';
 
-const EventOne = ({ tagline, title, buttonText, points, imageUrl }) => {
+const EventOne = ({ tagline, title, buttonText, buttonLink = "/contact", points, imageUrl }) => {
   return (
     <section className="event-one event-three">
       <div className="container">
@@ -15,7 +15,7 @@ const EventOne = ({ tagline, title, buttonText, points, imageUrl }) => {
               <h2 className="section-title__title">{title}</h2>
             </div>
             <div className="event-one__btn-box">
-              <Link to="/event-details" className="event-one__btn thm-btn">
+              <Link to={buttonLink} className="event-one__btn thm-btn">
                   {buttonText} <span className="icon-arrow-right"></span>
               </Link>
             </div>

@@ -70,7 +70,9 @@ const HeaderStyleOne = (props) => {
                         </div>
                         <div className="main-menu__right">
                         <div className="main-menu__vtd-logo">
-                            <img src={vtdLogo} alt="VTD Logo" />
+                            <Link to="/vtd">
+                                <img src={vtdLogo} alt="VTD Logo" />
+                            </Link>
                         </div>
                         {/* <div className="main-menu__btn-box">
                             <Link to="/contact" className="main-menu__btn thm-btn">
@@ -111,7 +113,9 @@ const HeaderStyleOne = (props) => {
                                 </div>
                                 <div className="main-menu__right">
                                 <div className="main-menu__vtd-logo">
-                                    <img src={vtdLogo} alt="VTD Logo" />
+                                    <Link to="/vtd">
+                                        <img src={vtdLogo} alt="VTD Logo" />
+                                    </Link>
                                 </div>
                                 {/* <div className="main-menu__btn-box">
                                     <Link [to=]"/contact" className="main-menu__btn thm-btn">

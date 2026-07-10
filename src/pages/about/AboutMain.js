@@ -97,6 +97,7 @@ const AboutMain = () => {
             tagline="About WPC–Telangana"
             title="World Powerlifting Congress Telangana"
             buttonText="Join Our Community"
+            buttonLink="/contact"
             points={points}
             imageUrl={eventImg}
         />

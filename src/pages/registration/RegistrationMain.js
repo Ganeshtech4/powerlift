@@ -44,14 +44,10 @@ const RegistrationMain = () => {
     };
 
     const handleDownload = (form) => {
-        const link = document.createElement('a');
-        link.href = form.file_url;
-        link.download = form.file_name;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        // Open email client with pre-filled subject
+        const subject = encodeURIComponent(`Request for ${form.title}`);
+        const body = encodeURIComponent(`Hello,\n\nI would like to request the ${form.title} form for ${getCategoryLabel(form.category)}.\n\nThank you.`);
+        window.location.href = `mailto:powerlifitingassociationofts@gmail.com?subject=${subject}&body=${body}`;
     };
 
     if (loading) {

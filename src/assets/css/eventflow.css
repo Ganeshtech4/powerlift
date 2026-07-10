@@ -1641,15 +1641,15 @@ ul {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 9999;
+  z-index: 99999;
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
   -webkit-transform-origin: left center;
   transform-origin: left center;
-  -webkit-transition: visibility 500ms ease 500ms, -webkit-transform 500ms ease 500ms;
-  transition: visibility 500ms ease 500ms, -webkit-transform 500ms ease 500ms;
-  transition: transform 500ms ease 500ms, visibility 500ms ease 500ms;
-  transition: transform 500ms ease 500ms, visibility 500ms ease 500ms, -webkit-transform 500ms ease 500ms;
+  -webkit-transition: visibility 200ms ease 200ms, -webkit-transform 200ms ease 200ms;
+  transition: visibility 200ms ease 200ms, -webkit-transform 200ms ease 200ms;
+  transition: transform 200ms ease 200ms, visibility 200ms ease 200ms;
+  transition: transform 200ms ease 200ms, visibility 200ms ease 200ms, -webkit-transform 200ms ease 200ms;
   visibility: hidden;
 }
 
@@ -1663,10 +1663,10 @@ ul {
   -webkit-transform: translateX(0%);
   transform: translateX(0%);
   visibility: visible;
-  -webkit-transition: visibility 500ms ease 0ms, -webkit-transform 500ms ease 0ms;
-  transition: visibility 500ms ease 0ms, -webkit-transform 500ms ease 0ms;
-  transition: transform 500ms ease 0ms, visibility 500ms ease 0ms;
-  transition: transform 500ms ease 0ms, visibility 500ms ease 0ms, -webkit-transform 500ms ease 0ms;
+  -webkit-transition: visibility 0ms ease 0ms, -webkit-transform 200ms ease 0ms;
+  transition: visibility 0ms ease 0ms, -webkit-transform 200ms ease 0ms;
+  transition: transform 200ms ease 0ms, visibility 0ms ease 0ms;
+  transition: transform 200ms ease 0ms, visibility 0ms ease 0ms, -webkit-transform 200ms ease 0ms;
 }
 
 .mobile-nav__overlay {
@@ -1678,7 +1678,7 @@ ul {
   background-color: rgba(0, 0, 0, 0.7);
   opacity: 1;
   cursor: pointer;
-  z-index: 9998;
+  z-index: 99998;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 }
@@ -1691,7 +1691,7 @@ ul {
     linear-gradient(rgba(8, 12, 22, 0.52), rgba(8, 12, 22, 0.52)),
     url('../images/powerlift-panel.png') center center / cover no-repeat;
   backdrop-filter: none;
-  z-index: 10000;
+  z-index: 100000;
   position: relative;
   height: 100%;
   overflow-y: auto;
@@ -1704,8 +1704,8 @@ ul {
   visibility: hidden;
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
-  -webkit-transition: opacity 300ms ease, visibility 300ms ease, -webkit-transform 300ms ease;
-  transition: opacity 300ms ease, visibility 300ms ease, transform 300ms ease;
+  -webkit-transition: opacity 150ms ease, visibility 150ms ease, -webkit-transform 150ms ease;
+  transition: opacity 150ms ease, visibility 150ms ease, transform 150ms ease;
   box-shadow: 14px 0 40px rgba(0, 0, 0, 0.55);
 }
 
@@ -1716,8 +1716,8 @@ ul {
   backdrop-filter: none;
   -webkit-transform: translateX(0);
   transform: translateX(0);
-  -webkit-transition: opacity 300ms ease, visibility 300ms ease, -webkit-transform 300ms ease;
-  transition: opacity 300ms ease, visibility 300ms ease, transform 300ms ease;
+  -webkit-transition: opacity 150ms ease, visibility 0ms ease, -webkit-transform 150ms ease;
+  transition: opacity 150ms ease, visibility 0ms ease, transform 150ms ease;
 }
 
 .mobile-nav__content .logo-box {
