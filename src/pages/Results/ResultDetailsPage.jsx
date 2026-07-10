@@ -95,7 +95,7 @@ const ResultDetailsPage = () => {
             />
 
             <section className="results-section section-padding">
-                <div className="container">
+                <div className="container-fluid" style={{ maxWidth: '100%', padding: '0 3%' }}>
                     <div className="result-details-shell">
                         <div className="result-details-topbar">
                             <Link to="/results" className="result-back-link">
