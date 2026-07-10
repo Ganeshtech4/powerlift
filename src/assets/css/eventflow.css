@@ -938,7 +938,7 @@ ul {
   width: 100%;
   background: transparent;
   transition: all 500ms ease;
-  z-index: 999;
+  z-index: 10000;
 }
 .ourcollaborations{
   text-align: center;
@@ -2024,8 +2024,8 @@ ul {
   overflow: hidden;
 }
 
-.mobile-menu-visible .main-slider,
-.mobile-menu-visible .main-header {
+/* Keep header above everything, mobile nav wrapper handles its own stacking */
+.mobile-menu-visible .main-slider {
   z-index: 1 !important;
 }
 
@@ -2035,6 +2035,13 @@ ul {
 .mobile-menu-visible footer {
   visibility: hidden !important;
   z-index: 1 !important;
+}
+
+/* But keep header and mobile nav visible */
+.mobile-menu-visible header,
+.mobile-menu-visible .main-header,
+.mobile-menu-visible .mobile-nav__wrapper {
+  visibility: visible !important;
 }
 
 /* Ensure nav overlay is properly positioned */
@@ -2219,7 +2226,7 @@ ul {
   position: relative;
   display: block;
   background-color: var(--eventflow-black);
-  z-index: 91;
+  z-index: 1;
   overflow: hidden;
 }
 
@@ -11862,7 +11869,7 @@ ul {
   
   /* Fix mobile header and menu */
   .main-header {
-    z-index: 999;
+    z-index: 10000;
   }
   
   .main-menu {
@@ -11870,7 +11877,7 @@ ul {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 999;
+    z-index: 10000;
   }
   
   .main-menu__wrapper-inner {
@@ -11932,7 +11939,7 @@ ul {
   .mobile-menu-visible section {
     z-index: 1 !important;
   }
-  
+
   .section-title__title {
       font-size: 30px;
       line-height: 40px;
