@@ -117,27 +117,71 @@ const MobileMenu = ({ isSidebar, handleMobileMenu, handleSidebar }) => {
               </li>
 
               <li>
+                <Link to="/news" onClick={(e) => { e.preventDefault(); handleLinkClick('/news'); }}>
+                  News
+                </Link>
+              </li>
+
+              <li>
                 <Link to="/results" onClick={(e) => { e.preventDefault(); handleLinkClick('/results'); }}>
                   Results
                 </Link>
               </li>
 
-              <li>
-                <Link to="/inkspire" onClick={(e) => { e.preventDefault(); handleLinkClick('/inkspire'); }}>
-                  Inkspire
-                </Link>
+              <li className={`dropdown ${openSubmenu === 'resources' ? 'active' : ''}`}>
+                <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                  <span style={{ flex: 1, padding: '10px 0' }}>
+                    Resources
+                  </span>
+                  <button
+                    className={`dropdown-btn ${openSubmenu === 'resources' ? 'open' : ''}`}
+                    onClick={(e) => { e.preventDefault(); toggleSubmenu('resources'); }}
+                  >
+                    <i className="fa fa-angle-down" />
+                  </button>
+                </div>
+                <ul className="sub-menu" style={{ display: openSubmenu === 'resources' ? 'block' : 'none' }}>
+                  <li>
+                    <Link to="/vtd" onClick={(e) => { e.preventDefault(); handleLinkClick('/vtd'); }}>
+                      VTD
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/inkspire" onClick={(e) => { e.preventDefault(); handleLinkClick('/inkspire'); }}>
+                      Inkspire
+                    </Link>
+                  </li>
+                </ul>
               </li>
 
-              <li>
-                <Link to="/registration" onClick={(e) => { e.preventDefault(); handleLinkClick('/registration'); }}>
-                  Register
-                </Link>
-              </li>
-
-              <li>
-                <Link to="/calendar" onClick={(e) => { e.preventDefault(); handleLinkClick('/calendar'); }}>
-                  Calendar
-                </Link>
+              <li className={`dropdown ${openSubmenu === 'register' ? 'active' : ''}`}>
+                <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                  <Link
+                    to="/registration"
+                    onClick={(e) => { e.preventDefault(); handleLinkClick('/registration'); }}
+                    style={{ flex: 1 }}
+                  >
+                    Register
+                  </Link>
+                  <button
+                    className={`dropdown-btn ${openSubmenu === 'register' ? 'open' : ''}`}
+                    onClick={(e) => { e.preventDefault(); toggleSubmenu('register'); }}
+                  >
+                    <i className="fa fa-angle-down" />
+                  </button>
+                </div>
+                <ul className="sub-menu" style={{ display: openSubmenu === 'register' ? 'block' : 'none' }}>
+                  <li>
+                    <Link to="/registration" onClick={(e) => { e.preventDefault(); handleLinkClick('/registration'); }}>
+                      Registration
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/calendar" onClick={(e) => { e.preventDefault(); handleLinkClick('/calendar'); }}>
+                      Calendar
+                    </Link>
+                  </li>
+                </ul>
               </li>
 
               <li>
