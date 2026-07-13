@@ -31,6 +31,13 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get update && sudo apt-get install -y sshpass
 
+      - name: Test Server Connection
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          echo "🔌 Testing server connectivity..."
+          ping -c 3 $SERVER_HOST || echo "⚠️ Server ping failed, but continuing..."
+          
       - name: Deploy to Production Server
         env:
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
@@ -40,36 +47,43 @@ jobs:
           SSHPASS: ${{ secrets.SERVER_PASSWORD }}
         run: |
           echo "📦 Deploying to production server..."
+          echo "🎯 Target: $SERVER_USER@$SERVER_HOST:$DEPLOY_PATH"
           
           # Deploy static files
           echo "📤 Uploading static files..."
-          sshpass -e scp -o StrictHostKeyChecking=no -r build/static "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/"
+          sshpass -e scp -o StrictHostKeyChecking=no -o ConnectTimeout=60 -r build/static "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/" || {
+            echo "❌ Failed to upload static files - check server connectivity"
+            exit 1
+          }
           
           # Deploy images folder
           echo "📤 Uploading images..."
-          sshpass -e scp -o StrictHostKeyChecking=no -r build/images "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/"
+          sshpass -e scp -o StrictHostKeyChecking=no -o ConnectTimeout=60 -r build/images "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/" || {
+            echo "❌ Failed to upload images"
+            exit 1
+          }
           
           # Deploy root files (index.html, manifest, etc.)
           echo "📤 Uploading root files..."
-          sshpass -e scp -o StrictHostKeyChecking=no build/index.html build/asset-manifest.json build/manifest.json build/robots.txt "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/" 2>/dev/null || true
+          sshpass -e scp -o StrictHostKeyChecking=no -o ConnectTimeout=30 build/index.html build/asset-manifest.json build/manifest.json build/robots.txt "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/" 2>/dev/null || true
           
           # Deploy favicon and icons
           echo "📤 Uploading icons..."
-          sshpass -e scp -o StrictHostKeyChecking=no build/*.png build/*.ico "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/" 2>/dev/null || true
+          sshpass -e scp -o StrictHostKeyChecking=no -o ConnectTimeout=30 build/*.png build/*.ico "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/" 2>/dev/null || true
           
           # Clean up old bundles (keep only latest)
           echo "🧹 Cleaning up old bundles..."
-          sshpass -e ssh -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" << 'CLEANUP'
-          cd $DEPLOY_PATH/static/js
+          sshpass -e ssh -o StrictHostKeyChecking=no -o ConnectTimeout=30 "$SERVER_USER@$SERVER_HOST" << 'CLEANUP'
+          cd $DEPLOY_PATH/static/js 2>/dev/null || exit 0
           # Keep only the latest main.*.js and delete others
-          ls -t main.*.js | tail -n +2 | xargs -r rm -f
-          ls -t main.*.js.map | tail -n +2 | xargs -r rm -f
-          ls -t main.*.js.LICENSE.txt | tail -n +2 | xargs -r rm -f
+          ls -t main.*.js 2>/dev/null | tail -n +2 | xargs -r rm -f
+          ls -t main.*.js.map 2>/dev/null | tail -n +2 | xargs -r rm -f
+          ls -t main.*.js.LICENSE.txt 2>/dev/null | tail -n +2 | xargs -r rm -f
           
-          cd ../css
+          cd ../css 2>/dev/null || exit 0
           # Keep only the latest main.*.css and delete others
-          ls -t main.*.css | tail -n +2 | xargs -r rm -f
-          ls -t main.*.css.map | tail -n +2 | xargs -r rm -f
+          ls -t main.*.css 2>/dev/null | tail -n +2 | xargs -r rm -f
+          ls -t main.*.css.map 2>/dev/null | tail -n +2 | xargs -r rm -f
           
           echo "✅ Cleanup completed"
           CLEANUP
