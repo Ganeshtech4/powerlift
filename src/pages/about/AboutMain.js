@@ -260,7 +260,7 @@ const AboutMain = () => {
                                 marginBottom: '15px',
                                 lineHeight: '1'
                             }}>
-                                <CountUp start={0} end={150} duration={2} />+
+                                <CountUp start={0} end={10000} duration={2} />+
                             </div>
                             <p style={{color: '#333', fontWeight: '600', fontSize: '18px', margin: 0}}>Athletes Certified</p>
                         </div>
@@ -316,7 +316,7 @@ const AboutMain = () => {
                                 marginBottom: '15px',
                                 lineHeight: '1'
                             }}>
-                                <CountUp start={0} end={15} duration={2} />+
+                                <CountUp start={0} end={33} duration={2} />+
                             </div>
                             <p style={{color: '#333', fontWeight: '600', fontSize: '18px', margin: 0}}>Districts Represented</p>
                         </div>
@@ -344,7 +344,7 @@ const AboutMain = () => {
                                 marginBottom: '15px',
                                 lineHeight: '1'
                             }}>
-                                <CountUp start={0} end={5} duration={2} />+
+                                <CountUp start={0} end={3} duration={2} />+
                             </div>
                             <p style={{color: '#333', fontWeight: '600', fontSize: '18px', margin: 0}}>Years Active</p>
                         </div>

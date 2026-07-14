@@ -1,10 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import emailjs from '@emailjs/browser';
-import emailConfig from '../../config/emailConfig';
 
 const ContactMain = () => {
-  const form = useRef();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -51,7 +48,7 @@ const ContactMain = () => {
     return true;
   };
 
-  // Handle form submission
+  // Handle form submission using Web3Forms
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -63,25 +60,42 @@ const ContactMain = () => {
     setSubmitStatus(null);
 
     try {
-      // Send email using EmailJS
-      const result = await emailjs.sendForm(
-        emailConfig.serviceId,
-        emailConfig.templateId,
-        form.current,
-        emailConfig.publicKey
-      );
+      // Prepare form data for Web3Forms
+      const formDataToSend = new FormData();
+      formDataToSend.append('access_key', '9c4fa4e3-7f4a-4f8e-9b2d-1a5e6c8d9f3b'); // Web3Forms access key
+      formDataToSend.append('subject', 'New Contact Form Submission - WPC Telangana');
+      formDataToSend.append('from_name', formData.name);
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('address', formData.address);
+      formDataToSend.append('message', formData.message);
+      formDataToSend.append('redirect', 'false'); // Don't redirect after submission
 
-      console.log('Email sent successfully:', result.text);
-      setSubmitStatus('success');
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-        message: ''
+      // Send to Web3Forms API
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
       });
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log('Email sent successfully');
+        setSubmitStatus('success');
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          address: '',
+          message: ''
+        });
+      } else {
+        console.error('Email sending failed:', result);
+        setSubmitStatus('error');
+      }
 
     } catch (error) {
       console.error('Email sending failed:', error);
@@ -104,7 +118,6 @@ const ContactMain = () => {
 We’re proud to be your trusted platform for all things powerlifting — reach out to us anytime!
             </p>
             <form
-              ref={form}
               className="contact-form-validated contact-one__form"
               onSubmit={handleSubmit}
               noValidate
