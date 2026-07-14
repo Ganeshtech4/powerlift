@@ -57,18 +57,19 @@ class Settings(BaseSettings):
     THUMBNAIL_WIDTH: int = 400
     THUMBNAIL_HEIGHT: int = 300
 
-    # Email - Using free email service (no credentials required)
-    MAIL_USERNAME: str = "noreply@rekhawpctelangana.com"
-    MAIL_PASSWORD: str = "dummy_password"  # Not used with free service
-    MAIL_FROM: str = "noreply@rekhawpctelangana.com"
+    # Email Configuration (Gmail SMTP)
+    # Use an App Password from Google Account > Security > 2-Step Verification > App passwords
+    MAIL_USERNAME: str = "powerlifitingassociationofts@gmail.com"
+    MAIL_PASSWORD: str = ""  # Set this in .env file with Gmail App Password
+    MAIL_FROM: str = "powerlifitingassociationofts@gmail.com"
     MAIL_PORT: int = 587
-    MAIL_SERVER: str = "smtp-relay.sendinblue.com"  # Free tier: 300 emails/day
-    MAIL_FROM_NAME: str = "WPC Telangana"
+    MAIL_SERVER: str = "smtp.gmail.com"
+    MAIL_FROM_NAME: str = "WPC Telangana Contact Form"
     MAIL_STARTTLS: bool = True
     MAIL_SSL_TLS: bool = False
-    USE_CREDENTIALS: bool = False  # Free service doesn't need credentials
+    USE_CREDENTIALS: bool = True
     VALIDATE_CERTS: bool = True
-    MAIL_TO: str = "powerliftingassociationofts@gmail.com"  # Destination email
+    MAIL_TO: str = "powerlifitingassociationofts@gmail.com"  # Destination email
     
     # Pydantic v2 settings
     model_config = SettingsConfigDict(

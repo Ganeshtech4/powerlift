@@ -48,7 +48,7 @@ const ContactMain = () => {
     return true;
   };
 
-  // Handle form submission using Web3Forms
+  // Handle form submission using Backend API
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -60,27 +60,25 @@ const ContactMain = () => {
     setSubmitStatus(null);
 
     try {
-      // Prepare form data for Web3Forms
-      const formDataToSend = new FormData();
-      formDataToSend.append('access_key', '9c4fa4e3-7f4a-4f8e-9b2d-1a5e6c8d9f3b'); // Web3Forms access key
-      formDataToSend.append('subject', 'New Contact Form Submission - WPC Telangana');
-      formDataToSend.append('from_name', formData.name);
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('address', formData.address);
-      formDataToSend.append('message', formData.message);
-      formDataToSend.append('redirect', 'false'); // Don't redirect after submission
-
-      // Send to Web3Forms API
-      const response = await fetch('https://api.web3forms.com/submit', {
+      // Send to backend API
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+      const response = await fetch(`${apiUrl}/api/v1/send-email`, {
         method: 'POST',
-        body: formDataToSend
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          message: formData.message
+        })
       });
 
       const result = await response.json();
 
-      if (result.success) {
+      if (response.ok && result.success) {
         console.log('Email sent successfully');
         setSubmitStatus('success');
         
