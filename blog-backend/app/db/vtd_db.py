@@ -29,12 +29,33 @@ def get_vtd_books_table():
                 print(f"Creating DynamoDB table: {table_name}")
                 _vtd_table = dynamodb.create_table(
                     TableName=table_name,
-                    KeySchema=[{'AttributeName': 'id', 'KeyType': 'HASH'}],
-                    AttributeDefinitions=[{'AttributeName': 'id', 'AttributeType': 'S'}],
-                    ProvisionedThroughput={'ReadCapacityUnits': 5, 'WriteCapacityUnits': 5}
+                    KeySchema=[
+                        {'AttributeName': 'id', 'KeyType': 'HASH'},
+                    ],
+                    AttributeDefinitions=[
+                        {'AttributeName': 'id', 'AttributeType': 'S'},
+                        {'AttributeName': 'slug', 'AttributeType': 'S'},
+                    ],
+                    GlobalSecondaryIndexes=[
+                        {
+                            'IndexName': 'slug-index',
+                            'KeySchema': [
+                                {'AttributeName': 'slug', 'KeyType': 'HASH'},
+                            ],
+                            'Projection': {'ProjectionType': 'ALL'},
+                            'ProvisionedThroughput': {
+                                'ReadCapacityUnits': 5,
+                                'WriteCapacityUnits': 5
+                            }
+                        }
+                    ],
+                    ProvisionedThroughput={
+                        'ReadCapacityUnits': 5,
+                        'WriteCapacityUnits': 5
+                    }
                 )
                 _vtd_table.meta.client.get_waiter('table_exists').wait(TableName=table_name)
-                print(f"DynamoDB table '{table_name}' created successfully")
+                print(f"[OK] DynamoDB table '{table_name}' created successfully")
             else:
                 raise
 
