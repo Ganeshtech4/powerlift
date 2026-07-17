@@ -61,8 +61,8 @@ const ContactMain = () => {
 
     try {
       // Send to backend API
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
-      const response = await fetch(`${apiUrl}/api/v1/send-email`, {
+      const apiUrl = process.env.REACT_APP_API_URL || '/api/v1';
+      const response = await fetch(`${apiUrl}/send-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
