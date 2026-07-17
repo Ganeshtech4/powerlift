@@ -18,12 +18,12 @@ async def lifespan(app: FastAPI):
     # Startup: Initialize DynamoDB table
     try:
         table = get_blogs_table()
-        print(f"✅ Connected to DynamoDB table: {table.name}")
+        print(f"[OK] Connected to DynamoDB table: {table.name}")
     except Exception as e:
-        print(f"⚠️ DynamoDB connection check failed: {e}")
+        print(f"[WARN] DynamoDB connection check failed: {e}")
     yield
     # Shutdown: Cleanup if needed
-    print("🛑 Shutting down...")
+    print("[INFO] Shutting down...")
 
 
 app = FastAPI(

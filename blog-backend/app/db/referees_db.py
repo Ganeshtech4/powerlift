@@ -33,7 +33,7 @@ def get_referees_db_table():
                     ProvisionedThroughput={'ReadCapacityUnits': 5, 'WriteCapacityUnits': 5}
                 )
                 _referees_table.meta.client.get_waiter('table_exists').wait(TableName=table_name)
-                print(f"✅ DynamoDB table '{table_name}' created successfully")
+                print(f"[OK] DynamoDB table '{table_name}' created successfully")
             else:
                 raise
 
