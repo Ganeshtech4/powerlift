@@ -138,7 +138,7 @@ const PartnershipEditor = () => {
         alert('Partnership created successfully!');
       }
 
-      navigate('/admin/partnerships');
+      navigate('/admin/dashboard?section=partnerships');
     } catch (error) {
       console.error('Error saving partnership:', error);
       alert('Failed to save partnership');
@@ -160,7 +160,7 @@ const PartnershipEditor = () => {
     <div className="partnership-editor">
       <div className="partnership-editor__header">
         <div>
-          <button className="partnership-editor__back" onClick={() => navigate('/admin/partnerships')}>
+          <button className="partnership-editor__back" onClick={() => navigate('/admin/dashboard?section=partnerships')}>
             <i className="fas fa-arrow-left"></i> Back to Partnerships
           </button>
           <h1>{id ? 'Edit Partnership' : 'Add Partnership'}</h1>
@@ -170,7 +170,7 @@ const PartnershipEditor = () => {
           <button
             type="button"
             className="partnership-editor__button"
-            onClick={() => navigate('/admin/partnerships')}
+            onClick={() => navigate('/admin/dashboard?section=partnerships')}
             disabled={saving}
           >
             Cancel

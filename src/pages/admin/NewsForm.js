@@ -65,7 +65,7 @@ const NewsForm = () => {
       setForm({ ...EMPTY_FORM, ...res.data });
     } catch (err) {
       alert('Failed to load news item: ' + (err.response?.data?.detail || err.message));
-      navigate('/admin/news');
+      navigate('/admin/dashboard?section=news');
     } finally {
       setLoading(false);
     }
@@ -129,7 +129,7 @@ const NewsForm = () => {
       } else {
         await axiosInstance.post('/news/', form);
       }
-      navigate('/admin/news');
+      navigate('/admin/dashboard?section=news');
     } catch (err) {
       alert('Save failed: ' + (err.response?.data?.detail || err.message));
     } finally {
@@ -154,7 +154,7 @@ const NewsForm = () => {
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8 }}>
             <button
-              onClick={() => navigate('/admin/news')}
+              onClick={() => navigate('/admin/dashboard?section=news')}
               style={{
                 padding: '8px 12px',
                 borderRadius: 8,
@@ -395,7 +395,7 @@ const NewsForm = () => {
 
           {/* Buttons */}
           <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end', paddingTop: 16, borderTop: '1px solid #e2e8f0' }}>
-            <button type="button" onClick={() => navigate('/admin/news')}
+            <button type="button" onClick={() => navigate('/admin/dashboard?section=news')}
               style={{
                 padding: '12px 28px',
                 borderRadius: 8,

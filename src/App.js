@@ -18,6 +18,7 @@ import Contact from "./pages/contact";
 import Referees from "./pages/referees";
 import Inspire from "./pages/inspire";
 import Vtd from "./pages/vtd";
+import VtdDetails from "./pages/vtd/VtdDetails";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import BlogEditor from "./pages/admin/sections/BlogEditor";
@@ -94,6 +95,9 @@ export default function App() {
         <Route path="inspire" element={<Navigate to="/inkspire" replace />} />
         <Route path="inspire-details/:id" element={<Navigate to="/inkspire" replace />} />
         <Route path="vtd" element={<Vtd />} />
+        <Route path="vtd-details/:id" element={<VtdDetails />} />
+        <Route path="admin/news" element={<Navigate to="/admin/dashboard?section=news" replace />} />
+        <Route path="admin/partnerships" element={<Navigate to="/admin/dashboard?section=partnerships" replace />} />
         <Route path="results" element={<ResultsNew />} />
         <Route path="results/:id" element={<ResultDetailsPage />} />
         <Route path="calendar" element={<Calendar />} />
