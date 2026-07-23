@@ -69,10 +69,13 @@ class NewsService:
             items = [i for i in items if i.get("status") == "published"]
 
         # Sort: featured first, then by published_date desc
-        items.sort(key=lambda x: (
-            not x.get("is_featured", False),
-            -(x.get("published_date") or x.get("created_at") or ""),
-        ))
+        items.sort(
+            key=lambda x: (
+                1 if x.get("is_featured", False) else 0,
+                x.get("published_date") or x.get("created_at") or ""
+            ),
+            reverse=True
+        )
         return [_serialize(i) for i in items]
 
     @staticmethod
